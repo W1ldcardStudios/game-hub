@@ -16,16 +16,9 @@
   --text: #f4f7ff;
   --muted: #9aacc5;
   --accent: #64a6ff;
-  --green: #5ee3a0;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -34,18 +27,9 @@ body {
   font-family: system-ui, Arial, sans-serif;
 }
 
-button, input, select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
 
 .layout {
   display: flex;
@@ -70,9 +54,7 @@ a {
   letter-spacing: -1px;
 }
 
-.brand span {
-  color: var(--accent);
-}
+.brand span { color: var(--accent); }
 
 .navbtn {
   display: flex;
@@ -122,9 +104,7 @@ a {
   outline: none;
 }
 
-.search:focus {
-  border-color: var(--accent);
-}
+.search:focus { border-color: var(--accent); }
 
 .topright {
   display: flex;
@@ -154,25 +134,11 @@ h1 {
   margin: 0 0 8px;
 }
 
-h2 {
-  margin: 0 0 16px;
-}
-
-p {
-  line-height: 1.55;
-}
-
-.muted {
-  color: var(--muted);
-}
-
-.small {
-  font-size: 13px;
-}
-
-.section {
-  margin: 35px 0;
-}
+h2 { margin: 0 0 16px; }
+p { line-height: 1.55; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.section { margin: 35px 0; }
 
 .section-head {
   display: flex;
@@ -183,9 +149,7 @@ p {
   margin-bottom: 16px;
 }
 
-.section-head h2 {
-  margin: 0;
-}
+.section-head h2 { margin: 0; }
 
 .btn {
   background: #347fe2;
@@ -197,9 +161,7 @@ p {
   display: inline-block;
 }
 
-.btn:hover {
-  background: #559aff;
-}
+.btn:hover { background: #559aff; }
 
 .btn.secondary {
   background: #263751;
@@ -208,6 +170,8 @@ p {
 .btn.secondary:hover {
   background: #385170;
 }
+
+/* FEATURED */
 
 .featured {
   min-height: 355px;
@@ -224,9 +188,10 @@ p {
   display: grid;
   place-items: center;
   font-size: 125px;
-  opacity: .35;
+  opacity: .55;
 }
 
+.feature-media img,
 .feature-media video {
   width: 100%;
   height: 100%;
@@ -284,6 +249,8 @@ p {
   padding: 9px 14px;
 }
 
+/* FILTERS */
+
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -305,6 +272,8 @@ p {
   color: white;
   border-color: #66a7ff;
 }
+
+/* GAME CARDS */
 
 .grid {
   display: grid;
@@ -334,7 +303,7 @@ p {
 }
 
 .card-art {
-  height: 155px;
+  height: 170px;
   background: linear-gradient(130deg, #35557f, #152035);
   display: grid;
   place-items: center;
@@ -342,23 +311,16 @@ p {
   overflow: hidden;
 }
 
+.card-art img,
 .card-art video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.card-info {
-  padding: 16px;
-}
-
-.card-info h3 {
-  margin: 0 0 6px;
-}
-
-.card-info p {
-  margin: 5px 0;
-}
+.card-info { padding: 16px; }
+.card-info h3 { margin: 0 0 6px; }
+.card-info p { margin: 5px 0; }
 
 .tags {
   display: flex;
@@ -375,6 +337,8 @@ p {
   color: #c7dcf7;
 }
 
+/* GAME DETAILS */
+
 .detail-hero {
   position: relative;
   height: clamp(230px, 40vw, 420px);
@@ -386,12 +350,13 @@ p {
   font-size: 125px;
 }
 
+.detail-hero img,
 .detail-hero video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .detail-row {
@@ -412,13 +377,8 @@ p {
   font-size: 48px;
 }
 
-.detail-title {
-  flex: 1;
-}
-
-.detail-title h1 {
-  margin: 0;
-}
+.detail-title { flex: 1; }
+.detail-title h1 { margin: 0; }
 
 .panel {
   background: var(--panel);
@@ -427,6 +387,8 @@ p {
   border-radius: 14px;
   margin: 15px 0;
 }
+
+/* PROFILE */
 
 .profile-head {
   display: flex;
@@ -497,34 +459,19 @@ footer {
     padding: 10px 3px;
   }
 
-  .brand span {
-    display: none;
-  }
+  .brand span { display: none; }
 
   .navbtn {
     font-size: 0;
     justify-content: center;
   }
 
-  .navbtn .emoji {
-    font-size: 22px;
-  }
+  .navbtn .emoji { font-size: 22px; }
 
-  .content {
-    padding: 16px;
-  }
-
-  .topbar {
-    padding: 12px;
-  }
-
-  .feature-info {
-    padding: 45px 22px;
-  }
-
-  .featured {
-    min-height: 320px;
-  }
+  .content { padding: 16px; }
+  .topbar { padding: 12px; }
+  .feature-info { padding: 45px 22px; }
+  .featured { min-height: 320px; }
 }
 </style>
 </head>
@@ -591,7 +538,7 @@ footer {
 <main class="content" id="content"></main>
 
 <footer>
-  GAME HUB v3.1 · Discover. Play. Repeat.
+  GAME HUB v3.2 · Discover. Play. Repeat.
 </footer>
 
 </div>
@@ -603,14 +550,8 @@ footer {
 // GAME CONFIGURATION
 // =====================================
 
-// All three real GitHub Pages URLs
-// are included below.
-//
-// Upload MP4 recordings into a folder
-// called "videos" later.
-//
-// Example:
-// video: "videos/boostball.mp4"
+// Images are relative to index.html.
+// Upload counter-opps.png alongside it.
 
 const games = [
 
@@ -618,6 +559,7 @@ const games = [
     id: "counter",
     name: "Counter-Opps",
     icon: "🎯",
+    image: "counter-opps.png",
     genre: "Shooter",
     tags: ["FPS", "Action", "Tactical"],
     description:
@@ -634,6 +576,7 @@ const games = [
     id: "boost",
     name: "Boostball",
     icon: "🚗",
+    image: "",
     genre: "Sports",
     tags: ["Racing", "Cars", "Action"],
     description:
@@ -650,6 +593,7 @@ const games = [
     id: "chaos",
     name: "Card Chaos",
     icon: "🃏",
+    image: "",
     genre: "Action",
     tags: ["Cards", "Roguelike", "Platformer"],
     description:
@@ -706,7 +650,7 @@ let friends = load("friends", []);
 let notifications = load(
   "notifications",
   [
-    "Welcome to Game Hub v3.1!",
+    "Welcome to Game Hub v3.2!",
     "Counter-Opps, Boostball and Card Chaos are ready to explore."
   ]
 );
@@ -885,6 +829,68 @@ function refreshHeader() {
 }
 
 // =====================================
+// MEDIA HELPERS
+// =====================================
+
+function addMedia(container, game, options = {}) {
+
+  const {
+    preferVideo = false,
+    controls = false
+  } = options;
+
+  // Details can prioritise gameplay video.
+  // Cards prioritise cover artwork.
+
+  if (preferVideo && game.video) {
+    const video = document.createElement("video");
+
+    video.src = game.video;
+    video.controls = controls;
+    video.muted = true;
+    video.loop = !controls;
+    video.autoplay = !controls;
+    video.playsInline = true;
+
+    container.appendChild(video);
+    return;
+  }
+
+  if (game.image) {
+    const img = document.createElement("img");
+
+    img.src = game.image;
+    img.alt = game.name + " cover art";
+    img.loading = "lazy";
+
+    // If image is missing, show emoji instead.
+    img.onerror = () => {
+      img.remove();
+      container.textContent = game.icon;
+    };
+
+    container.appendChild(img);
+    return;
+  }
+
+  if (game.video) {
+    const video = document.createElement("video");
+
+    video.src = game.video;
+    video.controls = controls;
+    video.muted = true;
+    video.loop = !controls;
+    video.autoplay = !controls;
+    video.playsInline = true;
+
+    container.appendChild(video);
+    return;
+  }
+
+  container.textContent = game.icon;
+}
+
+// =====================================
 // GAME CARDS
 // =====================================
 
@@ -902,19 +908,7 @@ function createGameCard(game) {
 
   const art = el("div", "card-art");
 
-  if (game.video) {
-    const video = document.createElement("video");
-
-    video.src = game.video;
-    video.muted = true;
-    video.loop = true;
-    video.autoplay = true;
-    video.playsInline = true;
-
-    art.appendChild(video);
-  } else {
-    art.textContent = game.icon;
-  }
+  addMedia(art, game);
 
   const info = el("div", "card-info");
 
@@ -1023,21 +1017,7 @@ function featuredSection() {
   const section = el("section", "featured");
   const media = el("div", "feature-media");
 
-  if (game.video) {
-
-    const video = document.createElement("video");
-
-    video.src = game.video;
-    video.autoplay = true;
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
-
-    media.appendChild(video);
-
-  } else {
-    media.textContent = game.icon;
-  }
+  addMedia(media, game);
 
   section.appendChild(media);
   section.appendChild(
@@ -1266,20 +1246,10 @@ function renderDetail() {
 
   hero.style.marginTop = "20px";
 
-  if (game.video) {
-
-    const video = document.createElement("video");
-
-    video.src = game.video;
-    video.controls = true;
-    video.muted = true;
-    video.playsInline = true;
-
-    hero.appendChild(video);
-
-  } else {
-    hero.textContent = game.icon;
-  }
+  addMedia(hero, game, {
+    preferVideo: true,
+    controls: true
+  });
 
   content.appendChild(hero);
 
