@@ -3,22 +3,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b101b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a101b">
 <title>Game Hub</title>
 
 <style>
 :root {
   --bg: #090e18;
-  --panel: #141d2d;
-  --panel2: #1b2940;
-  --line: #2b3b55;
+  --sidebar: #101827;
+  --panel: #151f30;
+  --panel2: #1c2a40;
+  --line: #2c3d56;
   --text: #f4f7ff;
   --muted: #9aacc5;
   --accent: #64a6ff;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -27,46 +30,60 @@ body {
   font-family: system-ui, Arial, sans-serif;
 }
 
-button, input { font: inherit; }
-button { cursor: pointer; }
-a { color: inherit; text-decoration: none; }
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
 .layout {
   display: flex;
   min-height: 100vh;
 }
 
+/* SIDEBAR */
+
 .sidebar {
   width: 225px;
-  background: #101827;
+  flex-shrink: 0;
+  background: var(--sidebar);
   border-right: 1px solid var(--line);
   padding: 22px 13px;
   position: sticky;
   top: 0;
   height: 100vh;
-  flex-shrink: 0;
 }
 
 .brand {
-  font-weight: 950;
   font-size: 24px;
-  padding: 8px 12px 25px;
+  font-weight: 950;
   letter-spacing: -1px;
+  padding: 8px 12px 25px;
 }
 
-.brand span { color: var(--accent); }
+.brand span {
+  color: var(--accent);
+}
 
 .navbtn {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
-  border: 0;
-  border-radius: 10px;
   padding: 13px;
   margin: 4px 0;
   background: transparent;
   color: var(--muted);
+  border: none;
+  border-radius: 10px;
   text-align: left;
 }
 
@@ -81,30 +98,34 @@ a { color: inherit; text-decoration: none; }
   min-width: 0;
 }
 
+/* TOP BAR */
+
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 14px;
   padding: 17px 26px;
-  border-bottom: 1px solid var(--line);
   background: #101827;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  border-bottom: 1px solid var(--line);
 }
 
 .search {
-  background: #1b2a41;
-  border: 1px solid #3c526f;
-  color: white;
-  border-radius: 10px;
-  padding: 12px 15px;
   width: min(420px, 100%);
+  padding: 12px 15px;
+  background: #1b2a41;
+  color: white;
+  border: 1px solid #3c526f;
+  border-radius: 10px;
   outline: none;
 }
 
-.search:focus { border-color: var(--accent); }
+.search:focus {
+  border-color: var(--accent);
+}
 
 .topright {
   display: flex;
@@ -115,9 +136,9 @@ a { color: inherit; text-decoration: none; }
 .avatar {
   width: 39px;
   height: 39px;
+  border-radius: 50%;
   display: grid;
   place-items: center;
-  border-radius: 50%;
   background: linear-gradient(135deg, #538fff, #a46fff);
   font-weight: 900;
   flex-shrink: 0;
@@ -134,11 +155,25 @@ h1 {
   margin: 0 0 8px;
 }
 
-h2 { margin: 0 0 16px; }
-p { line-height: 1.55; }
-.muted { color: var(--muted); }
-.small { font-size: 13px; }
-.section { margin: 35px 0; }
+h2 {
+  margin: 0 0 16px;
+}
+
+p {
+  line-height: 1.55;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 13px;
+}
+
+.section {
+  margin: 35px 0;
+}
 
 .section-head {
   display: flex;
@@ -149,19 +184,23 @@ p { line-height: 1.55; }
   margin-bottom: 16px;
 }
 
-.section-head h2 { margin: 0; }
-
-.btn {
-  background: #347fe2;
-  color: white;
-  border: 0;
-  padding: 12px 19px;
-  border-radius: 9px;
-  font-weight: 750;
-  display: inline-block;
+.section-head h2 {
+  margin: 0;
 }
 
-.btn:hover { background: #559aff; }
+.btn {
+  display: inline-block;
+  padding: 12px 19px;
+  background: #347fe2;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  font-weight: 750;
+}
+
+.btn:hover {
+  background: #559aff;
+}
 
 .btn.secondary {
   background: #263751;
@@ -171,14 +210,14 @@ p { line-height: 1.55; }
   background: #385170;
 }
 
-/* FEATURED */
+/* FEATURED GAMES */
 
 .featured {
   min-height: 355px;
   position: relative;
+  overflow: hidden;
   border-radius: 18px;
   border: 1px solid #405576;
-  overflow: hidden;
   background: linear-gradient(120deg, #263e62, #101725);
 }
 
@@ -188,7 +227,6 @@ p { line-height: 1.55; }
   display: grid;
   place-items: center;
   font-size: 125px;
-  opacity: .55;
 }
 
 .feature-media img,
@@ -205,14 +243,15 @@ p { line-height: 1.55; }
   inset: 0;
   background: linear-gradient(
     90deg,
-    #08101bf7,
-    #08101bc4 50%,
-    #08101b33
+    rgba(5, 10, 18, 0.9) 0%,
+    rgba(5, 10, 18, 0.65) 35%,
+    rgba(5, 10, 18, 0.05) 100%
   );
 }
 
 .feature-info {
   position: relative;
+  z-index: 1;
   padding: 65px 45px;
   max-width: 630px;
 }
@@ -224,17 +263,18 @@ p { line-height: 1.55; }
 
 .pill {
   display: inline-block;
-  border: 1px solid #4b80bc;
-  color: #b9d8ff;
-  background: #24436b77;
   padding: 6px 11px;
   border-radius: 30px;
+  border: 1px solid #4b80bc;
+  background: #24436b77;
+  color: #b9d8ff;
   font-size: 12px;
   font-weight: 800;
 }
 
 .feature-controls {
   position: absolute;
+  z-index: 2;
   right: 17px;
   bottom: 17px;
   display: flex;
@@ -242,11 +282,11 @@ p { line-height: 1.55; }
 }
 
 .feature-controls button {
+  padding: 9px 14px;
   background: #253954;
   border: 1px solid #607da2;
   color: white;
   border-radius: 8px;
-  padding: 9px 14px;
 }
 
 /* FILTERS */
@@ -260,11 +300,11 @@ p { line-height: 1.55; }
 }
 
 .chip {
+  padding: 9px 15px;
   background: #1b2a40;
   color: #bfd0e5;
   border: 1px solid #354a66;
   border-radius: 30px;
-  padding: 9px 15px;
 }
 
 .chip.active {
@@ -290,7 +330,7 @@ p { line-height: 1.55; }
   border-radius: 14px;
   overflow: hidden;
   cursor: pointer;
-  transition: .2s;
+  transition: transform .2s, border-color .2s;
 }
 
 .card:hover {
@@ -318,9 +358,17 @@ p { line-height: 1.55; }
   object-fit: cover;
 }
 
-.card-info { padding: 16px; }
-.card-info h3 { margin: 0 0 6px; }
-.card-info p { margin: 5px 0; }
+.card-info {
+  padding: 16px;
+}
+
+.card-info h3 {
+  margin: 0 0 6px;
+}
+
+.card-info p {
+  margin: 5px 0;
+}
 
 .tags {
   display: flex;
@@ -356,7 +404,7 @@ p { line-height: 1.55; }
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .detail-row {
@@ -375,17 +423,30 @@ p { line-height: 1.55; }
   display: grid;
   place-items: center;
   font-size: 48px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.detail-title { flex: 1; }
-.detail-title h1 { margin: 0; }
+.detail-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-title {
+  flex: 1;
+}
+
+.detail-title h1 {
+  margin: 0;
+}
 
 .panel {
+  padding: 22px;
+  margin: 15px 0;
   background: var(--panel);
   border: 1px solid var(--line);
-  padding: 22px;
   border-radius: 14px;
-  margin: 15px 0;
 }
 
 /* PROFILE */
@@ -408,15 +469,15 @@ p { line-height: 1.55; }
 }
 
 .field {
+  display: block;
   width: 100%;
   max-width: 420px;
-  display: block;
   margin: 10px 0;
+  padding: 12px;
   background: #1b2a40;
   border: 1px solid #3e536e;
   color: white;
   border-radius: 9px;
-  padding: 12px;
 }
 
 .friend-row {
@@ -429,11 +490,11 @@ p { line-height: 1.55; }
 }
 
 .notice {
+  margin: 10px 0;
+  padding: 13px;
   background: #20354c;
   border: 1px solid #426183;
-  padding: 13px;
   border-radius: 10px;
-  margin: 10px 0;
 }
 
 .empty {
@@ -459,19 +520,34 @@ footer {
     padding: 10px 3px;
   }
 
-  .brand span { display: none; }
+  .brand span {
+    display: none;
+  }
 
   .navbtn {
     font-size: 0;
     justify-content: center;
   }
 
-  .navbtn .emoji { font-size: 22px; }
+  .navbtn .emoji {
+    font-size: 22px;
+  }
 
-  .content { padding: 16px; }
-  .topbar { padding: 12px; }
-  .feature-info { padding: 45px 22px; }
-  .featured { min-height: 320px; }
+  .content {
+    padding: 16px;
+  }
+
+  .topbar {
+    padding: 12px;
+  }
+
+  .feature-info {
+    padding: 45px 22px;
+  }
+
+  .featured {
+    min-height: 320px;
+  }
 }
 </style>
 </head>
@@ -529,7 +605,7 @@ footer {
     </span>
 
     <div class="avatar" id="topAvatar">
-      G
+      🎮
     </div>
   </div>
 
@@ -538,7 +614,7 @@ footer {
 <main class="content" id="content"></main>
 
 <footer>
-  GAME HUB v3.2 · Discover. Play. Repeat.
+  GAME HUB v3.3 · Discover. Play. Repeat.
 </footer>
 
 </div>
@@ -546,28 +622,32 @@ footer {
 
 <script>
 
-// =====================================
-// GAME CONFIGURATION
-// =====================================
+// ========================================
+// GAME HUB v3.3
+// ========================================
 
-// Images are relative to index.html.
-// Upload counter-opps.png alongside it.
+// Upload images beside index.html.
+//
+// counter-opps.png
+// counter-opps-banner.png
+// counter-opps-detail.png
 
 const games = [
 
   {
     id: "counter",
-    name: "Counter-Opps",
+    name: "Counter Opps",
     icon: "🎯",
     image: "counter-opps.png",
+    banner: "counter-opps-banner.png",
+    detailImage: "counter-opps-detail.png",
     genre: "Shooter",
     tags: ["FPS", "Action", "Tactical"],
     description:
-      "A tactical first-person shooter with bots, weapons, bomb sites and competitive rounds.",
+      "A tactical first-person shooter featuring bots, weapons, bomb sites and competitive rounds. Fight your way through intense matches and sharpen your skills against enemy AI.",
     version: "v0.5",
     players: "Single-player",
-    url:
-      "https://himynameishitler.github.io/Counter-Opps-/",
+    url: "https://himynameishitler.github.io/Counter-Opps-/",
     video: "",
     featured: true
   },
@@ -577,14 +657,15 @@ const games = [
     name: "Boostball",
     icon: "🚗",
     image: "",
+    banner: "",
+    detailImage: "",
     genre: "Sports",
     tags: ["Racing", "Cars", "Action"],
     description:
       "Drive, boost, jump and score goals in an arcade car soccer arena.",
     version: "In Development",
     players: "Single-player",
-    url:
-      "https://himynameishitler.github.io/boostball/",
+    url: "https://himynameishitler.github.io/boostball/",
     video: "",
     featured: true
   },
@@ -594,30 +675,33 @@ const games = [
     name: "Card Chaos",
     icon: "🃏",
     image: "",
+    banner: "",
+    detailImage: "",
     genre: "Action",
     tags: ["Cards", "Roguelike", "Platformer"],
     description:
       "Collect powerful upgrade cards and create ridiculous combinations while battling through chaotic arenas. Multiplayer is planned.",
     version: "v0.4",
     players: "Single-player · Multiplayer planned",
-    url:
-      "https://himynameishitler.github.io/card-chaos/",
+    url: "https://himynameishitler.github.io/card-chaos/",
     video: "",
     featured: true
   }
 
 ];
 
-// =====================================
-// LOCAL SAVE SYSTEM
-// =====================================
+// ========================================
+// LOCAL STORAGE
+// ========================================
 
 function load(key, fallback) {
   try {
     const value = localStorage.getItem("gh_" + key);
+
     return value === null
       ? fallback
       : JSON.parse(value);
+
   } catch {
     return fallback;
   }
@@ -630,10 +714,7 @@ function save(key, value) {
       JSON.stringify(value)
     );
   } catch (error) {
-    console.warn(
-      "Could not save local data:",
-      error
-    );
+    console.warn("Save failed:", error);
   }
 }
 
@@ -650,8 +731,8 @@ let friends = load("friends", []);
 let notifications = load(
   "notifications",
   [
-    "Welcome to Game Hub v3.2!",
-    "Counter-Opps, Boostball and Card Chaos are ready to explore."
+    "Welcome to Game Hub v3.3!",
+    "Counter Opps now has its own artwork."
   ]
 );
 
@@ -663,9 +744,9 @@ let featureIndex = 0;
 
 const content = document.getElementById("content");
 
-// =====================================
+// ========================================
 // HELPERS
-// =====================================
+// ========================================
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -683,7 +764,9 @@ function el(tag, className, text) {
 
 function button(text, fn, className = "btn") {
   const b = el("button", className, text);
+
   b.addEventListener("click", fn);
+
   return b;
 }
 
@@ -695,6 +778,7 @@ function setPage(page) {
   document.getElementById("search").value = "";
 
   render();
+
   window.scrollTo(0, 0);
 }
 
@@ -730,9 +814,9 @@ function matchingGames() {
   });
 }
 
-// =====================================
+// ========================================
 // RECOMMENDATIONS
-// =====================================
+// ========================================
 
 function recommendationScore(game) {
   let score = 0;
@@ -775,6 +859,7 @@ function toggleLike(id) {
     : [...likes, id];
 
   save("likes", likes);
+
   render();
 }
 
@@ -793,12 +878,17 @@ function hideGame(id) {
 
 function restoreGames() {
   hidden = [];
+
   save("hidden", hidden);
+
   render();
 }
 
 function openGame(id) {
-  selectedGame = games.find(g => g.id === id);
+  selectedGame = games.find(
+    g => g.id === id
+  );
+
   currentPage = "detail";
 
   render();
@@ -828,71 +918,69 @@ function refreshHeader() {
   });
 }
 
-// =====================================
-// MEDIA HELPERS
-// =====================================
+// ========================================
+// IMAGE / VIDEO SYSTEM
+// ========================================
 
-function addMedia(container, game, options = {}) {
+function addMedia(
+  container,
+  game,
+  type = "icon"
+) {
 
-  const {
-    preferVideo = false,
-    controls = false
-  } = options;
+  let imagePath = "";
 
-  // Details can prioritise gameplay video.
-  // Cards prioritise cover artwork.
-
-  if (preferVideo && game.video) {
-    const video = document.createElement("video");
-
-    video.src = game.video;
-    video.controls = controls;
-    video.muted = true;
-    video.loop = !controls;
-    video.autoplay = !controls;
-    video.playsInline = true;
-
-    container.appendChild(video);
-    return;
+  if (type === "featured") {
+    imagePath = game.banner || game.image;
   }
 
-  if (game.image) {
+  else if (type === "detail") {
+    imagePath = game.detailImage || game.banner || game.image;
+  }
+
+  else {
+    imagePath = game.image;
+  }
+
+  if (imagePath) {
+
     const img = document.createElement("img");
 
-    img.src = game.image;
-    img.alt = game.name + " cover art";
+    img.src = imagePath;
+    img.alt = game.name + " artwork";
     img.loading = "lazy";
 
-    // If image is missing, show emoji instead.
     img.onerror = () => {
       img.remove();
       container.textContent = game.icon;
     };
 
     container.appendChild(img);
+
     return;
   }
 
   if (game.video) {
+
     const video = document.createElement("video");
 
     video.src = game.video;
-    video.controls = controls;
     video.muted = true;
-    video.loop = !controls;
-    video.autoplay = !controls;
+    video.loop = true;
+    video.autoplay = true;
     video.playsInline = true;
 
     container.appendChild(video);
+
     return;
   }
 
   container.textContent = game.icon;
 }
 
-// =====================================
+// ========================================
 // GAME CARDS
-// =====================================
+// ========================================
 
 function createGameCard(game) {
 
@@ -900,7 +988,6 @@ function createGameCard(game) {
 
   card.tabIndex = 0;
   card.setAttribute("role", "button");
-
   card.setAttribute(
     "aria-label",
     "View " + game.name
@@ -908,7 +995,7 @@ function createGameCard(game) {
 
   const art = el("div", "card-art");
 
-  addMedia(art, game);
+  addMedia(art, game, "icon");
 
   const info = el("div", "card-info");
 
@@ -933,6 +1020,7 @@ function createGameCard(game) {
   }
 
   info.appendChild(tags);
+
   card.append(art, info);
 
   card.addEventListener(
@@ -961,6 +1049,7 @@ function gameSection(title, items) {
   const section = el("section", "section");
 
   const heading = el("div", "section-head");
+
   heading.appendChild(
     el("h2", "", title)
   );
@@ -992,9 +1081,9 @@ function gameSection(title, items) {
   return section;
 }
 
-// =====================================
-// FEATURED CAROUSEL
-// =====================================
+// ========================================
+// FEATURED GAMES
+// ========================================
 
 function featuredSection() {
 
@@ -1015,11 +1104,14 @@ function featuredSection() {
   const game = featuredGames[featureIndex];
 
   const section = el("section", "featured");
+
   const media = el("div", "feature-media");
 
-  addMedia(media, game);
+  // Uses counter-opps-banner.png
+  addMedia(media, game, "featured");
 
   section.appendChild(media);
+
   section.appendChild(
     el("div", "feature-shade")
   );
@@ -1079,9 +1171,9 @@ function featuredSection() {
   return section;
 }
 
-// =====================================
-// GENRE FILTERS
-// =====================================
+// ========================================
+// FILTERS
+// ========================================
 
 function filterBar() {
 
@@ -1134,9 +1226,9 @@ function filterBar() {
   return bar;
 }
 
-// =====================================
-// DISCOVER PAGE
-// =====================================
+// ========================================
+// DISCOVER
+// ========================================
 
 function renderDiscover() {
 
@@ -1178,9 +1270,9 @@ function renderDiscover() {
   );
 }
 
-// =====================================
-// RECOMMENDED PAGE
-// =====================================
+// ========================================
+// RECOMMENDED
+// ========================================
 
 function renderRecommended() {
 
@@ -1192,7 +1284,7 @@ function renderRecommended() {
     el(
       "p",
       "muted",
-      "Your recommendations are based on games you've liked and genres you enjoy. Hide games you're not interested in."
+      "Recommendations based on games you've liked and genres you enjoy."
     )
   );
 
@@ -1218,9 +1310,9 @@ function renderRecommended() {
   }
 }
 
-// =====================================
-// GAME DETAILS PAGE
-// =====================================
+// ========================================
+// GAME DETAILS
+// ========================================
 
 function renderDetail() {
 
@@ -1246,10 +1338,8 @@ function renderDetail() {
 
   hero.style.marginTop = "20px";
 
-  addMedia(hero, game, {
-    preferVideo: true,
-    controls: true
-  });
+  // Uses counter-opps-detail.png
+  addMedia(hero, game, "detail");
 
   content.appendChild(hero);
 
@@ -1258,13 +1348,15 @@ function renderDetail() {
     "detail-row"
   );
 
-  row.appendChild(
-    el(
-      "div",
-      "detail-icon",
-      game.icon
-    )
+  const gameIcon = el(
+    "div",
+    "detail-icon"
   );
+
+  // Uses counter-opps.png
+  addMedia(gameIcon, game, "icon");
+
+  row.appendChild(gameIcon);
 
   const title = el(
     "div",
@@ -1335,10 +1427,7 @@ function renderDetail() {
     el("p", "", game.description)
   );
 
-  const tags = el(
-    "div",
-    "tags"
-  );
+  const tags = el("div", "tags");
 
   for (const tag of game.tags) {
     tags.appendChild(
@@ -1359,35 +1448,23 @@ function renderDetail() {
   );
 
   details.appendChild(
-    el(
-      "p",
-      "",
-      "Genre: " + game.genre
-    )
+    el("p", "", "Genre: " + game.genre)
   );
 
   details.appendChild(
-    el(
-      "p",
-      "",
-      "Players: " + game.players
-    )
+    el("p", "", "Players: " + game.players)
   );
 
   details.appendChild(
-    el(
-      "p",
-      "",
-      "Version: " + game.version
-    )
+    el("p", "", "Version: " + game.version)
   );
 
   content.appendChild(details);
 }
 
-// =====================================
-// PROFILE PAGE
-// =====================================
+// ========================================
+// PROFILE
+// ========================================
 
 function renderProfile() {
 
@@ -1395,10 +1472,7 @@ function renderProfile() {
     el("h1", "", "My Profile")
   );
 
-  const panel = el(
-    "div",
-    "panel"
-  );
+  const panel = el("div", "panel");
 
   const head = el(
     "div",
@@ -1489,10 +1563,7 @@ function renderProfile() {
 
   content.appendChild(panel);
 
-  const info = el(
-    "div",
-    "panel"
-  );
+  const info = el("div", "panel");
 
   info.appendChild(
     el("h2", "", "Account Information")
@@ -1502,16 +1573,16 @@ function renderProfile() {
     el(
       "p",
       "muted",
-      "This is currently a local profile saved in your browser. It is not a registered account and will not sync between devices."
+      "This profile is saved locally in your browser. It is not yet a registered online account."
     )
   );
 
   content.appendChild(info);
 }
 
-// =====================================
-// FRIENDS PAGE
-// =====================================
+// ========================================
+// FRIENDS
+// ========================================
 
 function renderFriends() {
 
@@ -1527,10 +1598,7 @@ function renderFriends() {
     )
   );
 
-  const panel = el(
-    "div",
-    "panel"
-  );
+  const panel = el("div", "panel");
 
   panel.appendChild(
     el("h2", "", "Friends List")
@@ -1552,7 +1620,6 @@ function renderFriends() {
         const name = input.value.trim();
 
         if (!name) return;
-
         if (friends.includes(name)) return;
 
         friends.push(name);
@@ -1582,11 +1649,7 @@ function renderFriends() {
     );
 
     row.appendChild(
-      el(
-        "span",
-        "",
-        "👤 " + friend
-      )
+      el("span", "", "👤 " + friend)
     );
 
     row.appendChild(
@@ -1598,10 +1661,7 @@ function renderFriends() {
             x => x !== friend
           );
 
-          save(
-            "friends",
-            friends
-          );
+          save("friends", friends);
 
           render();
         },
@@ -1616,16 +1676,16 @@ function renderFriends() {
     el(
       "p",
       "muted small",
-      "Demo friends are only saved on this device. Real friend requests and online status require accounts and a backend."
+      "Demo friends are saved only on this device. Real friend requests and online status require accounts and a backend."
     )
   );
 
   content.appendChild(panel);
 }
 
-// =====================================
-// INVENTORY PAGE
-// =====================================
+// ========================================
+// INVENTORY
+// ========================================
 
 function renderInventory() {
 
@@ -1641,10 +1701,7 @@ function renderInventory() {
     )
   );
 
-  const panel = el(
-    "div",
-    "panel"
-  );
+  const panel = el("div", "panel");
 
   panel.appendChild(
     el("h2", "", "Coming Soon")
@@ -1654,7 +1711,7 @@ function renderInventory() {
     el(
       "p",
       "",
-      "🎯 Counter-Opps: Weapon skins"
+      "🎯 Counter Opps: Weapon skins"
     )
   );
 
@@ -1685,9 +1742,9 @@ function renderInventory() {
   content.appendChild(panel);
 }
 
-// =====================================
-// NOTIFICATIONS PAGE
-// =====================================
+// ========================================
+// NOTIFICATIONS
+// ========================================
 
 function renderNotifications() {
 
@@ -1695,10 +1752,7 @@ function renderNotifications() {
     el("h1", "", "Notifications")
   );
 
-  const panel = el(
-    "div",
-    "panel"
-  );
+  const panel = el("div", "panel");
 
   for (
     const notification of
@@ -1746,16 +1800,16 @@ function renderNotifications() {
     el(
       "p",
       "muted small",
-      "These are local app notifications, not private messages or account recovery emails."
+      "These are local app notifications, not online messages."
     )
   );
 
   content.appendChild(panel);
 }
 
-// =====================================
+// ========================================
 // MAIN RENDER
-// =====================================
+// ========================================
 
 function render() {
 
@@ -1792,6 +1846,10 @@ function render() {
   }
 }
 
+// ========================================
+// NAVIGATION
+// ========================================
+
 document.querySelectorAll(
   ".navbtn"
 ).forEach(btn => {
@@ -1822,5 +1880,6 @@ document.getElementById(
 render();
 
 </script>
+
 </body>
 </html>
