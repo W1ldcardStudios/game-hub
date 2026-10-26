@@ -4,272 +4,1853 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>My Game Hub</title>
+<meta name="theme-color" content="#0b101b">
+<title>Game Hub</title>
 
-<style> 
+<style>
+:root {
+  --bg: #090e18;
+  --panel: #141d2d;
+  --panel2: #1b2940;
+  --line: #2b3b55;
+  --text: #f4f7ff;
+  --muted: #9aacc5;
+  --accent: #64a6ff;
+  --green: #5ee3a0;
+}
+
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  background: radial-gradient(
-    circle at 10% 0%,
-    #203c66,
-    #0b1020 55%
-  );
-  color: #f5f8ff;
+  background: var(--bg);
+  color: var(--text);
   font-family: system-ui, Arial, sans-serif;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.layout {
+  display: flex;
   min-height: 100vh;
 }
 
-.wrap {
-  max-width: 1100px;
-  margin: auto;
-  padding: 48px 22px;
+.sidebar {
+  width: 225px;
+  background: #101827;
+  border-right: 1px solid var(--line);
+  padding: 22px 13px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  flex-shrink: 0;
 }
 
-header {
+.brand {
+  font-weight: 950;
+  font-size: 24px;
+  padding: 8px 12px 25px;
+  letter-spacing: -1px;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+.navbtn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  padding: 13px;
+  margin: 4px 0;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+}
+
+.navbtn:hover,
+.navbtn.active {
+  background: #263852;
+  color: white;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 14px;
+  padding: 17px 26px;
+  border-bottom: 1px solid var(--line);
+  background: #101827;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.search {
+  background: #1b2a41;
+  border: 1px solid #3c526f;
+  color: white;
+  border-radius: 10px;
+  padding: 12px 15px;
+  width: min(420px, 100%);
+  outline: none;
+}
+
+.search:focus {
+  border-color: var(--accent);
+}
+
+.topright {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #538fff, #a46fff);
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.content {
+  max-width: 1400px;
+  margin: auto;
+  padding: 27px;
 }
 
 h1 {
-  font-size: clamp(34px, 6vw, 62px);
+  font-size: 34px;
+  margin: 0 0 8px;
+}
+
+h2 {
+  margin: 0 0 16px;
+}
+
+p {
+  line-height: 1.55;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 13px;
+}
+
+.section {
+  margin: 35px 0;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.section-head h2 {
   margin: 0;
 }
 
-.sub {
-  color: #a9bed7;
+.btn {
+  background: #347fe2;
+  color: white;
+  border: 0;
+  padding: 12px 19px;
+  border-radius: 9px;
+  font-weight: 750;
+  display: inline-block;
 }
 
-input {
-  background: #17263d;
+.btn:hover {
+  background: #559aff;
+}
+
+.btn.secondary {
+  background: #263751;
+}
+
+.btn.secondary:hover {
+  background: #385170;
+}
+
+.featured {
+  min-height: 355px;
+  position: relative;
+  border-radius: 18px;
+  border: 1px solid #405576;
+  overflow: hidden;
+  background: linear-gradient(120deg, #263e62, #101725);
+}
+
+.feature-media {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 125px;
+  opacity: .35;
+}
+
+.feature-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.feature-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #08101bf7,
+    #08101bc4 50%,
+    #08101b33
+  );
+}
+
+.feature-info {
+  position: relative;
+  padding: 65px 45px;
+  max-width: 630px;
+}
+
+.feature-info h2 {
+  font-size: clamp(34px, 5vw, 58px);
+  margin: 10px 0;
+}
+
+.pill {
+  display: inline-block;
+  border: 1px solid #4b80bc;
+  color: #b9d8ff;
+  background: #24436b77;
+  padding: 6px 11px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.feature-controls {
+  position: absolute;
+  right: 17px;
+  bottom: 17px;
+  display: flex;
+  gap: 8px;
+}
+
+.feature-controls button {
+  background: #253954;
+  border: 1px solid #607da2;
   color: white;
-  border: 1px solid #526a87;
-  border-radius: 10px;
-  padding: 13px;
-  width: min(340px, 100%);
+  border-radius: 8px;
+  padding: 9px 14px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.chip {
+  background: #1b2a40;
+  color: #bfd0e5;
+  border: 1px solid #354a66;
+  border-radius: 30px;
+  padding: 9px 15px;
+}
+
+.chip.active {
+  background: #316fbe;
+  color: white;
+  border-color: #66a7ff;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(
-    auto-fit,
-    minmax(240px, 1fr)
+    auto-fill,
+    minmax(230px, 1fr)
   );
-  gap: 20px;
-  margin-top: 36px;
+  gap: 18px;
 }
 
 .card {
-  border: 1px solid #354d6e;
-  background: #17253bc9;
-  border-radius: 17px;
-  padding: 24px;
-  min-height: 230px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform .2s, border-color .2s;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: .2s;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  border-color: #7ba5e4;
+  transform: translateY(-5px);
+  border-color: var(--accent);
 }
 
-.icon {
-  font-size: 42px;
+.card:focus-visible {
+  outline: 3px solid var(--accent);
+}
+
+.card-art {
+  height: 155px;
+  background: linear-gradient(130deg, #35557f, #152035);
+  display: grid;
+  place-items: center;
+  font-size: 76px;
+  overflow: hidden;
+}
+
+.card-art video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-info {
+  padding: 16px;
+}
+
+.card-info h3 {
+  margin: 0 0 6px;
+}
+
+.card-info p {
+  margin: 5px 0;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 12px;
 }
 
 .tag {
-  color: #9ebbd9;
-  font-size: 13px;
+  font-size: 11px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: #293c57;
+  color: #c7dcf7;
 }
 
-a {
-  display: inline-block;
-  background: #3576c8;
+.detail-hero {
+  position: relative;
+  height: clamp(230px, 40vw, 420px);
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(130deg, #27486e, #141d2d);
+  display: grid;
+  place-items: center;
+  font-size: 125px;
+}
+
+.detail-hero video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-row {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  margin: 22px 0;
+  flex-wrap: wrap;
+}
+
+.detail-icon {
+  width: 90px;
+  height: 90px;
+  border-radius: 16px;
+  background: #273a56;
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+}
+
+.detail-title {
+  flex: 1;
+}
+
+.detail-title h1 {
+  margin: 0;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 22px;
+  border-radius: 14px;
+  margin: 15px 0;
+}
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #538fff, #a46fff);
+  font-size: 44px;
+}
+
+.field {
+  width: 100%;
+  max-width: 420px;
+  display: block;
+  margin: 10px 0;
+  background: #1b2a40;
+  border: 1px solid #3e536e;
   color: white;
-  text-decoration: none;
   border-radius: 9px;
-  padding: 11px 16px;
-  font-weight: 700;
-  text-align: center;
+  padding: 12px;
 }
 
-a:hover {
-  background: #5194e8;
+.friend-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px;
+  border-bottom: 1px solid var(--line);
+  gap: 12px;
+}
+
+.notice {
+  background: #20354c;
+  border: 1px solid #426183;
+  padding: 13px;
+  border-radius: 10px;
+  margin: 10px 0;
 }
 
 .empty {
-  display: none;
-  color: #b8c8da;
-  margin-top: 30px;
+  padding: 30px;
+  text-align: center;
+  color: var(--muted);
 }
 
 footer {
-  margin-top: 55px;
-  color: #8499b5;
-  font-size: 13px;
+  text-align: center;
+  color: #7087a4;
+  padding: 35px;
+}
+
+@media (max-width: 800px) {
+  .sidebar {
+    width: 65px;
+    padding: 15px 7px;
+  }
+
+  .brand {
+    font-size: 13px;
+    padding: 10px 3px;
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  .navbtn {
+    font-size: 0;
+    justify-content: center;
+  }
+
+  .navbtn .emoji {
+    font-size: 22px;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  .topbar {
+    padding: 12px;
+  }
+
+  .feature-info {
+    padding: 45px 22px;
+  }
+
+  .featured {
+    min-height: 320px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<main class="wrap">
+<div class="layout">
 
-<header>
-  <div>
-    <h1>🎮 GAME HUB</h1>
-    <p class="sub">
-      All my browser games. One place.
-    </p>
+<aside class="sidebar">
+
+  <div class="brand">
+    🎮 GAME<span>HUB</span>
   </div>
+
+  <button class="navbtn active" data-page="discover">
+    <span class="emoji">🏠</span> Discover
+  </button>
+
+  <button class="navbtn" data-page="recommended">
+    <span class="emoji">✨</span> Recommended
+  </button>
+
+  <button class="navbtn" data-page="friends">
+    <span class="emoji">👥</span> Friends
+  </button>
+
+  <button class="navbtn" data-page="profile">
+    <span class="emoji">👤</span> Profile
+  </button>
+
+  <button class="navbtn" data-page="inventory">
+    <span class="emoji">🎨</span> Inventory
+  </button>
+
+  <button class="navbtn" data-page="notifications">
+    <span class="emoji">🔔</span> Notifications
+  </button>
+
+</aside>
+
+<div class="main">
+
+<header class="topbar">
 
   <input
     id="search"
+    class="search"
     placeholder="Search games..."
     aria-label="Search games"
   >
+
+  <div class="topright">
+    <span class="muted small" id="topUsername">
+      Guest
+    </span>
+
+    <div class="avatar" id="topAvatar">
+      G
+    </div>
+  </div>
+
 </header>
 
-<section class="grid" id="games">
-
-  <!-- COUNTER-OPPS -->
-  <article
-    class="card"
-    data-name="Counter-Opps FPS shooter"
-  >
-    <div>
-      <div class="icon">🎯</div>
-      <h2>Counter-Opps</h2>
-      <p class="tag">
-        First-person shooter · v0.5
-      </p>
-      <p>
-        Tactical rounds, bots, guns,
-        and bomb sites.
-      </p>
-    </div>
-
-    <a id="counterLink" href="#">
-      Play Counter-Opps
-    </a>
-  </article>
-
-  <!-- BOOSTBALL -->
-  <article
-    class="card"
-    data-name="Boostball cars soccer"
-  >
-    <div>
-      <div class="icon">🚗</div>
-      <h2>Boostball</h2>
-      <p class="tag">
-        Car soccer · Browser game
-      </p>
-      <p>
-        Drive, boost, jump, and score goals.
-      </p>
-    </div>
-
-    <a id="boostLink" href="#">
-      Play Boostball
-    </a>
-  </article>
-
-  <!-- CARD COMBO -->
-  <article
-    class="card"
-    data-name="Card Combo platformer cards"
-  >
-    <div>
-      <div class="icon">🃏</div>
-      <h2>Card Combo</h2>
-      <p class="tag">
-        Platformer · Upgrades
-      </p>
-      <p>
-        Collect cards and combine upgrades
-        as you play.
-      </p>
-    </div>
-
-    <a id="cardLink" href="#">
-      Play Card Combo
-    </a>
-  </article>
-
-</section>
-
-<p class="empty" id="empty">
-  No matching games.
-</p>
+<main class="content" id="content"></main>
 
 <footer>
-  GAME HUB · Built for GitHub Pages
+  GAME HUB v3.1 · Discover. Play. Repeat.
 </footer>
 
-</main>
+</div>
+</div>
 
 <script>
 
-// IMPORTANT:
-// Replace YOUR-USERNAME with your GitHub username.
-// Also change the repository names if yours differ.
+// =====================================
+// GAME CONFIGURATION
+// =====================================
 
-const links = {
-  counter: "https://himynameishitler.github.io/Counter-Opps-/",
-  boost: "https://himynameishitler.github.io/boostball/",
-  card: "https://himynameishitler.github.io/card-chaos/"
-};
+// All three real GitHub Pages URLs
+// are included below.
+//
+// Upload MP4 recordings into a folder
+// called "videos" later.
+//
+// Example:
+// video: "videos/boostball.mp4"
 
-// Connect the buttons to the games
+const games = [
 
-document.getElementById("counterLink").href =
-  links.counter;
+  {
+    id: "counter",
+    name: "Counter-Opps",
+    icon: "🎯",
+    genre: "Shooter",
+    tags: ["FPS", "Action", "Tactical"],
+    description:
+      "A tactical first-person shooter with bots, weapons, bomb sites and competitive rounds.",
+    version: "v0.5",
+    players: "Single-player",
+    url:
+      "https://himynameishitler.github.io/Counter-Opps-/",
+    video: "",
+    featured: true
+  },
 
-document.getElementById("boostLink").href =
-  links.boost;
+  {
+    id: "boost",
+    name: "Boostball",
+    icon: "🚗",
+    genre: "Sports",
+    tags: ["Racing", "Cars", "Action"],
+    description:
+      "Drive, boost, jump and score goals in an arcade car soccer arena.",
+    version: "In Development",
+    players: "Single-player",
+    url:
+      "https://himynameishitler.github.io/boostball/",
+    video: "",
+    featured: true
+  },
 
-document.getElementById("cardLink").href =
-  links.card;
+  {
+    id: "chaos",
+    name: "Card Chaos",
+    icon: "🃏",
+    genre: "Action",
+    tags: ["Cards", "Roguelike", "Platformer"],
+    description:
+      "Collect powerful upgrade cards and create ridiculous combinations while battling through chaotic arenas. Multiplayer is planned.",
+    version: "v0.4",
+    players: "Single-player · Multiplayer planned",
+    url:
+      "https://himynameishitler.github.io/card-chaos/",
+    video: "",
+    featured: true
+  }
 
-// Search system
+];
 
-document.getElementById("search").addEventListener(
-  "input",
-  function(event) {
+// =====================================
+// LOCAL SAVE SYSTEM
+// =====================================
 
-    const query = event.target.value.toLowerCase();
-    const cards = document.querySelectorAll(".card");
+function load(key, fallback) {
+  try {
+    const value = localStorage.getItem("gh_" + key);
+    return value === null
+      ? fallback
+      : JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+}
 
-    let count = 0;
+function save(key, value) {
+  try {
+    localStorage.setItem(
+      "gh_" + key,
+      JSON.stringify(value)
+    );
+  } catch (error) {
+    console.warn(
+      "Could not save local data:",
+      error
+    );
+  }
+}
 
-    for (const card of cards) {
+let profile = load("profile", {
+  username: "Guest",
+  bio: "Exploring Game Hub!",
+  avatar: "🎮"
+});
 
-      const name = card.dataset.name.toLowerCase();
-      const visible = name.includes(query);
+let likes = load("likes", []);
+let hidden = load("hidden", []);
+let friends = load("friends", []);
 
-      card.style.display = visible ? "flex" : "none";
+let notifications = load(
+  "notifications",
+  [
+    "Welcome to Game Hub v3.1!",
+    "Counter-Opps, Boostball and Card Chaos are ready to explore."
+  ]
+);
 
-      if (visible) {
-        count++;
-      }
+let currentPage = "discover";
+let selectedGame = null;
+let selectedGenre = "All";
+let searchQuery = "";
+let featureIndex = 0;
+
+const content = document.getElementById("content");
+
+// =====================================
+// HELPERS
+// =====================================
+
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+
+  if (className) {
+    node.className = className;
+  }
+
+  if (text !== undefined) {
+    node.textContent = text;
+  }
+
+  return node;
+}
+
+function button(text, fn, className = "btn") {
+  const b = el("button", className, text);
+  b.addEventListener("click", fn);
+  return b;
+}
+
+function setPage(page) {
+  currentPage = page;
+  selectedGame = null;
+  searchQuery = "";
+
+  document.getElementById("search").value = "";
+
+  render();
+  window.scrollTo(0, 0);
+}
+
+function gameVisible(game) {
+  return !hidden.includes(game.id);
+}
+
+function matchingGames() {
+  return games.filter(game => {
+
+    if (!gameVisible(game)) {
+      return false;
     }
 
-    document.getElementById("empty").style.display =
-      count ? "none" : "block";
+    if (
+      selectedGenre !== "All" &&
+      game.genre !== selectedGenre &&
+      !game.tags.includes(selectedGenre)
+    ) {
+      return false;
+    }
+
+    const text = [
+      game.name,
+      game.genre,
+      ...game.tags,
+      game.description
+    ].join(" ").toLowerCase();
+
+    return text.includes(
+      searchQuery.toLowerCase()
+    );
+  });
+}
+
+// =====================================
+// RECOMMENDATIONS
+// =====================================
+
+function recommendationScore(game) {
+  let score = 0;
+
+  if (likes.includes(game.id)) {
+    score += 100;
+  }
+
+  const likedGames = games.filter(g =>
+    likes.includes(g.id)
+  );
+
+  for (const liked of likedGames) {
+
+    if (game.genre === liked.genre) {
+      score += 20;
+    }
+
+    for (const tag of game.tags) {
+      if (liked.tags.includes(tag)) {
+        score += 8;
+      }
+    }
+  }
+
+  return score;
+}
+
+function recommendedGames() {
+  return matchingGames().sort(
+    (a, b) =>
+      recommendationScore(b) -
+      recommendationScore(a)
+  );
+}
+
+function toggleLike(id) {
+  likes = likes.includes(id)
+    ? likes.filter(x => x !== id)
+    : [...likes, id];
+
+  save("likes", likes);
+  render();
+}
+
+function hideGame(id) {
+  if (!hidden.includes(id)) {
+    hidden.push(id);
+  }
+
+  save("hidden", hidden);
+
+  selectedGame = null;
+  currentPage = "discover";
+
+  render();
+}
+
+function restoreGames() {
+  hidden = [];
+  save("hidden", hidden);
+  render();
+}
+
+function openGame(id) {
+  selectedGame = games.find(g => g.id === id);
+  currentPage = "detail";
+
+  render();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function refreshHeader() {
+  document.getElementById(
+    "topUsername"
+  ).textContent = profile.username;
+
+  document.getElementById(
+    "topAvatar"
+  ).textContent = profile.avatar || "🎮";
+
+  document.querySelectorAll(
+    ".navbtn"
+  ).forEach(btn => {
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page === currentPage
+    );
+  });
+}
+
+// =====================================
+// GAME CARDS
+// =====================================
+
+function createGameCard(game) {
+
+  const card = el("article", "card");
+
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+
+  card.setAttribute(
+    "aria-label",
+    "View " + game.name
+  );
+
+  const art = el("div", "card-art");
+
+  if (game.video) {
+    const video = document.createElement("video");
+
+    video.src = game.video;
+    video.muted = true;
+    video.loop = true;
+    video.autoplay = true;
+    video.playsInline = true;
+
+    art.appendChild(video);
+  } else {
+    art.textContent = game.icon;
+  }
+
+  const info = el("div", "card-info");
+
+  info.appendChild(
+    el("h3", "", game.name)
+  );
+
+  info.appendChild(
+    el(
+      "p",
+      "muted small",
+      game.genre + " · " + game.version
+    )
+  );
+
+  const tags = el("div", "tags");
+
+  for (const tag of game.tags.slice(0, 3)) {
+    tags.appendChild(
+      el("span", "tag", tag)
+    );
+  }
+
+  info.appendChild(tags);
+  card.append(art, info);
+
+  card.addEventListener(
+    "click",
+    () => openGame(game.id)
+  );
+
+  card.addEventListener(
+    "keydown",
+    event => {
+      if (
+        event.key === "Enter" ||
+        event.key === " "
+      ) {
+        event.preventDefault();
+        openGame(game.id);
+      }
+    }
+  );
+
+  return card;
+}
+
+function gameSection(title, items) {
+
+  const section = el("section", "section");
+
+  const heading = el("div", "section-head");
+  heading.appendChild(
+    el("h2", "", title)
+  );
+
+  section.appendChild(heading);
+
+  if (items.length === 0) {
+    section.appendChild(
+      el(
+        "div",
+        "empty",
+        "No games match your filters."
+      )
+    );
+
+    return section;
+  }
+
+  const grid = el("div", "grid");
+
+  for (const game of items) {
+    grid.appendChild(
+      createGameCard(game)
+    );
+  }
+
+  section.appendChild(grid);
+
+  return section;
+}
+
+// =====================================
+// FEATURED CAROUSEL
+// =====================================
+
+function featuredSection() {
+
+  const featuredGames = games.filter(
+    game =>
+      game.featured &&
+      gameVisible(game)
+  );
+
+  if (!featuredGames.length) {
+    return el("div");
+  }
+
+  featureIndex =
+    (featureIndex + featuredGames.length) %
+    featuredGames.length;
+
+  const game = featuredGames[featureIndex];
+
+  const section = el("section", "featured");
+  const media = el("div", "feature-media");
+
+  if (game.video) {
+
+    const video = document.createElement("video");
+
+    video.src = game.video;
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+
+    media.appendChild(video);
+
+  } else {
+    media.textContent = game.icon;
+  }
+
+  section.appendChild(media);
+  section.appendChild(
+    el("div", "feature-shade")
+  );
+
+  const info = el("div", "feature-info");
+
+  info.appendChild(
+    el("span", "pill", "FEATURED GAME")
+  );
+
+  info.appendChild(
+    el("h2", "", game.name)
+  );
+
+  info.appendChild(
+    el("p", "", game.description)
+  );
+
+  info.appendChild(
+    button(
+      "VIEW GAME",
+      () => openGame(game.id)
+    )
+  );
+
+  section.appendChild(info);
+
+  const controls = el(
+    "div",
+    "feature-controls"
+  );
+
+  controls.appendChild(
+    button(
+      "❮",
+      () => {
+        featureIndex--;
+        render();
+      },
+      ""
+    )
+  );
+
+  controls.appendChild(
+    button(
+      "❯",
+      () => {
+        featureIndex++;
+        render();
+      },
+      ""
+    )
+  );
+
+  section.appendChild(controls);
+
+  return section;
+}
+
+// =====================================
+// GENRE FILTERS
+// =====================================
+
+function filterBar() {
+
+  const bar = el("div", "filters");
+
+  const genres = [
+    "All",
+    "Shooter",
+    "Sports",
+    "Action",
+    "Racing",
+    "Cards"
+  ];
+
+  for (const genre of genres) {
+
+    const chip = button(
+      genre,
+      () => {
+        selectedGenre = genre;
+        render();
+      },
+      "chip" +
+      (selectedGenre === genre
+        ? " active"
+        : "")
+    );
+
+    bar.appendChild(chip);
+  }
+
+  bar.appendChild(
+    el(
+      "span",
+      "muted small",
+      hidden.length + " hidden game(s)"
+    )
+  );
+
+  if (hidden.length) {
+    bar.appendChild(
+      button(
+        "Restore Hidden",
+        restoreGames,
+        "chip"
+      )
+    );
+  }
+
+  return bar;
+}
+
+// =====================================
+// DISCOVER PAGE
+// =====================================
+
+function renderDiscover() {
+
+  content.appendChild(
+    el("h1", "", "Discover Games")
+  );
+
+  content.appendChild(
+    el(
+      "p",
+      "muted",
+      "Discover new experiences, explore your favourite genres, and find something worth playing."
+    )
+  );
+
+  if (!searchQuery) {
+    content.appendChild(
+      featuredSection()
+    );
+  }
+
+  const section = el("section", "section");
+
+  section.appendChild(
+    el("h2", "", "Browse Games")
+  );
+
+  section.appendChild(
+    filterBar()
+  );
+
+  content.appendChild(section);
+
+  content.appendChild(
+    gameSection(
+      "Game Library",
+      matchingGames()
+    )
+  );
+}
+
+// =====================================
+// RECOMMENDED PAGE
+// =====================================
+
+function renderRecommended() {
+
+  content.appendChild(
+    el("h1", "", "Recommended For You")
+  );
+
+  content.appendChild(
+    el(
+      "p",
+      "muted",
+      "Your recommendations are based on games you've liked and genres you enjoy. Hide games you're not interested in."
+    )
+  );
+
+  content.appendChild(
+    filterBar()
+  );
+
+  content.appendChild(
+    gameSection(
+      "Your Picks",
+      recommendedGames()
+    )
+  );
+
+  if (!likes.length) {
+    content.appendChild(
+      el(
+        "p",
+        "muted small",
+        "Tip: Open a game and press Like to improve your recommendations."
+      )
+    );
+  }
+}
+
+// =====================================
+// GAME DETAILS PAGE
+// =====================================
+
+function renderDetail() {
+
+  const game = selectedGame;
+
+  if (!game) {
+    setPage("discover");
+    return;
+  }
+
+  content.appendChild(
+    button(
+      "← Back to Discover",
+      () => setPage("discover"),
+      "btn secondary"
+    )
+  );
+
+  const hero = el(
+    "div",
+    "detail-hero"
+  );
+
+  hero.style.marginTop = "20px";
+
+  if (game.video) {
+
+    const video = document.createElement("video");
+
+    video.src = game.video;
+    video.controls = true;
+    video.muted = true;
+    video.playsInline = true;
+
+    hero.appendChild(video);
+
+  } else {
+    hero.textContent = game.icon;
+  }
+
+  content.appendChild(hero);
+
+  const row = el(
+    "div",
+    "detail-row"
+  );
+
+  row.appendChild(
+    el(
+      "div",
+      "detail-icon",
+      game.icon
+    )
+  );
+
+  const title = el(
+    "div",
+    "detail-title"
+  );
+
+  title.appendChild(
+    el("h1", "", game.name)
+  );
+
+  title.appendChild(
+    el(
+      "p",
+      "muted",
+      game.genre + " · " + game.version
+    )
+  );
+
+  row.appendChild(title);
+
+  const join = document.createElement("a");
+
+  join.className = "btn";
+  join.textContent = "▶ JOIN GAME";
+  join.href = game.url;
+  join.target = "_blank";
+  join.rel = "noopener noreferrer";
+
+  row.appendChild(join);
+
+  content.appendChild(row);
+
+  const actions = el(
+    "div",
+    "filters"
+  );
+
+  actions.appendChild(
+    button(
+      likes.includes(game.id)
+        ? "♥ Liked"
+        : "♡ Like Game",
+      () => toggleLike(game.id),
+      "chip"
+    )
+  );
+
+  actions.appendChild(
+    button(
+      "🚫 Not Interested",
+      () => hideGame(game.id),
+      "chip"
+    )
+  );
+
+  content.appendChild(actions);
+
+  const about = el(
+    "div",
+    "panel"
+  );
+
+  about.appendChild(
+    el("h2", "", "About This Game")
+  );
+
+  about.appendChild(
+    el("p", "", game.description)
+  );
+
+  const tags = el(
+    "div",
+    "tags"
+  );
+
+  for (const tag of game.tags) {
+    tags.appendChild(
+      el("span", "tag", tag)
+    );
+  }
+
+  about.appendChild(tags);
+  content.appendChild(about);
+
+  const details = el(
+    "div",
+    "panel"
+  );
+
+  details.appendChild(
+    el("h2", "", "Game Information")
+  );
+
+  details.appendChild(
+    el(
+      "p",
+      "",
+      "Genre: " + game.genre
+    )
+  );
+
+  details.appendChild(
+    el(
+      "p",
+      "",
+      "Players: " + game.players
+    )
+  );
+
+  details.appendChild(
+    el(
+      "p",
+      "",
+      "Version: " + game.version
+    )
+  );
+
+  content.appendChild(details);
+}
+
+// =====================================
+// PROFILE PAGE
+// =====================================
+
+function renderProfile() {
+
+  content.appendChild(
+    el("h1", "", "My Profile")
+  );
+
+  const panel = el(
+    "div",
+    "panel"
+  );
+
+  const head = el(
+    "div",
+    "profile-head"
+  );
+
+  head.appendChild(
+    el(
+      "div",
+      "profile-avatar",
+      profile.avatar
+    )
+  );
+
+  const text = el("div");
+
+  text.appendChild(
+    el("h2", "", profile.username)
+  );
+
+  text.appendChild(
+    el("p", "muted", profile.bio)
+  );
+
+  head.appendChild(text);
+  panel.appendChild(head);
+
+  panel.appendChild(
+    el("h3", "", "Edit Profile")
+  );
+
+  const username = document.createElement("input");
+
+  username.className = "field";
+  username.placeholder = "Username";
+  username.maxLength = 24;
+  username.value = profile.username;
+
+  const bio = document.createElement("input");
+
+  bio.className = "field";
+  bio.placeholder = "Bio";
+  bio.maxLength = 120;
+  bio.value = profile.bio;
+
+  const avatar = document.createElement("input");
+
+  avatar.className = "field";
+  avatar.placeholder = "Avatar emoji";
+  avatar.maxLength = 8;
+  avatar.value = profile.avatar;
+
+  panel.append(
+    username,
+    bio,
+    avatar
+  );
+
+  panel.appendChild(
+    button(
+      "Save Profile",
+      () => {
+
+        profile.username =
+          username.value.trim() || "Guest";
+
+        profile.bio =
+          bio.value.trim();
+
+        profile.avatar =
+          avatar.value.trim() || "🎮";
+
+        save("profile", profile);
+
+        notifications.unshift(
+          "Your profile was updated."
+        );
+
+        save(
+          "notifications",
+          notifications
+        );
+
+        render();
+      }
+    )
+  );
+
+  content.appendChild(panel);
+
+  const info = el(
+    "div",
+    "panel"
+  );
+
+  info.appendChild(
+    el("h2", "", "Account Information")
+  );
+
+  info.appendChild(
+    el(
+      "p",
+      "muted",
+      "This is currently a local profile saved in your browser. It is not a registered account and will not sync between devices."
+    )
+  );
+
+  content.appendChild(info);
+}
+
+// =====================================
+// FRIENDS PAGE
+// =====================================
+
+function renderFriends() {
+
+  content.appendChild(
+    el("h1", "", "Friends")
+  );
+
+  content.appendChild(
+    el(
+      "p",
+      "muted",
+      "A preview of the future Game Hub friends system."
+    )
+  );
+
+  const panel = el(
+    "div",
+    "panel"
+  );
+
+  panel.appendChild(
+    el("h2", "", "Friends List")
+  );
+
+  const input = document.createElement("input");
+
+  input.className = "field";
+  input.placeholder = "Friend's username (demo)";
+  input.maxLength = 24;
+
+  panel.appendChild(input);
+
+  panel.appendChild(
+    button(
+      "Add Demo Friend",
+      () => {
+
+        const name = input.value.trim();
+
+        if (!name) return;
+
+        if (friends.includes(name)) return;
+
+        friends.push(name);
+
+        save("friends", friends);
+
+        render();
+      }
+    )
+  );
+
+  if (!friends.length) {
+    panel.appendChild(
+      el(
+        "p",
+        "muted",
+        "No demo friends yet."
+      )
+    );
+  }
+
+  for (const friend of friends) {
+
+    const row = el(
+      "div",
+      "friend-row"
+    );
+
+    row.appendChild(
+      el(
+        "span",
+        "",
+        "👤 " + friend
+      )
+    );
+
+    row.appendChild(
+      button(
+        "Remove",
+        () => {
+
+          friends = friends.filter(
+            x => x !== friend
+          );
+
+          save(
+            "friends",
+            friends
+          );
+
+          render();
+        },
+        "btn secondary"
+      )
+    );
+
+    panel.appendChild(row);
+  }
+
+  panel.appendChild(
+    el(
+      "p",
+      "muted small",
+      "Demo friends are only saved on this device. Real friend requests and online status require accounts and a backend."
+    )
+  );
+
+  content.appendChild(panel);
+}
+
+// =====================================
+// INVENTORY PAGE
+// =====================================
+
+function renderInventory() {
+
+  content.appendChild(
+    el("h1", "", "Inventory")
+  );
+
+  content.appendChild(
+    el(
+      "p",
+      "muted",
+      "Your future collection of skins and cosmetics."
+    )
+  );
+
+  const panel = el(
+    "div",
+    "panel"
+  );
+
+  panel.appendChild(
+    el("h2", "", "Coming Soon")
+  );
+
+  panel.appendChild(
+    el(
+      "p",
+      "",
+      "🎯 Counter-Opps: Weapon skins"
+    )
+  );
+
+  panel.appendChild(
+    el(
+      "p",
+      "",
+      "🚗 Boostball: Car bodies, decals and goal explosions"
+    )
+  );
+
+  panel.appendChild(
+    el(
+      "p",
+      "",
+      "🃏 Card Chaos: Character skins and effects"
+    )
+  );
+
+  panel.appendChild(
+    el(
+      "p",
+      "muted small",
+      "Shared inventories will be added after proper user accounts are implemented."
+    )
+  );
+
+  content.appendChild(panel);
+}
+
+// =====================================
+// NOTIFICATIONS PAGE
+// =====================================
+
+function renderNotifications() {
+
+  content.appendChild(
+    el("h1", "", "Notifications")
+  );
+
+  const panel = el(
+    "div",
+    "panel"
+  );
+
+  for (
+    const notification of
+    notifications.slice(0, 20)
+  ) {
+
+    panel.appendChild(
+      el(
+        "div",
+        "notice",
+        notification
+      )
+    );
+  }
+
+  if (!notifications.length) {
+    panel.appendChild(
+      el(
+        "p",
+        "muted",
+        "No notifications."
+      )
+    );
+  }
+
+  panel.appendChild(
+    button(
+      "Clear Notifications",
+      () => {
+
+        notifications = [];
+
+        save(
+          "notifications",
+          notifications
+        );
+
+        render();
+      },
+      "btn secondary"
+    )
+  );
+
+  panel.appendChild(
+    el(
+      "p",
+      "muted small",
+      "These are local app notifications, not private messages or account recovery emails."
+    )
+  );
+
+  content.appendChild(panel);
+}
+
+// =====================================
+// MAIN RENDER
+// =====================================
+
+function render() {
+
+  content.innerHTML = "";
+
+  refreshHeader();
+
+  if (currentPage === "discover") {
+    renderDiscover();
+  }
+
+  else if (currentPage === "recommended") {
+    renderRecommended();
+  }
+
+  else if (currentPage === "detail") {
+    renderDetail();
+  }
+
+  else if (currentPage === "profile") {
+    renderProfile();
+  }
+
+  else if (currentPage === "friends") {
+    renderFriends();
+  }
+
+  else if (currentPage === "inventory") {
+    renderInventory();
+  }
+
+  else if (currentPage === "notifications") {
+    renderNotifications();
+  }
+}
+
+document.querySelectorAll(
+  ".navbtn"
+).forEach(btn => {
+
+  btn.addEventListener(
+    "click",
+    () => setPage(btn.dataset.page)
+  );
+
+});
+
+document.getElementById(
+  "search"
+).addEventListener(
+  "input",
+  event => {
+
+    searchQuery = event.target.value;
+
+    if (currentPage !== "recommended") {
+      currentPage = "discover";
+    }
+
+    render();
   }
 );
 
-</script>
+render();
 
+</script>
 </body>
 </html>
