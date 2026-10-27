@@ -791,29 +791,6 @@ function backgroundEditor(parent,bg,change){
 }
 
 // ====================================================
-// UPLOAD IMAGE TO CLOUDFLARE
-// ====================================================
-
-async function uploadImage(blob,type){
-  if(!WORKER_URL)throw Error("Cloudflare Worker isn't configured yet.");
-  if(!user)throw Error("Sign in first.");
-  const token=await user.getIdToken();
-  const res=await fetch(`${WORKER_URL.replace(/\/$/,"")}/upload/${type}`,{
-    method:"PUT",
-    headers:{
-      "Authorization":`Bearer ${token}`,
-      "Content-Type":"image/jpeg"
-    },
-    body:blob
-  });
-  if(!res.ok){
-    const message=await res.text();
-    throw Error(`Upload failed (${res.status}): ${message}`);
-  }
-  return await res.json();
-}
-
-// ====================================================
 // PROFILE EDITOR
 // ====================================================
 
@@ -970,7 +947,7 @@ function profilePage(){
 
   const savePanel=panel("Save Changes");
   txt(savePanel,"p",WORKER_URL
-    ?"Photos will be uploaded to Cloudflare and appearance settings saved in Firebase."
+    ?"Photos will be uploaded to Netlify and appearance settings saved in Firebase."
     :"Photo uploads need Cloudflare setup. Colours, gradients and text avatars can still be saved.",
     "muted");
   const save=button("💾 Save Profile Appearance",async()=>{
