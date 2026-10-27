@@ -171,7 +171,8 @@ const firebaseConfig={
 
 // AFTER DEPLOYING YOUR WORKER, PUT ITS URL HERE.
 // Example: https://gamehub-images.your-account.workers.dev
-const WORKER_URL="";
+const WORKER_URL =
+  "https://gamehub-images.netlify.app/.netlify/functions/profile-images";
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
@@ -342,9 +343,47 @@ function bgCSS(bg){
     return `linear-gradient(${bg.angle}deg,${c[0]},${c[1]},${c[2]})`;
   return c[0];
 }
-function imageURL(uid,type,version){
-  if(!WORKER_URL||!uid)return "";
-  return `${WORKER_URL.replace(/\/$/,"")}/image/${encodeURIComponent(uid)}/${type}?v=${version||0}`;
+
+function imageURL(uid, type, version = 0) {
+  if (!uid) return "";
+
+  const params = new URLSearchParams({
+    uid,
+    type,
+    v: String(version)
+  });
+
+  return `${WORKER_URL}?${params.toString()}`;
+}
+
+async function uploadImage(blob, type) {
+  if (!user) {
+    throw new Error("You must sign in first.");
+  }
+
+  if (!["avatar", "banner"].includes(type)) {
+    throw new Error("Invalid image type.");
+  }
+
+  const token = await user.getIdToken();
+
+  const response = await fetch(
+    `${WORKER_URL}?type=${encodeURIComponent(type)}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "image/jpeg"
+      },
+      body: blob
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return await response.json();
 }
 function paint(node,background){
   node.style.background=background;
