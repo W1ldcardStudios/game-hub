@@ -75,11 +75,18 @@ export default async function handler(request) {
   const url = new URL(request.url);
   const origin = request.headers.get("Origin") || "";
 
-  if (request.method === "OPTIONS") {
-    if (!ALLOWED_ORIGINS.includes(origin)) {
-      return respond("Origin not allowed", 403, origin);
+ if (request.method === "OPTIONS") {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "https://himynameishitler.github.io",
+      "Access-Control-Allow-Methods": "GET, PUT, OPTIONS",
+      "Access-Control-Allow-Headers": "Authorization, Content-Type",
+      "Access-Control-Max-Age": "86400",
+      "Vary": "Origin"
     }
-
+  });
+}
     return new Response(null, {
       status: 204,
       headers: cors(origin)
