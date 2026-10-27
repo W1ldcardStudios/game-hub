@@ -3,9 +3,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0a101b">
-<title>Game Hub v3.3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090e18">
+<title>Game Hub v3.4</title>
 
 <style>
 :root {
@@ -18,17 +18,22 @@
   --muted:#9aacc5;
   --accent:#64a6ff;
 }
+
 * {box-sizing:border-box}
+
 body {
   margin:0;
   background:var(--bg);
   color:var(--text);
   font-family:system-ui,Arial,sans-serif;
 }
+
 button,input {font:inherit}
 button {cursor:pointer}
 a {color:inherit;text-decoration:none}
+
 .layout {display:flex;min-height:100vh}
+
 .sidebar {
   width:225px;
   flex-shrink:0;
@@ -39,13 +44,16 @@ a {color:inherit;text-decoration:none}
   top:0;
   height:100vh;
 }
+
 .brand {
   font-size:24px;
   font-weight:950;
   letter-spacing:-1px;
   padding:8px 12px 25px;
 }
+
 .brand span {color:var(--accent)}
+
 .navbtn {
   display:flex;
   align-items:center;
@@ -55,15 +63,20 @@ a {color:inherit;text-decoration:none}
   margin:4px 0;
   background:transparent;
   color:var(--muted);
-  border:none;
+  border:0;
   border-radius:10px;
   text-align:left;
+  transition:.2s;
 }
+
 .navbtn:hover,.navbtn.active {
   background:#263852;
   color:white;
+  transform:translateX(3px);
 }
+
 .main {flex:1;min-width:0}
+
 .topbar {
   position:sticky;
   top:0;
@@ -76,6 +89,7 @@ a {color:inherit;text-decoration:none}
   background:#101827;
   border-bottom:1px solid var(--line);
 }
+
 .search {
   width:min(420px,100%);
   padding:12px 15px;
@@ -84,25 +98,44 @@ a {color:inherit;text-decoration:none}
   border:1px solid #3c526f;
   border-radius:10px;
   outline:none;
+  transition:.2s;
 }
-.search:focus {border-color:var(--accent)}
-.topright {display:flex;align-items:center;gap:12px}
+
+.search:focus {
+  border-color:var(--accent);
+  box-shadow:0 0 15px #64a6ff25;
+}
+
+.topright {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
 .avatar {
-  width:39px;height:39px;
+  width:39px;
+  height:39px;
   border-radius:50%;
   display:grid;
   place-items:center;
   background:linear-gradient(135deg,#538fff,#a46fff);
   font-weight:900;
-  flex-shrink:0;
 }
-.content {max-width:1400px;margin:auto;padding:27px}
+
+.content {
+  max-width:1400px;
+  margin:auto;
+  padding:27px;
+}
+
 h1 {font-size:34px;margin:0 0 8px}
 h2 {margin:0 0 16px}
 p {line-height:1.55}
 .muted {color:var(--muted)}
 .small {font-size:13px}
 .section {margin:35px 0}
+
 .section-head {
   display:flex;
   justify-content:space-between;
@@ -111,21 +144,31 @@ p {line-height:1.55}
   flex-wrap:wrap;
   margin-bottom:16px;
 }
+
 .section-head h2 {margin:0}
+
 .btn {
   display:inline-block;
   padding:12px 19px;
   background:#347fe2;
   color:white;
-  border:none;
+  border:0;
   border-radius:9px;
   font-weight:750;
+  transition:transform .2s,background .2s,box-shadow .2s;
 }
-.btn:hover {background:#559aff}
+
+.btn:hover {
+  background:#559aff;
+  transform:translateY(-2px);
+  box-shadow:0 6px 22px #347fe244;
+}
+
 .btn.secondary {background:#263751}
 .btn.secondary:hover {background:#385170}
 
 /* FEATURED GAMES */
+
 .featured {
   min-height:355px;
   position:relative;
@@ -133,7 +176,9 @@ p {line-height:1.55}
   border-radius:18px;
   border:1px solid #405576;
   background:linear-gradient(120deg,#263e62,#101725);
+  animation:riseIn .45s ease,softGlow 5s infinite;
 }
+
 .feature-media {
   position:absolute;
   inset:0;
@@ -141,33 +186,38 @@ p {line-height:1.55}
   place-items:center;
   font-size:125px;
 }
+
 .feature-media img,.feature-media video {
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
-  position:absolute;
-  inset:0;
 }
+
 .feature-shade {
   position:absolute;
   inset:0;
   background:linear-gradient(
     90deg,
-    rgba(5,10,18,.9) 0%,
-    rgba(5,10,18,.65) 35%,
-    rgba(5,10,18,.05) 100%
+    rgba(5,10,18,.92),
+    rgba(5,10,18,.68) 40%,
+    rgba(5,10,18,.08)
   );
 }
+
 .feature-info {
   position:relative;
   z-index:1;
   padding:65px 45px;
   max-width:630px;
 }
+
 .feature-info h2 {
   font-size:clamp(34px,5vw,58px);
   margin:10px 0;
 }
+
 .pill {
   display:inline-block;
   padding:6px 11px;
@@ -178,6 +228,7 @@ p {line-height:1.55}
   font-size:12px;
   font-weight:800;
 }
+
 .feature-controls {
   position:absolute;
   z-index:2;
@@ -186,6 +237,7 @@ p {line-height:1.55}
   display:flex;
   gap:8px;
 }
+
 .feature-controls button {
   padding:9px 14px;
   background:#253954;
@@ -195,6 +247,7 @@ p {line-height:1.55}
 }
 
 /* FILTERS */
+
 .filters {
   display:flex;
   flex-wrap:wrap;
@@ -202,13 +255,21 @@ p {line-height:1.55}
   align-items:center;
   margin-bottom:20px;
 }
+
 .chip {
   padding:9px 15px;
   background:#1b2a40;
   color:#bfd0e5;
   border:1px solid #354a66;
   border-radius:30px;
+  transition:.2s;
 }
+
+.chip:hover {
+  background:#30486b;
+  transform:translateY(-2px);
+}
+
 .chip.active {
   background:#316fbe;
   color:white;
@@ -216,24 +277,31 @@ p {line-height:1.55}
 }
 
 /* GAME CARDS */
+
 .grid {
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
   gap:18px;
 }
+
 .card {
   background:var(--panel);
   border:1px solid var(--line);
   border-radius:14px;
   overflow:hidden;
   cursor:pointer;
-  transition:transform .2s,border-color .2s;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+  animation:riseIn .4s ease both;
 }
+
 .card:hover {
-  transform:translateY(-5px);
+  transform:translateY(-7px) scale(1.015);
   border-color:var(--accent);
+  box-shadow:0 14px 35px #0007;
 }
+
 .card:focus-visible {outline:3px solid var(--accent)}
+
 .card-art {
   height:170px;
   background:linear-gradient(130deg,#35557f,#152035);
@@ -242,20 +310,27 @@ p {line-height:1.55}
   font-size:76px;
   overflow:hidden;
 }
+
 .card-art img,.card-art video {
   width:100%;
   height:100%;
   object-fit:cover;
+  transition:transform .35s;
 }
+
+.card:hover .card-art img {transform:scale(1.07)}
+
 .card-info {padding:16px}
 .card-info h3 {margin:0 0 6px}
 .card-info p {margin:5px 0}
+
 .tags {
   display:flex;
   gap:6px;
   flex-wrap:wrap;
   margin-top:12px;
 }
+
 .tag {
   font-size:11px;
   padding:5px 8px;
@@ -264,7 +339,8 @@ p {line-height:1.55}
   color:#c7dcf7;
 }
 
-/* GAME DETAILS */
+/* DETAILS */
+
 .detail-hero {
   position:relative;
   height:clamp(230px,40vw,420px);
@@ -275,6 +351,7 @@ p {line-height:1.55}
   place-items:center;
   font-size:125px;
 }
+
 .detail-hero img,.detail-hero video {
   position:absolute;
   inset:0;
@@ -282,6 +359,7 @@ p {line-height:1.55}
   height:100%;
   object-fit:cover;
 }
+
 .detail-row {
   display:flex;
   gap:22px;
@@ -289,8 +367,10 @@ p {line-height:1.55}
   margin:22px 0;
   flex-wrap:wrap;
 }
+
 .detail-icon {
-  width:90px;height:90px;
+  width:90px;
+  height:90px;
   border-radius:16px;
   background:#273a56;
   display:grid;
@@ -299,13 +379,16 @@ p {line-height:1.55}
   overflow:hidden;
   flex-shrink:0;
 }
+
 .detail-icon img {
   width:100%;
   height:100%;
   object-fit:cover;
 }
+
 .detail-title {flex:1}
 .detail-title h1 {margin:0}
+
 .panel {
   padding:22px;
   margin:15px 0;
@@ -315,20 +398,24 @@ p {line-height:1.55}
 }
 
 /* PROFILE */
+
 .profile-head {
   display:flex;
   align-items:center;
   gap:20px;
   flex-wrap:wrap;
 }
+
 .profile-avatar {
-  width:100px;height:100px;
+  width:100px;
+  height:100px;
   border-radius:50%;
   display:grid;
   place-items:center;
   background:linear-gradient(135deg,#538fff,#a46fff);
   font-size:44px;
 }
+
 .field {
   display:block;
   width:100%;
@@ -340,6 +427,7 @@ p {line-height:1.55}
   color:white;
   border-radius:9px;
 }
+
 .friend-row {
   display:flex;
   justify-content:space-between;
@@ -348,6 +436,7 @@ p {line-height:1.55}
   border-bottom:1px solid var(--line);
   gap:12px;
 }
+
 .notice {
   margin:10px 0;
   padding:13px;
@@ -355,16 +444,78 @@ p {line-height:1.55}
   border:1px solid #426183;
   border-radius:10px;
 }
+
 .empty {
   padding:30px;
   text-align:center;
   color:var(--muted);
 }
+
 footer {
   text-align:center;
   color:#7087a4;
   padding:35px;
 }
+
+/* ANIMATIONS */
+
+@keyframes riseIn {
+  from {
+    opacity:0;
+    transform:translateY(15px);
+  }
+  to {
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes softGlow {
+  0%,100% {box-shadow:0 0 0 #64a6ff00}
+  50% {box-shadow:0 0 26px #64a6ff25}
+}
+
+.content > * {animation:riseIn .32s ease both}
+
+/* SIGN IN */
+
+.auth-overlay {
+  position:fixed;
+  inset:0;
+  background:#000c;
+  backdrop-filter:blur(9px);
+  display:grid;
+  place-items:center;
+  z-index:100;
+  padding:18px;
+}
+
+.auth-overlay[hidden] {display:none}
+
+.auth-box {
+  width:min(430px,100%);
+  background:#151f30;
+  border:1px solid #405576;
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 24px 80px #0009;
+  animation:riseIn .25s ease;
+}
+
+.auth-box .field {max-width:none}
+
+.auth-actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.auth-message {
+  color:#c4d9f9;
+  min-height:24px;
+}
+
 @media(max-width:800px) {
   .sidebar {width:65px;padding:15px 7px}
   .brand {font-size:13px;padding:10px 3px}
@@ -376,50 +527,118 @@ footer {
   .feature-info {padding:45px 22px}
   .featured {min-height:320px}
 }
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation:none!important;
+    transition:none!important;
+  }
+}
 </style>
 </head>
 
 <body>
+
 <div class="layout">
+
 <aside class="sidebar">
   <div class="brand">🎮 GAME<span>HUB</span></div>
-  <button class="navbtn active" data-page="discover"><span class="emoji">🏠</span> Discover</button>
-  <button class="navbtn" data-page="recommended"><span class="emoji">✨</span> Recommended</button>
-  <button class="navbtn" data-page="friends"><span class="emoji">👥</span> Friends</button>
-  <button class="navbtn" data-page="profile"><span class="emoji">👤</span> Profile</button>
-  <button class="navbtn" data-page="inventory"><span class="emoji">🎨</span> Inventory</button>
-  <button class="navbtn" data-page="notifications"><span class="emoji">🔔</span> Notifications</button>
+
+  <button class="navbtn active" data-page="discover">
+    <span class="emoji">🏠</span> Discover
+  </button>
+
+  <button class="navbtn" data-page="recommended">
+    <span class="emoji">✨</span> Recommended
+  </button>
+
+  <button class="navbtn" data-page="friends">
+    <span class="emoji">👥</span> Friends
+  </button>
+
+  <button class="navbtn" data-page="profile">
+    <span class="emoji">👤</span> Profile
+  </button>
+
+  <button class="navbtn" data-page="inventory">
+    <span class="emoji">🎨</span> Inventory
+  </button>
+
+  <button class="navbtn" data-page="notifications">
+    <span class="emoji">🔔</span> Notifications
+  </button>
 </aside>
 
 <div class="main">
+
 <header class="topbar">
-  <input id="search" class="search" placeholder="Search games..." aria-label="Search games">
+  <input
+    id="search"
+    class="search"
+    placeholder="Search games..."
+    aria-label="Search games"
+  >
+
   <div class="topright">
     <span class="muted small" id="topUsername">Guest</span>
     <div class="avatar" id="topAvatar">🎮</div>
+    <button class="btn secondary" id="signInButton">Sign In</button>
+    <button class="btn secondary" id="signOutButton" hidden>Sign Out</button>
   </div>
 </header>
 
 <main class="content" id="content"></main>
-<footer>GAME HUB v3.3 · Discover. Play. Repeat.</footer>
+
+<footer>
+  GAME HUB v3.4 · Discover. Play. Repeat.
+</footer>
+
 </div>
+</div>
+
+<!-- ACCOUNT WINDOW -->
+
+<div class="auth-overlay" id="authOverlay" hidden>
+  <div class="auth-box" role="dialog" aria-modal="true">
+    <h2>Game Hub Account</h2>
+    <p class="muted small">
+      Sign in or create your account.
+    </p>
+
+    <input
+      class="field"
+      id="authEmail"
+      type="email"
+      autocomplete="email"
+      placeholder="Email address"
+    >
+
+    <input
+      class="field"
+      id="authPassword"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Password (at least 6 characters)"
+    >
+
+    <p class="auth-message" id="authMessage"></p>
+
+    <div class="auth-actions">
+      <button class="btn" id="loginButton">Sign In</button>
+      <button class="btn secondary" id="registerButton">
+        Create Account
+      </button>
+      <button class="btn secondary" id="closeAuthButton">
+        Close
+      </button>
+    </div>
+  </div>
 </div>
 
 <script>
-"use strict";
-
 // ========================================
-// GAME HUB v3.3
+// GAME HUB v3.4
 // ========================================
-
-// Upload these images beside index.html:
-//
-// counter-opps.png
-// counter-opps-banner.png
-// counter-opps-detail.png
-// card-chaos-icon.png
-// card-chaos-banner.png
-// card-chaos-cover.png
 
 const games = [
   {
@@ -431,7 +650,8 @@ const games = [
     detailImage:"counter-opps-detail.png",
     genre:"Shooter",
     tags:["FPS","Action","Tactical"],
-    description:"A tactical first-person shooter featuring bots, weapons, bomb sites and competitive rounds. Fight your way through intense matches and sharpen your skills against enemy AI.",
+    description:
+      "A tactical first-person shooter featuring bots, weapons, bomb sites and competitive rounds. Fight your way through intense matches and sharpen your skills against enemy AI.",
     version:"v0.5",
     players:"Single-player",
     url:"https://himynameishitler.github.io/Counter-Opps-/",
@@ -447,7 +667,8 @@ const games = [
     detailImage:"",
     genre:"Sports",
     tags:["Racing","Cars","Action"],
-    description:"Drive, boost, jump and score goals in an arcade car soccer arena.",
+    description:
+      "Drive, boost, jump and score goals in an arcade car soccer arena.",
     version:"In Development",
     players:"Single-player",
     url:"https://himynameishitler.github.io/boostball/",
@@ -458,12 +679,13 @@ const games = [
     id:"chaos",
     name:"Card Chaos",
     icon:"🃏",
-    image:"card-chaos-icon.png",
-    banner:"card-chaos-banner.png",
-    detailImage:"card-chaos-cover.png",
+    image:"images/card-chaos-icon.png",
+    banner:"images/card-chaos-banner.png",
+    detailImage:"images/card-chaos-cover.png",
     genre:"Action",
     tags:["Cards","Roguelike","Platformer"],
-    description:"Collect powerful upgrade cards and create ridiculous combinations while battling through chaotic arenas. Multiplayer is planned.",
+    description:
+      "Collect powerful upgrade cards and create ridiculous combinations while battling through chaotic arenas. Multiplayer is planned.",
     version:"v0.4",
     players:"Single-player · Multiplayer planned",
     url:"https://himynameishitler.github.io/card-chaos/",
@@ -484,6 +706,7 @@ function load(key,fallback) {
     return fallback;
   }
 }
+
 function save(key,value) {
   try {
     localStorage.setItem("gh_"+key,JSON.stringify(value));
@@ -497,12 +720,14 @@ let profile=load("profile",{
   bio:"Exploring Game Hub!",
   avatar:"🎮"
 });
+
 let likes=load("likes",[]);
 let hidden=load("hidden",[]);
 let friends=load("friends",[]);
 let notifications=load("notifications",[
-  "Welcome to Game Hub v3.3!",
-  "Counter Opps now has its own artwork."
+  "Welcome to Game Hub v3.4!",
+  "Animations have arrived!",
+  "Card Chaos now has custom artwork."
 ]);
 
 let currentPage="discover";
@@ -510,6 +735,7 @@ let selectedGame=null;
 let selectedGenre="All";
 let searchQuery="";
 let featureIndex=0;
+
 const content=document.getElementById("content");
 
 // ========================================
@@ -522,11 +748,13 @@ function el(tag,className="",text) {
   if(text!==undefined) node.textContent=text;
   return node;
 }
+
 function button(text,fn,className="btn") {
   const b=el("button",className,text);
   b.addEventListener("click",fn);
   return b;
 }
+
 function setPage(page) {
   currentPage=page;
   selectedGame=null;
@@ -535,20 +763,28 @@ function setPage(page) {
   render();
   window.scrollTo(0,0);
 }
+
 function gameVisible(game) {
   return !hidden.includes(game.id);
 }
+
 function matchingGames() {
   return games.filter(game=>{
     if(!gameVisible(game)) return false;
+
     if(
       selectedGenre!=="All" &&
       game.genre!==selectedGenre &&
       !game.tags.includes(selectedGenre)
     ) return false;
+
     const text=[
-      game.name,game.genre,...game.tags,game.description
+      game.name,
+      game.genre,
+      ...game.tags,
+      game.description
     ].join(" ").toLowerCase();
+
     return text.includes(searchQuery.toLowerCase());
   });
 }
@@ -559,27 +795,35 @@ function matchingGames() {
 
 function recommendationScore(game) {
   let score=likes.includes(game.id)?100:0;
+
   const likedGames=games.filter(g=>likes.includes(g.id));
+
   for(const liked of likedGames) {
     if(game.genre===liked.genre) score+=20;
+
     for(const tag of game.tags) {
       if(liked.tags.includes(tag)) score+=8;
     }
   }
+
   return score;
 }
+
 function recommendedGames() {
   return matchingGames().sort(
     (a,b)=>recommendationScore(b)-recommendationScore(a)
   );
 }
+
 function toggleLike(id) {
   likes=likes.includes(id)
     ?likes.filter(x=>x!==id)
     :[...likes,id];
+
   save("likes",likes);
   render();
 }
+
 function hideGame(id) {
   if(!hidden.includes(id)) hidden.push(id);
   save("hidden",hidden);
@@ -587,22 +831,29 @@ function hideGame(id) {
   currentPage="discover";
   render();
 }
+
 function restoreGames() {
   hidden=[];
   save("hidden",hidden);
   render();
 }
+
 function openGame(id) {
   selectedGame=games.find(g=>g.id===id);
   currentPage="detail";
   render();
   window.scrollTo({top:0,behavior:"smooth"});
 }
+
 function refreshHeader() {
   document.getElementById("topUsername").textContent=profile.username;
   document.getElementById("topAvatar").textContent=profile.avatar||"🎮";
+
   document.querySelectorAll(".navbtn").forEach(btn=>{
-    btn.classList.toggle("active",btn.dataset.page===currentPage);
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page===currentPage
+    );
   });
 }
 
@@ -612,6 +863,7 @@ function refreshHeader() {
 
 function addMedia(container,game,type="icon") {
   let imagePath="";
+
   if(type==="featured") {
     imagePath=game.banner||game.image;
   } else if(type==="detail") {
@@ -625,10 +877,13 @@ function addMedia(container,game,type="icon") {
     img.src=imagePath;
     img.alt=game.name+" artwork";
     img.loading="lazy";
+
     img.onerror=()=>{
       img.remove();
       container.textContent=game.icon;
+      console.warn("Missing game image:",imagePath);
     };
+
     container.appendChild(img);
     return;
   }
@@ -662,24 +917,31 @@ function createGameCard(game) {
 
   const info=el("div","card-info");
   info.appendChild(el("h3","",game.name));
-  info.appendChild(el("p","muted small",game.genre+" · "+game.version));
+  info.appendChild(
+    el("p","muted small",game.genre+" · "+game.version)
+  );
 
   const tags=el("div","tags");
+
   for(const tag of game.tags.slice(0,3)) {
     tags.appendChild(el("span","tag",tag));
   }
+
   info.appendChild(tags);
   card.append(art,info);
 
   card.addEventListener("click",()=>openGame(game.id));
+
   card.addEventListener("keydown",event=>{
     if(event.key==="Enter"||event.key===" ") {
       event.preventDefault();
       openGame(game.id);
     }
   });
+
   return card;
 }
+
 function gameSection(title,items) {
   const section=el("section","section");
   const heading=el("div","section-head");
@@ -687,14 +949,18 @@ function gameSection(title,items) {
   section.appendChild(heading);
 
   if(!items.length) {
-    section.appendChild(el("div","empty","No games match your filters."));
+    section.appendChild(
+      el("div","empty","No games match your filters.")
+    );
     return section;
   }
 
   const grid=el("div","grid");
+
   for(const game of items) {
     grid.appendChild(createGameCard(game));
   }
+
   section.appendChild(grid);
   return section;
 }
@@ -707,33 +973,48 @@ function featuredSection() {
   const featuredGames=games.filter(
     game=>game.featured&&gameVisible(game)
   );
+
   if(!featuredGames.length) return el("div");
 
-  featureIndex=(featureIndex+featuredGames.length)%featuredGames.length;
-  const game=featuredGames[featureIndex];
+  featureIndex=
+    (featureIndex+featuredGames.length)%featuredGames.length;
 
+  const game=featuredGames[featureIndex];
   const section=el("section","featured");
+
   const media=el("div","feature-media");
   addMedia(media,game,"featured");
   section.appendChild(media);
+
   section.appendChild(el("div","feature-shade"));
 
   const info=el("div","feature-info");
-  info.appendChild(el("span","pill","FEATURED GAME"));
+
+  info.appendChild(
+    el("span","pill","FEATURED GAME")
+  );
+
   info.appendChild(el("h2","",game.name));
   info.appendChild(el("p","",game.description));
-  info.appendChild(button("VIEW GAME",()=>openGame(game.id)));
+
+  info.appendChild(
+    button("VIEW GAME",()=>openGame(game.id))
+  );
+
   section.appendChild(info);
 
   const controls=el("div","feature-controls");
+
   controls.appendChild(button("❮",()=>{
     featureIndex--;
     render();
   },""));
+
   controls.appendChild(button("❯",()=>{
     featureIndex++;
     render();
   },""));
+
   section.appendChild(controls);
   return section;
 }
@@ -744,20 +1025,29 @@ function featuredSection() {
 
 function filterBar() {
   const bar=el("div","filters");
-  const genres=["All","Shooter","Sports","Action","Racing","Cards"];
+
+  const genres=[
+    "All","Shooter","Sports",
+    "Action","Racing","Cards"
+  ];
 
   for(const genre of genres) {
-    const chip=button(genre,()=>{
+    bar.appendChild(button(genre,()=>{
       selectedGenre=genre;
       render();
-    },"chip"+(selectedGenre===genre?" active":""));
-    bar.appendChild(chip);
+    },"chip"+(selectedGenre===genre?" active":"")));
   }
 
-  bar.appendChild(el("span","muted small",hidden.length+" hidden game(s)"));
+  bar.appendChild(
+    el("span","muted small",hidden.length+" hidden game(s)")
+  );
+
   if(hidden.length) {
-    bar.appendChild(button("Restore Hidden",restoreGames,"chip"));
+    bar.appendChild(
+      button("Restore Hidden",restoreGames,"chip")
+    );
   }
+
   return bar;
 }
 
@@ -766,18 +1056,27 @@ function filterBar() {
 // ========================================
 
 function renderDiscover() {
-  content.appendChild(el("h1","","Discover Games"));
-  content.appendChild(el("p","muted",
+  content.appendChild(
+    el("h1","","Discover Games")
+  );
+
+  content.appendChild(el(
+    "p","muted",
     "Discover new experiences, explore your favourite genres, and find something worth playing."
   ));
 
-  if(!searchQuery) content.appendChild(featuredSection());
+  if(!searchQuery) {
+    content.appendChild(featuredSection());
+  }
 
   const section=el("section","section");
   section.appendChild(el("h2","","Browse Games"));
   section.appendChild(filterBar());
+
   content.appendChild(section);
-  content.appendChild(gameSection("Game Library",matchingGames()));
+  content.appendChild(
+    gameSection("Game Library",matchingGames())
+  );
 }
 
 // ========================================
@@ -785,15 +1084,24 @@ function renderDiscover() {
 // ========================================
 
 function renderRecommended() {
-  content.appendChild(el("h1","","Recommended For You"));
-  content.appendChild(el("p","muted",
+  content.appendChild(
+    el("h1","","Recommended For You")
+  );
+
+  content.appendChild(el(
+    "p","muted",
     "Recommendations based on games you've liked and genres you enjoy."
   ));
+
   content.appendChild(filterBar());
-  content.appendChild(gameSection("Your Picks",recommendedGames()));
+
+  content.appendChild(
+    gameSection("Your Picks",recommendedGames())
+  );
 
   if(!likes.length) {
-    content.appendChild(el("p","muted small",
+    content.appendChild(el(
+      "p","muted small",
       "Tip: Open a game and press Like to improve your recommendations."
     ));
   }
@@ -805,14 +1113,19 @@ function renderRecommended() {
 
 function renderDetail() {
   const game=selectedGame;
+
   if(!game) {
     setPage("discover");
     return;
   }
 
-  content.appendChild(button("← Back to Discover",
-    ()=>setPage("discover"),"btn secondary"
-  ));
+  content.appendChild(
+    button(
+      "← Back to Discover",
+      ()=>setPage("discover"),
+      "btn secondary"
+    )
+  );
 
   const hero=el("div","detail-hero");
   hero.style.marginTop="20px";
@@ -820,13 +1133,17 @@ function renderDetail() {
   content.appendChild(hero);
 
   const row=el("div","detail-row");
+
   const gameIcon=el("div","detail-icon");
   addMedia(gameIcon,game,"icon");
   row.appendChild(gameIcon);
 
   const title=el("div","detail-title");
   title.appendChild(el("h1","",game.name));
-  title.appendChild(el("p","muted",game.genre+" · "+game.version));
+  title.appendChild(el(
+    "p","muted",game.genre+" · "+game.version
+  ));
+
   row.appendChild(title);
 
   const join=document.createElement("a");
@@ -835,34 +1152,61 @@ function renderDetail() {
   join.href=game.url;
   join.target="_blank";
   join.rel="noopener noreferrer";
+
   row.appendChild(join);
   content.appendChild(row);
 
   const actions=el("div","filters");
+
   actions.appendChild(button(
     likes.includes(game.id)?"♥ Liked":"♡ Like Game",
-    ()=>toggleLike(game.id),"chip"
+    ()=>toggleLike(game.id),
+    "chip"
   ));
+
   actions.appendChild(button(
-    "🚫 Not Interested",()=>hideGame(game.id),"chip"
+    "🚫 Not Interested",
+    ()=>hideGame(game.id),
+    "chip"
   ));
+
   content.appendChild(actions);
 
   const about=el("div","panel");
-  about.appendChild(el("h2","","About This Game"));
-  about.appendChild(el("p","",game.description));
+  about.appendChild(
+    el("h2","","About This Game")
+  );
+
+  about.appendChild(
+    el("p","",game.description)
+  );
+
   const tags=el("div","tags");
+
   for(const tag of game.tags) {
     tags.appendChild(el("span","tag",tag));
   }
+
   about.appendChild(tags);
   content.appendChild(about);
 
   const details=el("div","panel");
-  details.appendChild(el("h2","","Game Information"));
-  details.appendChild(el("p","","Genre: "+game.genre));
-  details.appendChild(el("p","","Players: "+game.players));
-  details.appendChild(el("p","","Version: "+game.version));
+  details.appendChild(
+    el("h2","","Game Information")
+  );
+
+  details.appendChild(
+    el("p","","Genre: "+game.genre)
+  );
+
+  details.appendChild(
+    el("p","","Players: "+game.players)
+  );
+
+  details.appendChild(
+    el("p","","Version: "+game.version)
+  );
+
   content.appendChild(details);
 }
 
@@ -872,16 +1216,28 @@ function renderDetail() {
 
 function renderProfile() {
   content.appendChild(el("h1","","My Profile"));
+
   const panel=el("div","panel");
   const head=el("div","profile-head");
-  head.appendChild(el("div","profile-avatar",profile.avatar));
+
+  head.appendChild(
+    el("div","profile-avatar",profile.avatar)
+  );
 
   const text=el("div");
-  text.appendChild(el("h2","",profile.username));
-  text.appendChild(el("p","muted",profile.bio));
+  text.appendChild(
+    el("h2","",profile.username)
+  );
+  text.appendChild(
+    el("p","muted",profile.bio)
+  );
+
   head.appendChild(text);
   panel.appendChild(head);
-  panel.appendChild(el("h3","","Edit Profile"));
+
+  panel.appendChild(
+    el("h3","","Edit Profile")
+  );
 
   const username=document.createElement("input");
   username.className="field";
@@ -900,24 +1256,36 @@ function renderProfile() {
   avatar.placeholder="Avatar emoji";
   avatar.maxLength=8;
   avatar.value=profile.avatar;
+
   panel.append(username,bio,avatar);
 
   panel.appendChild(button("Save Profile",()=>{
     profile.username=username.value.trim()||"Guest";
     profile.bio=bio.value.trim();
     profile.avatar=avatar.value.trim()||"🎮";
+
     save("profile",profile);
-    notifications.unshift("Your profile was updated.");
+
+    notifications.unshift(
+      "Your profile was updated."
+    );
+
     save("notifications",notifications);
     render();
   }));
+
   content.appendChild(panel);
 
   const info=el("div","panel");
-  info.appendChild(el("h2","","Account Information"));
-  info.appendChild(el("p","muted",
-    "This profile is saved locally in your browser. It is not yet a registered online account."
+  info.appendChild(
+    el("h2","","Account Information")
+  );
+
+  info.appendChild(el(
+    "p","muted",
+    "Your profile, likes and friends are saved locally on this device. Online account sign-in does not yet sync these settings."
   ));
+
   content.appendChild(info);
 }
 
@@ -927,45 +1295,61 @@ function renderProfile() {
 
 function renderFriends() {
   content.appendChild(el("h1","","Friends"));
-  content.appendChild(el("p","muted",
+
+  content.appendChild(el(
+    "p","muted",
     "A preview of the future Game Hub friends system."
   ));
 
   const panel=el("div","panel");
-  panel.appendChild(el("h2","","Friends List"));
+  panel.appendChild(
+    el("h2","","Friends List")
+  );
 
   const input=document.createElement("input");
   input.className="field";
   input.placeholder="Friend's username (demo)";
   input.maxLength=24;
+
   panel.appendChild(input);
 
   panel.appendChild(button("Add Demo Friend",()=>{
     const name=input.value.trim();
+
     if(!name||friends.includes(name)) return;
+
     friends.push(name);
     save("friends",friends);
     render();
   }));
 
   if(!friends.length) {
-    panel.appendChild(el("p","muted","No demo friends yet."));
+    panel.appendChild(
+      el("p","muted","No demo friends yet.")
+    );
   }
 
   for(const friend of friends) {
     const row=el("div","friend-row");
-    row.appendChild(el("span","","👤 "+friend));
+
+    row.appendChild(
+      el("span","","👤 "+friend)
+    );
+
     row.appendChild(button("Remove",()=>{
       friends=friends.filter(x=>x!==friend);
       save("friends",friends);
       render();
     },"btn secondary"));
+
     panel.appendChild(row);
   }
 
-  panel.appendChild(el("p","muted small",
-    "Demo friends are saved only on this device. Real friend requests and online status require accounts and a backend."
+  panel.appendChild(el(
+    "p","muted small",
+    "Demo friends are saved only on this device. Real friend requests require a backend."
   ));
+
   content.appendChild(panel);
 }
 
@@ -974,19 +1358,38 @@ function renderFriends() {
 // ========================================
 
 function renderInventory() {
-  content.appendChild(el("h1","","Inventory"));
-  content.appendChild(el("p","muted",
+  content.appendChild(
+    el("h1","","Inventory")
+  );
+
+  content.appendChild(el(
+    "p","muted",
     "Your future collection of skins and cosmetics."
   ));
 
   const panel=el("div","panel");
-  panel.appendChild(el("h2","","Coming Soon"));
-  panel.appendChild(el("p","","🎯 Counter Opps: Weapon skins"));
-  panel.appendChild(el("p","","🚗 Boostball: Car bodies, decals and goal explosions"));
-  panel.appendChild(el("p","","🃏 Card Chaos: Character skins and effects"));
-  panel.appendChild(el("p","muted small",
-    "Shared inventories will be added after proper user accounts are implemented."
+
+  panel.appendChild(
+    el("h2","","Coming Soon")
+  );
+
+  panel.appendChild(
+    el("p","","🎯 Counter Opps: Weapon skins")
+  );
+
+  panel.appendChild(
+    el("p","","🚗 Boostball: Car bodies, decals and goal explosions")
+  );
+
+  panel.appendChild(
+    el("p","","🃏 Card Chaos: Character skins and effects")
+  );
+
+  panel.appendChild(el(
+    "p","muted small",
+    "Shared inventories will be added after online accounts and a database are implemented."
   ));
+
   content.appendChild(panel);
 }
 
@@ -995,26 +1398,39 @@ function renderInventory() {
 // ========================================
 
 function renderNotifications() {
-  content.appendChild(el("h1","","Notifications"));
+  content.appendChild(
+    el("h1","","Notifications")
+  );
+
   const panel=el("div","panel");
 
   for(const notification of notifications.slice(0,20)) {
-    panel.appendChild(el("div","notice",notification));
+    panel.appendChild(
+      el("div","notice",notification)
+    );
   }
 
   if(!notifications.length) {
-    panel.appendChild(el("p","muted","No notifications."));
+    panel.appendChild(
+      el("p","muted","No notifications.")
+    );
   }
 
-  panel.appendChild(button("Clear Notifications",()=>{
-    notifications=[];
-    save("notifications",notifications);
-    render();
-  },"btn secondary"));
+  panel.appendChild(button(
+    "Clear Notifications",
+    ()=>{
+      notifications=[];
+      save("notifications",notifications);
+      render();
+    },
+    "btn secondary"
+  ));
 
-  panel.appendChild(el("p","muted small",
+  panel.appendChild(el(
+    "p","muted small",
     "These are local app notifications, not online messages."
   ));
+
   content.appendChild(panel);
 }
 
@@ -1026,13 +1442,21 @@ function render() {
   content.innerHTML="";
   refreshHeader();
 
-  if(currentPage==="discover") renderDiscover();
-  else if(currentPage==="recommended") renderRecommended();
-  else if(currentPage==="detail") renderDetail();
-  else if(currentPage==="profile") renderProfile();
-  else if(currentPage==="friends") renderFriends();
-  else if(currentPage==="inventory") renderInventory();
-  else if(currentPage==="notifications") renderNotifications();
+  if(currentPage==="discover") {
+    renderDiscover();
+  } else if(currentPage==="recommended") {
+    renderRecommended();
+  } else if(currentPage==="detail") {
+    renderDetail();
+  } else if(currentPage==="profile") {
+    renderProfile();
+  } else if(currentPage==="friends") {
+    renderFriends();
+  } else if(currentPage==="inventory") {
+    renderInventory();
+  } else if(currentPage==="notifications") {
+    renderNotifications();
+  }
 }
 
 // ========================================
@@ -1040,16 +1464,156 @@ function render() {
 // ========================================
 
 document.querySelectorAll(".navbtn").forEach(btn=>{
-  btn.addEventListener("click",()=>setPage(btn.dataset.page));
+  btn.addEventListener(
+    "click",
+    ()=>setPage(btn.dataset.page)
+  );
 });
 
-document.getElementById("search").addEventListener("input",event=>{
-  searchQuery=event.target.value;
-  if(currentPage!=="recommended") currentPage="discover";
-  render();
-});
+document.getElementById("search").addEventListener(
+  "input",
+  event=>{
+    searchQuery=event.target.value;
+
+    if(currentPage!=="recommended") {
+      currentPage="discover";
+    }
+
+    render();
+  }
+);
 
 render();
 </script>
+
+<!-- FIREBASE ACCOUNT SYSTEM -->
+
+<script type="module">
+import {initializeApp} from
+  "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from
+  "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+// REPLACE THESE VALUES WITH YOUR FIREBASE CONFIGURATION.
+
+const firebaseConfig={
+  apiKey:"PASTE_API_KEY",
+  authDomain:"PASTE_PROJECT_ID.firebaseapp.com",
+  projectId:"PASTE_PROJECT_ID",
+  appId:"PASTE_APP_ID"
+};
+
+const configured=
+  !Object.values(firebaseConfig).some(
+    value=>value.includes("PASTE_")
+  );
+
+const overlay=document.getElementById("authOverlay");
+const message=document.getElementById("authMessage");
+const email=document.getElementById("authEmail");
+const password=document.getElementById("authPassword");
+const signInBtn=document.getElementById("signInButton");
+const signOutBtn=document.getElementById("signOutButton");
+
+let auth=null;
+
+function showMessage(text) {
+  message.textContent=text;
+}
+
+function openAuth() {
+  overlay.hidden=false;
+  showMessage(
+    configured
+      ?""
+      :"Owner setup required: configure Firebase first."
+  );
+}
+
+signInBtn.addEventListener("click",openAuth);
+
+document.getElementById("closeAuthButton")
+  .addEventListener("click",()=>{
+    overlay.hidden=true;
+  });
+
+async function submitAuth(mode) {
+  if(!auth) {
+    showMessage(
+      "Accounts are not configured yet. Add your Firebase settings."
+    );
+    return;
+  }
+
+  if(!email.value.trim()||!password.value) {
+    showMessage("Enter your email and password.");
+    return;
+  }
+
+  showMessage("Please wait...");
+
+  try {
+    if(mode==="register") {
+      await createUserWithEmailAndPassword(
+        auth,email.value.trim(),password.value
+      );
+    } else {
+      await signInWithEmailAndPassword(
+        auth,email.value.trim(),password.value
+      );
+    }
+
+    password.value="";
+    overlay.hidden=true;
+  } catch(error) {
+    showMessage(
+      error.code
+        ?error.code.replace("auth/","").replaceAll("-"," ")
+        :"Could not sign in."
+    );
+  }
+}
+
+document.getElementById("loginButton")
+  .addEventListener("click",()=>submitAuth("login"));
+
+document.getElementById("registerButton")
+  .addEventListener("click",()=>submitAuth("register"));
+
+signOutBtn.addEventListener("click",async()=>{
+  if(auth) {
+    await signOut(auth);
+  }
+});
+
+if(configured) {
+  try {
+    auth=getAuth(initializeApp(firebaseConfig));
+
+    onAuthStateChanged(auth,user=>{
+      signInBtn.hidden=!!user;
+      signOutBtn.hidden=!user;
+
+      if(user) {
+        document.getElementById("topUsername")
+          .textContent=user.email||"Player";
+      } else {
+        document.getElementById("topUsername")
+          .textContent=profile.username;
+      }
+    });
+  } catch(error) {
+    console.error("Firebase setup error:",error);
+  }
+}
+</script>
+
 </body>
 </html>
