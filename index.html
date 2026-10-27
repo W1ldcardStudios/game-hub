@@ -4,12 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Game Hub v3.5</title>
+<title>Game Hub v3.5.1</title>
 <style>
 :root{
-  --bg:#080d17;--side:#101929;--panel:#152136;
-  --panel2:#1e304b;--line:#32445e;--text:#f5f8ff;
-  --muted:#9eb1cb;--blue:#529cff;--green:#5ce0aa
+ --bg:#080d17;--side:#101929;--panel:#152136;
+ --panel2:#1e304b;--line:#32445e;--text:#f5f8ff;
+ --muted:#9eb1cb;--blue:#529cff;--green:#5ce0aa
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif}
@@ -95,7 +95,7 @@ footer{text-align:center;padding:30px;color:#8195b0}
 
 <div class="main">
  <header class="topbar">
-  <strong>🎮 Game Hub v3.5</strong>
+  <strong>🎮 Game Hub v3.5.1</strong>
   <div class="row">
    <span id="headerName" class="muted">Guest</span>
    <button class="btn" id="authButton">Sign In</button>
@@ -104,7 +104,7 @@ footer{text-align:center;padding:30px;color:#8195b0}
  </header>
 
  <main class="content" id="content"></main>
- <footer>Game Hub v3.5 · Friends · Skins · Community</footer>
+ <footer>Game Hub v3.5.1 · Friends · Skins · Community</footer>
 </div>
 </div>
 
@@ -112,8 +112,8 @@ footer{text-align:center;padding:30px;color:#8195b0}
  <div class="modal">
   <h2>Game Hub Account</h2>
   <p class="muted">Sign in or create your account.</p>
-  <input id="email" class="field" type="email" placeholder="Email">
-  <input id="password" class="field" type="password" placeholder="Password">
+  <input id="email" class="field" type="email" placeholder="Email" autocomplete="email">
+  <input id="password" class="field" type="password" placeholder="Password" autocomplete="current-password">
   <input id="username" class="field" placeholder="New username (3–20 letters, numbers or _)">
   <p class="small muted">Username is only required when creating an account.</p>
   <div class="row">
@@ -151,8 +151,6 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-// GAME LIBRARY
-
 const games=[
  {
   id:"counter",name:"Counter Opps",icon:"🎯",
@@ -180,8 +178,6 @@ const games=[
   url:"https://himynameishitler.github.io/card-chaos/"
  }
 ];
-
-// COSMETIC SKINS
 
 const skins=[
  {id:"classic",name:"Classic",emoji:"🎮",type:"free"},
@@ -254,14 +250,32 @@ function setStatus(value){
  content.prepend(p);
 }
 
+function openAuth(){
+ $("authOverlay").hidden=false;
+ $("authError").textContent="";
+}
+
 function requireLogin(){
- if(currentUser&&profile)return true;
- openAuth();
- return false;
+ if(!currentUser){
+  openAuth();
+  return false;
+ }
+
+ if(!profile){
+  page="setup";
+  render();
+  return false;
+ }
+
+ return true;
 }
 
 function go(next){
- page=next;
+ if(currentUser&&!profile&&next!=="discover"){
+  page="setup";
+ }else{
+  page=next;
+ }
  render();
  window.scrollTo(0,0);
 }
@@ -271,10 +285,14 @@ function image(container,path,fallback){
   container.textContent=fallback;
   return;
  }
+
  const img=new Image();
  img.alt="Game artwork";
  img.src=encodeURI(path);
- img.onerror=()=>{container.textContent=fallback;};
+ img.onerror=()=>{
+  container.textContent=fallback;
+ };
+
  container.appendChild(img);
 }
 
@@ -294,8 +312,13 @@ function requestId(sender,receiver){
 async function userByName(name){
  const ref=doc(db,"usernames",name.toLowerCase());
  const snap=await getDoc(ref);
+
  if(!snap.exists())return null;
- const userSnap=await getDoc(doc(db,"users",snap.data().uid));
+
+ const userSnap=await getDoc(
+  doc(db,"users",snap.data().uid)
+ );
+
  return userSnap.exists()
   ?{id:userSnap.id,...userSnap.data()}
   :null;
@@ -303,6 +326,7 @@ async function userByName(name){
 
 async function getPlayer(uid){
  const snap=await getDoc(doc(db,"users",uid));
+
  return snap.exists()
   ?{id:snap.id,...snap.data()}
   :null;
@@ -312,7 +336,9 @@ function playerRow(parent,p,actions=[]){
  const r=node("div","userrow");
  const left=node("div","row");
 
- left.appendChild(node("div","avatar",userAvatar(p)));
+ left.appendChild(
+  node("div","avatar",userAvatar(p))
+ );
 
  const info=node("div");
  text(info,"strong",p.username||"Unknown player");
@@ -333,12 +359,9 @@ function playerRow(parent,p,actions=[]){
  parent.appendChild(r);
 }
 
-// ACCOUNT SYSTEM
-
-function openAuth(){
- $("authOverlay").hidden=false;
- $("authError").textContent="";
-}
+// =====================================
+// FIREBASE AUTHENTICATION
+// =====================================
 
 $("authButton").onclick=openAuth;
 
@@ -381,9 +404,7 @@ $("register").onclick=async()=>{
    $("password").value
   );
 
-  const uid=result.user.uid;
-
-  await createProfile(uid,name);
+  await createProfile(result.user.uid,name);
 
   $("authOverlay").hidden=true;
   $("password").value="";
@@ -396,13 +417,19 @@ $("register").onclick=async()=>{
 
 $("logoutButton").onclick=async()=>{
  await signOut(auth);
- go("discover");
+ page="discover";
+ render();
 };
+
+// =====================================
+// CLOUD PROFILE CREATION
+// =====================================
 
 async function createProfile(uid,name){
  const usernameRef=doc(
   db,"usernames",name.toLowerCase()
  );
+
  const userRef=doc(db,"users",uid);
 
  await runTransaction(db,async tx=>{
@@ -440,7 +467,14 @@ async function refreshUser(){
  if(currentUser){
   const token=await currentUser.getIdTokenResult(true);
   isAdmin=token.claims.admin===true;
+
   profile=await getPlayer(currentUser.uid);
+
+  if(!profile){
+   page="setup";
+  }
+ }else{
+  page="discover";
  }
 
  $("headerName").textContent=
@@ -460,11 +494,15 @@ onAuthStateChanged(auth,async user=>{
   await refreshUser();
  }catch(e){
   console.error(e);
-  setStatus("Account loading failed: "+errorText(e));
+  setStatus(
+   "Account loading failed: "+errorText(e)
+  );
  }
 });
 
+// =====================================
 // NAVIGATION
+// =====================================
 
 function render(){
  content.replaceChildren();
@@ -478,6 +516,7 @@ function render(){
 
  if(page==="discover")renderDiscover();
  else if(page==="detail")renderDetail();
+ else if(page==="setup")renderSetup();
  else if(page==="friends")renderFriends();
  else if(page==="inventory")renderInventory();
  else if(page==="profile")renderProfile();
@@ -489,7 +528,69 @@ document.querySelectorAll(".nav").forEach(b=>{
  b.onclick=()=>go(b.dataset.page);
 });
 
-// GAME CARDS
+// =====================================
+// MISSING PROFILE SETUP SCREEN
+// =====================================
+
+function renderSetup(){
+ text(
+  content,
+  "h1",
+  "Complete Your Game Hub Profile"
+ );
+
+ const p=panel(content,"Choose Your Username");
+
+ message(
+  p,
+  "Your Firebase account is connected. Choose a unique username to activate your Game Hub profile, friends and skins."
+ );
+
+ const username=field("Choose a username");
+ username.maxLength=20;
+ p.appendChild(username);
+
+ const status=node("p","muted small");
+ p.appendChild(status);
+
+ p.appendChild(btn("Create Profile",async()=>{
+  if(!currentUser){
+   status.textContent="Please sign in first.";
+   return;
+  }
+
+  const name=username.value.trim();
+
+  if(!usernameValid(name)){
+   status.textContent=
+    "Use 3–20 letters, numbers or underscores.";
+   return;
+  }
+
+  status.textContent="Creating your profile...";
+
+  try{
+   await createProfile(currentUser.uid,name);
+
+   profile=await getPlayer(currentUser.uid);
+
+   if(!profile){
+    throw Error("Profile could not be loaded.");
+   }
+
+   $("headerName").textContent=profile.username;
+
+   page="profile";
+   render();
+  }catch(error){
+   status.textContent=errorText(error);
+  }
+ }));
+}
+
+// =====================================
+// GAME LIBRARY
+// =====================================
 
 function gameCard(g){
  const card=node("div","card");
@@ -513,7 +614,11 @@ function gameCard(g){
 
 function renderDiscover(){
  text(content,"h1","Discover Games");
- message(content,"Find your next favourite game.");
+
+ message(
+  content,
+  "Find your next favourite game."
+ );
 
  const featured=games[0];
  const feature=node("section","feature");
@@ -541,7 +646,11 @@ function renderDiscover(){
  text(content,"h2","Game Library");
 
  const grid=node("div","grid");
- games.forEach(g=>grid.appendChild(gameCard(g)));
+
+ games.forEach(g=>{
+  grid.appendChild(gameCard(g));
+ });
+
  content.appendChild(grid);
 }
 
@@ -554,13 +663,22 @@ function renderDetail(){
  }
 
  content.appendChild(
-  btn("← Back",()=>go("discover"),"btn secondary")
+  btn(
+   "← Back",
+   ()=>go("discover"),
+   "btn secondary"
+  )
  );
 
  const hero=node("div","hero");
  hero.style.marginTop="18px";
 
- image(hero,g.detail||g.banner||g.image,g.icon);
+ image(
+  hero,
+  g.detail||g.banner||g.image,
+  g.icon
+ );
+
  content.appendChild(hero);
 
  const p=panel(content,g.name);
@@ -569,6 +687,7 @@ function renderDetail(){
  text(p,"p","Genre: "+g.genre);
 
  const link=node("a","btn","▶ Play Game");
+
  link.href=g.url;
  link.target="_blank";
  link.rel="noopener noreferrer";
@@ -576,26 +695,24 @@ function renderDetail(){
  p.appendChild(link);
 }
 
-// PLAYER PROFILE
+// =====================================
+// PROFILE
+// =====================================
 
 function renderProfile(){
  text(content,"h1","My Profile");
 
  if(!requireLogin())return;
 
- if(!profile){
-  message(
-   content,
-   "Your account needs a profile. If registration failed, contact the site administrator."
-  );
-  return;
- }
-
  const p=panel(content,"Player Profile");
  const r=node("div","row");
 
  r.appendChild(
-  node("div","avatar bigavatar",userAvatar(profile))
+  node(
+   "div",
+   "avatar bigavatar",
+   userAvatar(profile)
+  )
  );
 
  const info=node("div");
@@ -617,24 +734,32 @@ function renderProfile(){
   try{
    await updateDoc(
     doc(db,"users",currentUser.uid),
-    {bio:bio.value.trim().slice(0,120)}
+    {
+     bio:bio.value.trim().slice(0,120)
+    }
    );
 
    profile=await getPlayer(currentUser.uid);
+
    setStatus("Profile updated!");
   }catch(e){
    setStatus(errorText(e));
   }
  }));
 
- message(p,"Username changes are not available yet.");
+ message(
+  p,
+  "Your username is permanent for now."
+ );
 
  if(isAdmin){
   text(p,"p","🛡️ Administrator","tag");
  }
 }
 
-// FRIEND REQUESTS
+// =====================================
+// REAL FRIEND REQUESTS
+// =====================================
 
 async function sendRequest(target){
  if(!requireLogin())return;
@@ -644,15 +769,21 @@ async function sendRequest(target){
   return;
  }
 
- const id=requestId(currentUser.uid,target.id);
+ const id=requestId(
+  currentUser.uid,
+  target.id
+ );
 
  try{
-  await setDoc(doc(db,"friendRequests",id),{
-   sender:currentUser.uid,
-   receiver:target.id,
-   status:"pending",
-   createdAt:serverTimestamp()
-  });
+  await setDoc(
+   doc(db,"friendRequests",id),
+   {
+    sender:currentUser.uid,
+    receiver:target.id,
+    status:"pending",
+    createdAt:serverTimestamp()
+   }
+  );
 
   setStatus(
    "Friend request sent to "+target.username+"!"
@@ -664,10 +795,15 @@ async function sendRequest(target){
 
 async function respondToRequest(id,action){
  try{
-  const ref=doc(db,"friendRequests",id);
+  const ref=doc(
+   db,"friendRequests",id
+  );
 
   if(action==="accept"){
-   await updateDoc(ref,{status:"accepted"});
+   await updateDoc(
+    ref,
+    {status:"accepted"}
+   );
   }else{
    await deleteDoc(ref);
   }
@@ -686,10 +822,15 @@ function renderFriends(){
  text(content,"h1","Friends");
 
  if(!requireLogin())return;
- if(!profile)return;
 
- const search=panel(content,"Find Players");
- const input=field("Search exact username");
+ const search=panel(
+  content,
+  "Find Players"
+ );
+
+ const input=field(
+  "Search exact username"
+ );
 
  search.appendChild(input);
 
@@ -701,7 +842,10 @@ function renderFriends(){
   const name=input.value.trim();
 
   if(!usernameValid(name)){
-   message(results,"Enter a valid username.");
+   message(
+    results,
+    "Enter a valid username."
+   );
    return;
   }
 
@@ -709,7 +853,10 @@ function renderFriends(){
    const p=await userByName(name);
 
    if(!p){
-    message(results,"Player not found.");
+    message(
+     results,
+     "Player not found."
+    );
     return;
    }
 
@@ -724,13 +871,22 @@ function renderFriends(){
 
  search.appendChild(results);
 
- const incoming=panel(content,"Incoming Requests");
+ const incoming=panel(
+  content,
+  "Incoming Requests"
+ );
  incoming.id="incomingRequests";
 
- const outgoing=panel(content,"Sent Requests");
+ const outgoing=panel(
+  content,
+  "Sent Requests"
+ );
  outgoing.id="outgoingRequests";
 
- const accepted=panel(content,"Your Friends");
+ const accepted=panel(
+  content,
+  "Your Friends"
+ );
  accepted.id="acceptedFriends";
 
  loadFriends();
@@ -745,7 +901,11 @@ async function loadFriends(){
 
  if(!incoming||!outgoing||!accepted)return;
 
- for(const box of [incoming,outgoing,accepted]){
+ for(const box of [
+  incoming,
+  outgoing,
+  accepted
+ ]){
   while(box.children.length>1){
    box.lastChild.remove();
   }
@@ -775,22 +935,33 @@ async function loadFriends(){
    });
   });
 
-  for(const box of [incoming,outgoing,accepted]){
+  for(const box of [
+   incoming,
+   outgoing,
+   accepted
+  ]){
    while(box.children.length>1){
     box.lastChild.remove();
    }
   }
 
-  const requests=[...all.values()];
+  const requests=[
+   ...all.values()
+  ];
 
   if(!requests.length){
-   message(accepted,"No friends yet.");
+   message(
+    accepted,
+    "No friends yet."
+   );
    return;
   }
 
   for(const req of requests){
    const otherId=
-    req.sender===uid?req.receiver:req.sender;
+    req.sender===uid
+     ?req.receiver
+     :req.sender;
 
    const p=await getPlayer(otherId);
 
@@ -805,33 +976,50 @@ async function loadFriends(){
     playerRow(incoming,p,[
      {
       label:"Accept",
-      run:()=>respondToRequest(req.id,"accept")
+      run:()=>respondToRequest(
+       req.id,
+       "accept"
+      )
      },
      {
       label:"Decline",
-      run:()=>respondToRequest(req.id,"decline"),
+      run:()=>respondToRequest(
+       req.id,
+       "decline"
+      ),
       cls:"btn secondary"
      }
     ]);
    }else{
     playerRow(outgoing,p,[{
      label:"Cancel",
-     run:()=>respondToRequest(req.id,"cancel")
+     run:()=>respondToRequest(
+      req.id,
+      "cancel"
+     )
     }]);
    }
   }
  }catch(e){
   setStatus(
-   "Could not load friends: "+errorText(e)
+   "Could not load friends: "+
+   errorText(e)
   );
  }
 }
 
-// SKIN INVENTORY
+// =====================================
+// CLOUD SKIN INVENTORY
+// =====================================
 
 async function ownedSkins(uid){
  const snap=await getDocs(
-  collection(db,"users",uid,"inventory")
+  collection(
+   db,
+   "users",
+   uid,
+   "inventory"
+  )
  );
 
  return new Set(
@@ -843,14 +1031,24 @@ async function claimFreeSkin(skinId){
  if(!requireLogin())return;
 
  try{
-  const skin=skins.find(s=>s.id===skinId);
+  const skin=skins.find(
+   s=>s.id===skinId
+  );
 
   if(!skin||skin.type!=="free"){
-   throw Error("Not a free skin.");
+   throw Error(
+    "Not a free skin."
+   );
   }
 
   await setDoc(
-   doc(db,"users",currentUser.uid,"inventory",skinId),
+   doc(
+    db,
+    "users",
+    currentUser.uid,
+    "inventory",
+    skinId
+   ),
    {
     skinId,
     source:"free"
@@ -869,31 +1067,52 @@ async function equipSkin(skinId){
  try{
   if(skinId!=="classic"){
    const owned=await getDoc(
-    doc(db,"users",currentUser.uid,"inventory",skinId)
+    doc(
+     db,
+     "users",
+     currentUser.uid,
+     "inventory",
+     skinId
+    )
    );
 
    if(!owned.exists()){
-    throw Error("Skin not owned.");
+    throw Error(
+     "Skin not owned."
+    );
    }
   }
 
   await updateDoc(
-   doc(db,"users",currentUser.uid),
-   {equipped:skinId}
+   doc(
+    db,
+    "users",
+    currentUser.uid
+   ),
+   {
+    equipped:skinId
+   }
   );
 
-  profile=await getPlayer(currentUser.uid);
+  profile=await getPlayer(
+   currentUser.uid
+  );
 
   await loadInventory();
 
-  $("headerName").textContent=profile.username;
+  $("headerName").textContent=
+   profile.username;
  }catch(e){
   setStatus(errorText(e));
  }
 }
 
 function renderInventory(){
- text(content,"h1","Skin Inventory");
+ text(
+  content,
+  "h1",
+  "Skin Inventory"
+ );
 
  if(!requireLogin())return;
 
@@ -918,7 +1137,9 @@ async function loadInventory(){
  grid.replaceChildren();
 
  try{
-  const owned=await ownedSkins(currentUser.uid);
+  const owned=await ownedSkins(
+   currentUser.uid
+  );
 
   for(const skin of skins){
    const has=
@@ -928,39 +1149,64 @@ async function loadInventory(){
    const card=node(
     "div",
     "skin"+(
-     profile?.equipped===skin.id?" equipped":""
+     profile?.equipped===skin.id
+      ?" equipped"
+      :""
     )
    );
 
    const preview=node(
-    "div","skin-preview",skin.emoji
+    "div",
+    "skin-preview",
+    skin.emoji
    );
 
    card.appendChild(preview);
 
-   text(card,"h3",skin.name);
+   text(
+    card,
+    "h3",
+    skin.name
+   );
 
    text(
-    card,"p",
-    skin.type==="free"?"Free":"Admin Exclusive",
+    card,
+    "p",
+    skin.type==="free"
+     ?"Free"
+     :"Admin Exclusive",
     "muted small"
    );
 
    if(profile?.equipped===skin.id){
     card.appendChild(
-     btn("Equipped",()=>{},"btn secondary")
+     btn(
+      "Equipped",
+      ()=>{},
+      "btn secondary"
+     )
     );
    }else if(has){
     card.appendChild(
-     btn("Equip",()=>equipSkin(skin.id))
+     btn(
+      "Equip",
+      ()=>equipSkin(skin.id)
+     )
     );
    }else if(skin.type==="free"){
     card.appendChild(
-     btn("Claim Free",()=>claimFreeSkin(skin.id))
+     btn(
+      "Claim Free",
+      ()=>claimFreeSkin(skin.id)
+     )
     );
    }else{
     card.appendChild(
-     btn("Locked",()=>{},"btn secondary")
+     btn(
+      "Locked",
+      ()=>{},
+      "btn secondary"
+     )
     );
    }
 
@@ -971,12 +1217,22 @@ async function loadInventory(){
  }
 }
 
-// NEWS AND ANNOUNCEMENTS
+// =====================================
+// ANNOUNCEMENTS
+// =====================================
 
 function renderAnnouncements(){
- text(content,"h1","Game Hub News");
+ text(
+  content,
+  "h1",
+  "Game Hub News"
+ );
 
- const list=panel(content,"Announcements");
+ const list=panel(
+  content,
+  "Announcements"
+ );
+
  list.id="newsList";
 
  loadAnnouncements();
@@ -989,142 +1245,227 @@ async function loadAnnouncements(){
 
  try{
   const snap=await getDocs(query(
-   collection(db,"announcements"),
-   orderBy("createdAt","desc"),
+   collection(
+    db,
+    "announcements"
+   ),
+   orderBy(
+    "createdAt",
+    "desc"
+   ),
    limit(20)
   ));
 
   if(snap.empty){
-   message(list,"No announcements yet.");
+   message(
+    list,
+    "No announcements yet."
+   );
   }
 
   snap.forEach(d=>{
-   const p=node("div","notice");
-
-   text(
-    p,"h3",
-    d.data().title||"Announcement"
+   const p=node(
+    "div",
+    "notice"
    );
 
    text(
-    p,"p",
+    p,
+    "h3",
+    d.data().title||
+    "Announcement"
+   );
+
+   text(
+    p,
+    "p",
     d.data().body||""
    );
 
    list.appendChild(p);
   });
  }catch(e){
-  message(list,errorText(e));
+  message(
+   list,
+   errorText(e)
+  );
  }
 }
 
-// ADMIN DASHBOARD
+// =====================================
+// SECURE ADMIN DASHBOARD
+// =====================================
 
 function renderAdmin(){
- text(content,"h1","🛡️ Admin Dashboard");
+ text(
+  content,
+  "h1",
+  "🛡️ Admin Dashboard"
+ );
 
  if(!isAdmin){
-  message(content,"Access denied.");
+  message(
+   content,
+   "Access denied."
+  );
   return;
  }
 
- const lookup=panel(content,"Player Management");
- const search=field("Exact player username");
+ const lookup=panel(
+  content,
+  "Player Management"
+ );
+
+ const search=field(
+  "Exact player username"
+ );
 
  lookup.appendChild(search);
 
  const results=node("div");
 
- lookup.appendChild(btn("Find Player",async()=>{
-  results.replaceChildren();
+ lookup.appendChild(btn(
+  "Find Player",
+  async()=>{
+   results.replaceChildren();
 
-  try{
-   const p=await userByName(
-    search.value.trim()
-   );
+   try{
+    const p=await userByName(
+     search.value.trim()
+    );
 
-   if(!p){
-    message(results,"Player not found.");
-    return;
+    if(!p){
+     message(
+      results,
+      "Player not found."
+     );
+     return;
+    }
+
+    playerRow(results,p);
+
+    text(
+     results,
+     "h3",
+     "Grant Exclusive Skin"
+    );
+
+    for(const skin of skins.filter(
+     s=>s.type==="exclusive"
+    )){
+     results.appendChild(btn(
+      skin.emoji+" "+skin.name,
+      async()=>{
+       try{
+        await setDoc(
+         doc(
+          db,
+          "users",
+          p.id,
+          "inventory",
+          skin.id
+         ),
+         {
+          skinId:skin.id,
+          source:"admin",
+          grantedBy:currentUser.uid,
+          grantedAt:serverTimestamp()
+         }
+        );
+
+        setStatus(
+         "Granted "+
+         skin.name+
+         " to "+
+         p.username
+        );
+       }catch(e){
+        setStatus(
+         errorText(e)
+        );
+       }
+      },
+      "btn secondary"
+     ));
+    }
+   }catch(e){
+    message(
+     results,
+     errorText(e)
+    );
    }
-
-   playerRow(results,p);
-
-   text(results,"h3","Grant Exclusive Skin");
-
-   for(const skin of skins.filter(
-    s=>s.type==="exclusive"
-   )){
-    results.appendChild(btn(
-     skin.emoji+" "+skin.name,
-     async()=>{
-      try{
-       await setDoc(
-        doc(db,"users",p.id,"inventory",skin.id),
-        {
-         skinId:skin.id,
-         source:"admin",
-         grantedBy:currentUser.uid,
-         grantedAt:serverTimestamp()
-        }
-       );
-
-       setStatus(
-        "Granted "+skin.name+" to "+p.username
-       );
-      }catch(e){
-       setStatus(errorText(e));
-      }
-     },
-     "btn secondary"
-    ));
-   }
-  }catch(e){
-   message(results,errorText(e));
   }
- }));
+ ));
 
  lookup.appendChild(results);
 
  const announce=panel(
-  content,"Publish Announcement"
+  content,
+  "Publish Announcement"
  );
 
- const title=field("Announcement title");
+ const title=field(
+  "Announcement title"
+ );
+
  title.maxLength=100;
 
- const body=node("textarea","field");
- body.placeholder="Announcement message";
+ const body=node(
+  "textarea",
+  "field"
+ );
+
+ body.placeholder=
+  "Announcement message";
+
  body.rows=5;
  body.maxLength=1000;
 
- announce.append(title,body);
+ announce.append(
+  title,
+  body
+ );
 
- announce.appendChild(btn("Publish",async()=>{
-  if(!title.value.trim()||!body.value.trim()){
-   setStatus("Title and message required.");
-   return;
+ announce.appendChild(btn(
+  "Publish",
+  async()=>{
+   if(
+    !title.value.trim()||
+    !body.value.trim()
+   ){
+    setStatus(
+     "Title and message required."
+    );
+    return;
+   }
+
+   try{
+    await addDoc(
+     collection(
+      db,
+      "announcements"
+     ),
+     {
+      title:title.value.trim(),
+      body:body.value.trim(),
+      author:currentUser.uid,
+      createdAt:serverTimestamp()
+     }
+    );
+
+    title.value="";
+    body.value="";
+
+    setStatus(
+     "Announcement published!"
+    );
+   }catch(e){
+    setStatus(
+     errorText(e)
+    );
+   }
   }
-
-  try{
-   await addDoc(
-    collection(db,"announcements"),
-    {
-     title:title.value.trim(),
-     body:body.value.trim(),
-     author:currentUser.uid,
-     createdAt:serverTimestamp()
-    }
-   );
-
-   title.value="";
-   body.value="";
-
-   setStatus("Announcement published!");
-  }catch(e){
-   setStatus(errorText(e));
-  }
- }));
+ ));
 }
 
 render();
