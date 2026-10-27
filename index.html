@@ -3,147 +3,147 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Game Hub v4.0</title>
 <style>
-:root{
-  color-scheme:dark;
-  --bg:#080d18;--nav:#101a2b;--panel:#152238;
-  --line:#30425e;--text:#f5f8ff;--muted:#a5b7d0;
-  --accent:#569dff;--green:#58dfaa;--gold:#ffd479;
-}
+:root{color-scheme:dark;--bg:#080e1a;--panel:#152238;--line:#344865;--muted:#a9b9d0;--blue:#579dff}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif}
-button,input,textarea,select{font:inherit}
+body{margin:0;background:var(--bg);color:white;font-family:system-ui,Arial,sans-serif}
+button,input,textarea{font:inherit}
 button{cursor:pointer}
 button:disabled{opacity:.5;cursor:not-allowed}
-a{color:inherit;text-decoration:none}
 [hidden]{display:none!important}
+a{color:inherit;text-decoration:none}
 .layout{display:flex;min-height:100vh}
-.sidebar{width:215px;flex-shrink:0;background:var(--nav);border-right:1px solid var(--line);padding:18px 12px}
-.logo{font-size:25px;font-weight:900;margin:12px 10px 30px}
-.logo span{color:var(--accent)}
-.nav{display:block;width:100%;background:transparent;border:0;border-radius:10px;padding:13px;margin:5px 0;color:var(--muted);text-align:left}
-.nav:hover,.nav.active{background:#263d5e;color:white}
-.main{flex:1;min-width:0}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:17px 25px;background:var(--nav);border-bottom:1px solid var(--line)}
-.content{padding:26px;max-width:1450px;margin:auto}
-h1{margin:0 0 12px;font-size:32px}
-h2{margin:0 0 14px}
-h3{margin:0 0 8px}
+aside{width:210px;background:#101b2c;border-right:1px solid var(--line);padding:18px 12px;flex-shrink:0}
+.logo{font-size:25px;font-weight:900;margin:12px 8px 25px}
+.logo span{color:var(--blue)}
+.nav{display:block;width:100%;border:0;background:transparent;color:var(--muted);padding:13px;text-align:left;border-radius:10px;margin:5px 0}
+.nav:hover,.nav.active{background:#294569;color:white}
+main{flex:1;min-width:0}
+header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:17px 25px;background:#101b2c;border-bottom:1px solid var(--line)}
+#content{max-width:1350px;margin:auto;padding:24px}
+h1{margin:0 0 12px}h2{margin:0 0 12px}h3{margin:0 0 8px}
 p{line-height:1.5}
 .muted{color:var(--muted)}
-.small{font-size:13px}
-.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.btn{display:inline-block;background:#347edb;color:white;border:0;border-radius:9px;padding:11px 17px;font-weight:700;margin:3px}
-.btn:hover:not(:disabled){background:#579af0}
-.btn.secondary{background:#2a405d}
-.btn.danger{background:#a53c50}
-.field{display:block;width:100%;background:#0b1729;color:white;border:1px solid #425a7b;border-radius:9px;padding:12px;margin:10px 0}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:22px;margin:18px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;transition:.2s}
-.card:hover{transform:translateY(-3px);border-color:var(--accent)}
-.art{height:175px;background:linear-gradient(135deg,#334d74,#16253c);display:grid;place-items:center;font-size:70px;overflow:hidden}
+.btn{border:0;background:#347edb;color:white;padding:11px 16px;border-radius:9px;font-weight:700;margin:3px}
+.btn:hover:not(:disabled){background:#589cf1}
+.btn.secondary{background:#304660}
+.btn.danger{background:#a64054}
+.field{width:100%;padding:11px;background:#0c1829;border:1px solid #4c6281;border-radius:9px;color:white;margin:8px 0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:21px;margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.cardbody{padding:17px}
+.art{height:165px;display:grid;place-items:center;font-size:70px;background:linear-gradient(120deg,#314e7b,#152238)}
 .art img{width:100%;height:100%;object-fit:cover}
-.cardbody{padding:16px}
-.feature{position:relative;min-height:350px;background:#263b59;border-radius:18px;overflow:hidden;margin:22px 0}
+.feature{position:relative;min-height:340px;border-radius:17px;overflow:hidden;background:#203958;margin:20px 0}
 .feature>img{position:absolute;width:100%;height:100%;object-fit:cover}
-.shade{position:absolute;inset:0;background:linear-gradient(90deg,#080d18f5,#080d18bd,#080d1820)}
-.featureinfo{position:relative;padding:48px 35px;max-width:570px;z-index:1}
-.featureinfo h2{font-size:45px}
-.hero-controls{position:absolute;right:18px;bottom:18px;z-index:3;display:flex;gap:8px}
-.hero-controls button{width:42px;height:42px;border:1px solid #ffffff55;border-radius:50%;background:#101a2bde;color:white;font-size:20px}
-.hero-controls button:hover{background:#347edb}
-.tag{display:inline-block;background:#284a76;border-radius:30px;padding:5px 11px;font-size:12px;font-weight:800}
-.hero{height:350px;background:#253b5b;border-radius:16px;overflow:hidden;display:grid;place-items:center;font-size:100px;margin:20px 0}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,#080e1af5,#080e1acc,#080e1a10)}
+.featureinfo{position:relative;max-width:540px;padding:42px 32px}
+.featureinfo h2{font-size:42px}
+.controls{position:absolute;right:15px;bottom:15px;display:flex;gap:7px}
+.controls button{border:1px solid #ffffff66;border-radius:50%;width:43px;height:43px;background:#10223edc;color:white;font-size:20px}
+.hero{height:300px;background:#233a5a;border-radius:15px;overflow:hidden;display:grid;place-items:center;font-size:90px}
 .hero img{width:100%;height:100%;object-fit:cover}
-.userrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.avatar{height:50px;width:50px;flex-shrink:0;border-radius:50%;background:#304c70;display:grid;place-items:center;font-size:26px}
-.avatar.big{height:105px;width:105px;font-size:55px}
-.profile-banner{padding:30px;border-radius:16px;margin-bottom:20px;border:1px solid #ffffff30}
-.avatar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:12px;margin:18px 0}
-.avatar-choice{font-size:36px;padding:12px;border:2px solid transparent;background:#263d5e;border-radius:12px}
-.avatar-choice:hover{border-color:var(--accent)}
-.color-grid{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}
-.color-choice{width:48px;height:48px;border:3px solid #ffffff55;border-radius:12px}
-.skin{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px}
-.skin.selected{border-color:var(--green)}
-.skinart{height:100px;background:#243954;border-radius:10px;display:grid;place-items:center;font-size:60px;margin-bottom:12px}
-.notice{background:#233a56;border-radius:10px;padding:15px;margin:12px 0}
-.status{background:#243c58;border:1px solid #4b739d;padding:13px;border-radius:10px;margin:15px 0}
-.overlay{position:fixed;inset:0;background:#000c;z-index:20;display:grid;place-items:center;padding:16px}
-.modal{background:var(--panel);border:1px solid #536d92;border-radius:16px;padding:25px;width:min(450px,100%);max-height:90vh;overflow:auto}
-.tabs{display:flex;gap:10px;margin:16px 0}
-.tabs button{flex:1}
-.balance{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;background:#263d5e;border:1px solid #4e729d;border-radius:12px;font-weight:800}
-.price{color:var(--gold);font-size:19px;font-weight:900}
-.shopart{min-height:130px;display:grid;place-items:center;font-size:75px;background:linear-gradient(145deg,#304b77,#101c30);border-radius:12px;margin-bottom:15px}
-.shopitem{padding:20px}
-.raritygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
-.rarity{padding:18px;border-radius:12px;text-align:center;background:#20314c;border:1px solid #405a7c}
-.garagetabs{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
-.preview{min-height:260px;border-radius:16px;background:radial-gradient(circle at center,#355d91,#101a2b 75%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:12px;padding:25px}
-.previewicon{font-size:90px}
-footer{text-align:center;color:var(--muted);padding:25px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.balance{background:#263e60;padding:10px 13px;border-radius:10px;color:#ffdc88;font-weight:800}
+.avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:#365b91;color:white;font-size:25px;font-weight:900;text-align:center;overflow-wrap:anywhere;flex-shrink:0}
+.avatar.big{width:105px;height:105px;font-size:34px;border:4px solid #ffffff88}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.banner{min-height:225px;border-radius:16px;padding:23px;display:flex;align-items:flex-end;gap:17px;background-size:cover;background-position:center;border:1px solid #ffffff44}
+.banner h2,.banner p{text-shadow:0 2px 8px #000b}
+.editorgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.editorbox{background:#0d1a2e;border:1px solid var(--line);padding:18px;border-radius:14px}
+.previewavatar{width:125px;height:125px;border-radius:50%;margin:15px auto;display:grid;place-items:center;overflow:hidden;font-size:36px;font-weight:900;overflow-wrap:anywhere;text-align:center}
+.previewbanner{height:145px;border-radius:12px;margin:15px 0;background-size:cover;background-position:center}
+.modes{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.modes button.active{outline:2px solid #9acbff}
+.colorrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:9px 0}
+.colorrow input[type=color]{width:55px;height:43px;border:0;background:transparent}
+.colorrow input[type=text]{max-width:125px}
+.sliderrow{display:flex;align-items:center;gap:12px;margin:12px 0}
+.sliderrow input{flex:1;min-width:0}
+.avatargrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(55px,1fr));gap:8px}
+.avatargrid button{font-size:27px;padding:10px;background:#2b4265;color:white;border:1px solid #53749c;border-radius:10px}
+.userrow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--line)}
+.notice{background:#263d5d;padding:14px;border-radius:10px;margin:12px 0}
+.tabs{display:flex;gap:10px;margin:15px 0;flex-wrap:wrap}
+.overlay{position:fixed;inset:0;z-index:20;background:#000c;display:grid;place-items:center;padding:15px}
+.modal{background:var(--panel);border:1px solid #5a7395;border-radius:15px;padding:24px;width:min(470px,100%);max-height:95vh;overflow:auto}
+.cropstage{width:100%;aspect-ratio:8/3;background:#070c15;touch-action:none;overflow:hidden;border-radius:10px;cursor:grab;margin:15px auto}
+.cropstage.circle{max-width:320px;aspect-ratio:1/1;border-radius:50%}
+.cropstage canvas{display:block;width:100%;height:100%}
+.raritygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:12px}
+.rarity{background:#263d5c;padding:16px;border-radius:11px;text-align:center}
+.price{font-size:19px;font-weight:900;color:#ffd478}
+footer{text-align:center;padding:25px;color:var(--muted)}
 @media(max-width:760px){
- .sidebar{width:65px;padding:10px 4px}
- .logo{font-size:12px;margin:12px 2px 22px}
- .logo span{display:none}
- .nav{font-size:0;text-align:center;padding:13px 0}
- .nav .emoji{font-size:23px}
- .content{padding:15px}
- .featureinfo{padding:30px 20px}
- .featureinfo h2{font-size:33px}
+ aside{width:64px;padding:10px 4px}.logo{font-size:11px;margin:12px 2px 20px}.logo span{display:none}
+ .nav{font-size:0;text-align:center;padding:12px 0}.nav .emoji{font-size:22px}
+ #content{padding:14px}.editorgrid{grid-template-columns:1fr}
+ .featureinfo{padding:30px 20px}.featureinfo h2{font-size:30px}
 }
 </style>
 </head>
 <body>
-
 <div class="layout">
-  <aside class="sidebar">
-    <div class="logo">GAME<span>HUB</span></div>
-    <button class="nav active" data-page="discover"><span class="emoji">🏠</span> Discover</button>
-    <button class="nav" data-page="shop"><span class="emoji">🛒</span> Shop</button>
-    <button class="nav" data-page="garage"><span class="emoji">🔧</span> Garage</button>
-    <button class="nav" data-page="friends"><span class="emoji">👥</span> Friends</button>
-    <button class="nav" data-page="inventory"><span class="emoji">🎨</span> Inventory</button>
-    <button class="nav" data-page="profile"><span class="emoji">👤</span> Profile</button>
-    <button class="nav" data-page="news"><span class="emoji">📢</span> News</button>
-    <button class="nav" data-page="admin" id="adminNav" hidden><span class="emoji">🛡️</span> Admin</button>
-  </aside>
-
-  <div class="main">
-    <header class="topbar">
-      <strong>🎮 Game Hub v4.0</strong>
-      <div class="row">
-        <span class="balance" id="balance">🪙 GP — Soon</span>
-        <span id="headerName" class="muted">Guest</span>
-        <button class="btn" id="authButton">Sign In</button>
-        <button class="btn secondary" id="logoutButton" hidden>Sign Out</button>
-      </div>
-    </header>
-    <main class="content" id="content"></main>
-    <footer>Game Hub v4.0 · Play · Connect · Customise</footer>
+<aside>
+  <div class="logo">GAME<span>HUB</span></div>
+  <button class="nav active" data-page="discover"><span class="emoji">🏠</span> Discover</button>
+  <button class="nav" data-page="shop"><span class="emoji">🛒</span> Shop</button>
+  <button class="nav" data-page="garage"><span class="emoji">🔧</span> Garage</button>
+  <button class="nav" data-page="friends"><span class="emoji">👥</span> Friends</button>
+  <button class="nav" data-page="inventory"><span class="emoji">🎨</span> Inventory</button>
+  <button class="nav" data-page="profile"><span class="emoji">👤</span> Profile</button>
+  <button class="nav" data-page="news"><span class="emoji">📢</span> News</button>
+  <button class="nav" data-page="admin" id="adminNav" hidden><span class="emoji">🛡️</span> Admin</button>
+</aside>
+<main>
+<header>
+  <strong>🎮 Game Hub v4.0</strong>
+  <div class="row">
+    <span class="balance">🪙 GP — Coming Soon</span>
+    <span id="headerName">Guest</span>
+    <button class="btn" id="authButton">Sign In</button>
+    <button class="btn secondary" id="logoutButton" hidden>Sign Out</button>
   </div>
+</header>
+<div id="content"></div>
+<footer>Game Hub v4.0 · Play · Connect · Customise</footer>
+</main>
 </div>
 
-<div class="overlay" id="authOverlay" hidden>
-  <div class="modal">
-    <h2>Welcome to Game Hub</h2>
-    <p class="muted">Your games, friends and profile in one place.</p>
-    <div class="tabs">
-      <button class="btn" id="loginTab">Sign In</button>
-      <button class="btn secondary" id="registerTab">Create Account</button>
-    </div>
-    <input class="field" id="email" type="email" placeholder="Email address">
-    <input class="field" id="password" type="password" placeholder="Password">
-    <p id="authError" style="color:#ff9aa9"></p>
-    <div class="row">
-      <button class="btn" id="submitAuth">Sign In</button>
-      <button class="btn secondary" id="closeAuth">Cancel</button>
-    </div>
+<div id="authOverlay" class="overlay" hidden>
+<div class="modal">
+  <h2>Game Hub Account</h2>
+  <div class="tabs">
+    <button class="btn" id="loginTab">Sign In</button>
+    <button class="btn secondary" id="registerTab">Register</button>
   </div>
+  <input class="field" id="email" type="email" placeholder="Email">
+  <input class="field" id="password" type="password" placeholder="Password">
+  <p id="authError" style="color:#ff9ca9"></p>
+  <button class="btn" id="submitAuth">Sign In</button>
+  <button class="btn secondary" id="closeAuth">Cancel</button>
+</div>
+</div>
+
+<div id="cropOverlay" class="overlay" hidden>
+<div class="modal" style="width:min(590px,100%)">
+  <h2 id="cropTitle">Crop Photo</h2>
+  <p class="muted">Drag to reposition. Adjust zoom below.</p>
+  <div class="cropstage" id="cropStage">
+    <canvas id="cropCanvas"></canvas>
+  </div>
+  <div class="sliderrow">
+    <span>Zoom</span>
+    <input id="cropZoom" type="range" min="1" max="3" step=".01" value="1">
+    <span id="cropZoomLabel">1.00×</span>
+  </div>
+  <button class="btn" id="cropSave">Use Photo</button>
+  <button class="btn secondary" id="cropCancel">Cancel</button>
+</div>
 </div>
 
 <script type="module">
@@ -155,13 +155,10 @@ import {
 import {
   getFirestore,doc,getDoc,getDocs,setDoc,updateDoc,deleteDoc,
   collection,query,where,limit,runTransaction,serverTimestamp,
-  addDoc,orderBy,writeBatch
+  addDoc,orderBy
 } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-// ====================================================
-// FIREBASE — EXISTING PROJECT
-// ====================================================
-
+// YOUR EXISTING FIREBASE PROJECT
 const firebaseConfig={
   apiKey:"AIzaSyAuux4SVi5PPQUL7A0AypYoWg37rGYu0ek",
   authDomain:"gamehub-53ffd.firebaseapp.com",
@@ -172,155 +169,225 @@ const firebaseConfig={
   measurementId:"G-FFQC75X66X"
 };
 
+// AFTER DEPLOYING YOUR WORKER, PUT ITS URL HERE.
+// Example: https://gamehub-images.your-account.workers.dev
+const WORKER_URL="";
+
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
-
-// ====================================================
-// GAME CATALOGUE
-// ====================================================
-
-const games=[
-  {
-    id:"counter",name:"Counter Opps",genre:"Shooter",icon:"🎯",
-    image:"counter-opps.png",
-    banner:"counter-opps-banner.png",
-    detail:"counter-opps-detail.png",
-    description:"Tactical shooting, bots and competitive rounds.",
-    url:"https://himynameishitler.github.io/Counter-Opps-/"
-  },
-  {
-    id:"boost",name:"Boostball",genre:"Sports",icon:"🚗",
-    image:"",banner:"",detail:"",
-    description:"Drive, boost, jump and score in car soccer.",
-    url:"https://himynameishitler.github.io/boostball/"
-  },
-  {
-    id:"chaos",name:"Card Chaos",genre:"Action",icon:"🃏",
-    image:"Neon Jester Card Chaos.png",
-    banner:"Neon Card Chaos Arena.png",
-    detail:"Neon Card Chaos Arena (1).png",
-    description:"Unlock cards and build chaotic upgrade combinations.",
-    url:"https://himynameishitler.github.io/card-chaos/"
-  }
-];
-
-const upcoming={
-  id:"baseball",name:"Doodle Sluggers",genre:"Sports",icon:"⚾",
-  description:"A chaotic arcade baseball game. Coming soon!"
-};
-
-const crates=[
-  {id:"counter",name:"Counter Opps Weapon Crate",icon:"🔫",count:1,description:"One weapon cosmetic.",ready:true},
-  {id:"boost",name:"Boostball Car Drop",icon:"🏎️",count:1,description:"One car cosmetic.",ready:true},
-  {id:"chaos",name:"Card Chaos Pack",icon:"🃏",count:5,description:"Five collectible cards.",ready:true},
-  {id:"bat",name:"Doodle Sluggers Bat Crate",icon:"🏏",count:1,description:"One baseball bat cosmetic.",ready:false},
-  {id:"character",name:"Doodle Sluggers Character Crate",icon:"⚾",count:1,description:"One baseball character cosmetic.",ready:false}
-];
-
-const rarities=[
-  {name:"Common",color:"#b8c0cb",refund:5},
-  {name:"Rare",color:"#569dff",refund:10},
-  {name:"Epic",color:"#b97aff",refund:15},
-  {name:"Legendary",color:"#ffd36d",refund:20},
-  {name:"Mythic",color:"#ff8fba",refund:30}
-];
-
-const garages=[
-  {id:"boost",name:"Boostball Garage",icon:"🏎️",description:"Cars, paint finishes, decals, wheels, boost trails and goal explosions."},
-  {id:"counter",name:"Counter Opps Armoury",icon:"🔫",description:"Weapon finishes, skins and loadouts."},
-  {id:"chaos",name:"Card Chaos Collection",icon:"🃏",description:"Collected cards and character cosmetics."},
-  {id:"baseball",name:"Doodle Sluggers Locker",icon:"⚾",description:"Baseball bats and characters. Coming soon!"}
-];
-
-const avatars=[
-  {id:"classic",emoji:"🎮"},{id:"cat",emoji:"🐈"},
-  {id:"robot",emoji:"🤖"},{id:"star",emoji:"⭐"},
-  {id:"rocket",emoji:"🚀"},{id:"fox",emoji:"🦊"},
-  {id:"ghost",emoji:"👻"},{id:"dragon",emoji:"🐉"},
-  {id:"alien",emoji:"👽"},{id:"crown",emoji:"👑"},
-  {id:"panda",emoji:"🐼"},{id:"flame",emoji:"🔥"}
-];
-
-const colors=[
-  "#17263e","#244b86","#6336a5","#ae3467","#b33b3b",
-  "#bb692d","#247e69","#23748b","#494d60","#121212"
-];
-
-const skins=[
-  {id:"classic",name:"Classic",emoji:"🎮",free:true},
-  {id:"blue",name:"Blue Flame",emoji:"🔥",free:true},
-  {id:"star",name:"Star Player",emoji:"⭐",free:true},
-  {id:"robot",name:"Robot",emoji:"🤖",free:true},
-  {id:"cat",name:"Cat",emoji:"🐈",free:true},
-  {id:"galaxy",name:"Galaxy",emoji:"🌌",free:false},
-  {id:"royal",name:"Royal Crown",emoji:"👑",free:false},
-  {id:"diamond",name:"Diamond",emoji:"💎",free:false},
-  {id:"developer",name:"Developer",emoji:"🛠️",free:false}
-];
-
-// ====================================================
-// STATE AND HELPERS
-// ====================================================
-
 const $=id=>document.getElementById(id);
 const content=$("content");
-let currentUser=null,profile=null,isAdmin=false;
-let page="discover",selectedGame=games[0],selectedPlayer=null;
-let authMode="login",featuredIndex=0,carouselTimer=null;
-let selectedGarage="boost";
+
+const games=[
+  {id:"counter",name:"Counter Opps",genre:"Shooter",icon:"🎯",
+   image:"counter-opps.png",banner:"counter-opps-banner.png",
+   detail:"counter-opps-detail.png",
+   description:"Tactical shooting, bots and competitive rounds.",
+   url:"https://himynameishitler.github.io/Counter-Opps-/"},
+  {id:"boost",name:"Boostball",genre:"Sports",icon:"🚗",
+   image:"",banner:"",detail:"",
+   description:"Drive, boost, jump and score in car soccer.",
+   url:"https://himynameishitler.github.io/boostball/"},
+  {id:"chaos",name:"Card Chaos",genre:"Action",icon:"🃏",
+   image:"Neon Jester Card Chaos.png",
+   banner:"Neon Card Chaos Arena.png",
+   detail:"Neon Card Chaos Arena (1).png",
+   description:"Unlock cards and build chaotic card combinations.",
+   url:"https://himynameishitler.github.io/card-chaos/"}
+];
+const crates=[
+  ["🔫","Counter Opps Weapon Crate","One weapon cosmetic.",true],
+  ["🏎️","Boostball Car Drop","One car cosmetic.",true],
+  ["🃏","Card Chaos Pack","Five cards.",true],
+  ["🏏","Doodle Sluggers Bat Crate","One bat cosmetic.",false],
+  ["⚾","Doodle Sluggers Character Crate","One character cosmetic.",false]
+];
+const rarities=[
+  ["Common","#c0c5cd",5],["Rare","#579dff",10],
+  ["Epic","#bb7bff",15],["Legendary","#ffd36d",20],
+  ["Mythic","#ff82bc",30]
+];
+const avatars=[
+  ["classic","🎮"],["cat","🐈"],["robot","🤖"],["star","⭐"],
+  ["rocket","🚀"],["fox","🦊"],["ghost","👻"],["dragon","🐉"],
+  ["alien","👽"],["crown","👑"],["panda","🐼"],["flame","🔥"]
+];
+const skins=[
+  ["classic","Classic","🎮",true],["blue","Blue Flame","🔥",true],
+  ["star","Star Player","⭐",true],["robot","Robot","🤖",true],
+  ["cat","Cat","🐈",true],["galaxy","Galaxy","🌌",false],
+  ["royal","Royal","👑",false],["diamond","Diamond","💎",false],
+  ["developer","Developer","🛠️",false]
+];
+
+let user=null,profile=null,isAdmin=false,page="discover";
+let selectedGame=games[0],selectedPlayer=null;
+let featuredIndex=0,carouselTimer=null,selectedGarage="boost";
+let authMode="login";
 
 function el(tag,cls="",value=""){
-  const e=document.createElement(tag);
-  e.className=cls;
-  e.textContent=value;
-  return e;
+  const x=document.createElement(tag);
+  x.className=cls;x.textContent=value;return x;
 }
 function txt(parent,tag,value,cls=""){
-  const e=el(tag,cls,value);
-  parent.append(e);
-  return e;
+  const x=el(tag,cls,value);parent.append(x);return x;
 }
 function button(label,fn,cls="btn"){
-  const b=el("button",cls,label);
-  b.type="button";
-  b.onclick=fn;
-  return b;
+  const x=el("button",cls,label);x.type="button";x.onclick=fn;return x;
 }
 function panel(title){
-  const p=el("section","panel");
-  if(title)txt(p,"h2",title);
-  content.append(p);
-  return p;
+  const x=el("section","panel");
+  if(title)txt(x,"h2",title);
+  content.append(x);return x;
 }
 function field(placeholder,value=""){
-  const i=el("input","field");
-  i.placeholder=placeholder;
-  i.value=value;
-  return i;
+  const x=el("input","field");
+  x.placeholder=placeholder;x.value=value;return x;
 }
-function status(message){
-  $("globalStatus")?.remove();
-  const n=el("div","status",message);
-  n.id="globalStatus";
-  content.prepend(n);
+function notice(message){
+  $("notice")?.remove();
+  const x=el("div","notice",message);x.id="notice";
+  content.prepend(x);
 }
-function fail(e){
-  console.error(e);
-  return e?.message||"Something went wrong.";
-}
+function error(e){console.error(e);return e?.message||"Something went wrong.";}
 function validName(s){return /^[A-Za-z0-9_]{3,20}$/.test(s);}
-function avatarElement(p,big=false){
-  const a=avatars.find(x=>x.id===p?.avatar);
-  return el("div","avatar"+(big?" big":""),a?.emoji||"🎮");
-}
-function artwork(parent,path,emoji){
+function validHex(s){return /^#[0-9a-fA-F]{6}$/.test(s);}
+function safeColor(s){return validHex(s)?s:"#ffffff";}
+function art(parent,path,emoji){
   if(!path){parent.textContent=emoji;return;}
-  const img=new Image();
-  img.alt="Game artwork";
+  const img=new Image();img.alt="Game artwork";
   img.src=encodeURI(path);
   img.onerror=()=>{img.remove();parent.textContent=emoji;};
   parent.append(img);
+}
+function requireUser(){
+  if(!user){$("authOverlay").hidden=false;return false;}
+  if(!profile){page="setup";render();return false;}
+  return true;
+}
+function go(next){
+  clearInterval(carouselTimer);carouselTimer=null;
+  if(["profile","friends","inventory","garage","admin"].includes(next)&&!requireUser())return;
+  if(next==="admin"&&!isAdmin)next="discover";
+  page=next;render();window.scrollTo(0,0);
+}
+function render(){
+  content.replaceChildren();
+  document.querySelectorAll(".nav").forEach(n=>
+    n.classList.toggle("active",n.dataset.page===page));
+  const routes={
+    discover,detail,shop:shopPage,garage:garagePage,
+    profile:profilePage,setup,friends:friendsPage,
+    inventory:inventoryPage,news:newsPage,admin:adminPage,
+    publicProfile:publicProfilePage
+  };
+  (routes[page]||discover)();
+}
+document.querySelectorAll(".nav").forEach(n=>n.onclick=()=>go(n.dataset.page));
+
+// ====================================================
+// PROFILE APPEARANCE
+// ====================================================
+
+const baseBg=()=>({
+  mode:"solid",
+  colors:["#345d9d","#8e4bd1","#ff6894"],
+  angle:120
+});
+const baseAppearance=()=>({
+  avatarMode:"preset",
+  avatarText:"GH",
+  avatarBg:baseBg(),
+  bannerMode:"color",
+  bannerBg:{
+    mode:"gradient2",
+    colors:["#17263e","#345d9d","#a64bc4"],
+    angle:120
+  },
+  usernameColor:"#ffffff",
+  bioColor:"#e4eaf5",
+  avatarVersion:0,
+  bannerVersion:0
+});
+
+function normalizeBg(input,fallback){
+  const bg={...fallback,...(input||{})};
+  if(!["solid","gradient2","gradient3"].includes(bg.mode))bg.mode="solid";
+  bg.colors=[0,1,2].map(i=>safeColor(bg.colors?.[i]||fallback.colors[i]));
+  bg.angle=Math.max(0,Math.min(360,Number(bg.angle)||0));
+  return bg;
+}
+function appearanceFor(p){
+  const base=baseAppearance();
+  const raw=p?.appearance||{};
+  return {
+    ...base,
+    avatarMode:["preset","text","photo"].includes(raw.avatarMode)?raw.avatarMode:"preset",
+    avatarText:String(raw.avatarText||"GH").slice(0,6),
+    avatarBg:normalizeBg(raw.avatarBg,base.avatarBg),
+    bannerMode:raw.bannerMode==="photo"?"photo":"color",
+    bannerBg:normalizeBg(raw.bannerBg,base.bannerBg),
+    usernameColor:safeColor(raw.usernameColor),
+    bioColor:safeColor(raw.bioColor),
+    avatarVersion:Number(raw.avatarVersion)||0,
+    bannerVersion:Number(raw.bannerVersion)||0
+  };
+}
+function bgCSS(bg){
+  const c=bg.colors.map(safeColor);
+  if(bg.mode==="gradient2")
+    return `linear-gradient(${bg.angle}deg,${c[0]},${c[1]})`;
+  if(bg.mode==="gradient3")
+    return `linear-gradient(${bg.angle}deg,${c[0]},${c[1]},${c[2]})`;
+  return c[0];
+}
+function imageURL(uid,type,version){
+  if(!WORKER_URL||!uid)return "";
+  return `${WORKER_URL.replace(/\/$/,"")}/image/${encodeURIComponent(uid)}/${type}?v=${version||0}`;
+}
+function paint(node,background){
+  node.style.background=background;
+}
+function avatarElement(p,big=false,local=null){
+  const a=local||appearanceFor(p);
+  const x=el("div","avatar"+(big?" big":""));
+  if(a.avatarMode==="photo"&&p?.uid&&WORKER_URL){
+    const img=new Image();
+    img.alt="Profile picture";
+    img.src=imageURL(p.uid,"avatar",a.avatarVersion);
+    img.onerror=()=>{
+      img.remove();
+      x.textContent="📷";
+    };
+    x.append(img);
+  }else if(a.avatarMode==="text"){
+    paint(x,bgCSS(a.avatarBg));
+    x.textContent=a.avatarText||"GH";
+    x.style.fontSize=big?"27px":"15px";
+  }else{
+    x.textContent=avatars.find(v=>v[0]===p?.avatar)?.[1]||"🎮";
+  }
+  return x;
+}
+function paintBanner(node,p,a){
+  if(a.bannerMode==="photo"&&p?.uid&&WORKER_URL){
+    node.style.background=`center / cover url("${imageURL(p.uid,"banner",a.bannerVersion)}")`;
+  }else{
+    paint(node,bgCSS(a.bannerBg));
+  }
+}
+function profileBanner(p,a=appearanceFor(p)){
+  const banner=el("div","banner");
+  paintBanner(banner,p,a);
+  banner.append(avatarElement(p,true,a));
+  const info=el("div");
+  const name=txt(info,"h2",p.username||"Player");
+  name.style.color=a.usernameColor;
+  const bio=txt(info,"p",p.bio||"");
+  bio.style.color=a.bioColor;
+  banner.append(info);
+  return banner;
 }
 function playerRow(parent,p,actions=[]){
   const row=el("div","userrow");
@@ -328,551 +395,674 @@ function playerRow(parent,p,actions=[]){
   left.append(avatarElement(p));
   const info=el("div");
   txt(info,"strong",p.username||"Unknown");
-  txt(info,"div",p.bio||"","muted small");
-  left.append(info);
-  row.append(left);
+  txt(info,"div",p.bio||"","muted");
+  left.append(info);row.append(left);
   const right=el("div","row");
-  actions.forEach(a=>right.append(button(a.label,a.action,"btn secondary")));
-  row.append(right);
-  parent.append(row);
+  actions.forEach(a=>right.append(button(a.label,a.fn,"btn secondary")));
+  row.append(right);parent.append(row);
 }
-function requireAccount(){
-  if(!currentUser){openAuth();return false;}
-  if(!profile){go("setup");return false;}
-  return true;
-}
-function go(next){
-  clearInterval(carouselTimer);
-  carouselTimer=null;
-  if(["friends","inventory","profile","garage","admin"].includes(next)&&!requireAccount()){
-    if(next!=="garage")return;
-    if(!currentUser)return;
-  }
-  if(next==="admin"&&!isAdmin){next="discover";}
-  page=next;
-  render();
-  window.scrollTo(0,0);
-}
-function render(){
-  content.replaceChildren();
-  document.querySelectorAll(".nav").forEach(n=>{
-    n.classList.toggle("active",n.dataset.page===page);
-  });
-  const routes={
-    discover,detail,shop:shopPage,garage:garagePage,
-    setup,profile:profilePage,friends:friendsPage,
-    inventory:inventoryPage,news:newsPage,admin:adminPage,
-    publicProfile:publicProfilePage
-  };
-  (routes[page]||discover)();
-}
-document.querySelectorAll(".nav").forEach(n=>{
-  n.onclick=()=>go(n.dataset.page);
-});
 
 // ====================================================
-// AUTHENTICATION
+// AUTH
 // ====================================================
 
-function openAuth(){
-  $("authOverlay").hidden=false;
-  $("authError").textContent="";
-}
-function closeAuth(){$("authOverlay").hidden=true;}
+$("authButton").onclick=()=>$("authOverlay").hidden=false;
+$("closeAuth").onclick=()=>$("authOverlay").hidden=true;
 function setAuthMode(mode){
   authMode=mode;
   $("loginTab").className=mode==="login"?"btn":"btn secondary";
   $("registerTab").className=mode==="register"?"btn":"btn secondary";
   $("submitAuth").textContent=mode==="login"?"Sign In":"Create Account";
 }
-$("authButton").onclick=openAuth;
-$("closeAuth").onclick=closeAuth;
 $("loginTab").onclick=()=>setAuthMode("login");
 $("registerTab").onclick=()=>setAuthMode("register");
-$("logoutButton").onclick=async()=>{
-  try{await signOut(auth);go("discover");}
-  catch(e){status(fail(e));}
-};
 $("submitAuth").onclick=async()=>{
-  const email=$("email").value.trim();
-  const password=$("password").value;
-  const b=$("submitAuth");
-  b.disabled=true;
+  const b=$("submitAuth");b.disabled=true;
   $("authError").textContent="";
   try{
-    if(authMode==="register"){
-      await createUserWithEmailAndPassword(auth,email,password);
-    }else{
+    const email=$("email").value.trim();
+    const password=$("password").value;
+    if(authMode==="login")
       await signInWithEmailAndPassword(auth,email,password);
-    }
-    closeAuth();
-  }catch(e){
-    $("authError").textContent=fail(e);
-  }finally{b.disabled=false;}
+    else
+      await createUserWithEmailAndPassword(auth,email,password);
+    $("authOverlay").hidden=true;
+  }catch(e){$("authError").textContent=error(e);}
+  finally{b.disabled=false;}
 };
+$("logoutButton").onclick=()=>signOut(auth).catch(e=>notice(error(e)));
 
-onAuthStateChanged(auth,async user=>{
-  currentUser=user;
-  profile=null;
-  isAdmin=false;
-  if(user){
+onAuthStateChanged(auth,async current=>{
+  user=current;profile=null;isAdmin=false;
+  if(current){
     try{
       const [snap,token]=await Promise.all([
-        getDoc(doc(db,"users",user.uid)),
-        user.getIdTokenResult()
+        getDoc(doc(db,"users",current.uid)),
+        current.getIdTokenResult()
       ]);
-      profile=snap.exists()?{uid:user.uid,...snap.data()}:null;
+      if(auth.currentUser?.uid!==current.uid)return;
+      profile=snap.exists()?{uid:current.uid,...snap.data()}:null;
       isAdmin=token.claims.admin===true;
     }catch(e){console.error(e);}
   }
-  $("headerName").textContent=profile?.username||user?.email||"Guest";
-  $("authButton").hidden=!!user;
-  $("logoutButton").hidden=!user;
+  $("headerName").textContent=profile?.username||current?.email||"Guest";
+  $("authButton").hidden=!!current;
+  $("logoutButton").hidden=!current;
   $("adminNav").hidden=!isAdmin;
-  if(user&&!profile)page="setup";
-  else if(!user&&["setup","profile","friends","inventory","admin"].includes(page))
+  if(current&&!profile)page="setup";
+  if(!current&&["profile","friends","inventory","garage","admin","setup"].includes(page))
     page="discover";
   render();
 });
 
-// ====================================================
-// ACCOUNT SETUP
-// ====================================================
-
 function setup(){
   txt(content,"h1","Create Your Profile");
-  txt(content,"p","Choose a unique username to finish setting up Game Hub.","muted");
-  const p=panel("Your Username");
-  const name=field("Username (3–20 letters, numbers or underscores)");
+  const p=panel("Choose Username");
+  const name=field("3–20 letters, numbers or underscores");
   p.append(name);
-  const save=button("Create Profile",async()=>{
-    if(!currentUser)return;
+  p.append(button("Create Profile",async()=>{
+    if(!user)return;
     const username=name.value.trim();
-    if(!validName(username)){
-      status("Username must be 3–20 letters, numbers or underscores.");
-      return;
-    }
-    save.disabled=true;
+    if(!validName(username)){notice("Invalid username.");return;}
     const lower=username.toLowerCase();
     try{
-      const userRef=doc(db,"users",currentUser.uid);
-      const nameRef=doc(db,"usernames",lower);
       await runTransaction(db,async tx=>{
-        const [u,n]=await Promise.all([tx.get(userRef),tx.get(nameRef)]);
-        if(u.exists())throw Error("This account already has a profile.");
-        if(n.exists())throw Error("That username is already taken.");
-        tx.set(userRef,{
+        const u=doc(db,"users",user.uid);
+        const n=doc(db,"usernames",lower);
+        const us=await tx.get(u);
+        const ns=await tx.get(n);
+        if(us.exists()||ns.exists())throw Error("Username unavailable.");
+        tx.set(u,{
           username,usernameLower:lower,
-          bio:"New to Game Hub!",
-          avatar:"classic",background:"#17263e",
-          equipped:"classic",createdAt:serverTimestamp()
+          bio:"New to Game Hub!",avatar:"classic",
+          background:"#17263e",equipped:"classic",
+          createdAt:serverTimestamp()
         });
-        tx.set(nameRef,{uid:currentUser.uid,username});
+        tx.set(n,{uid:user.uid,username});
       });
       profile={
-        uid:currentUser.uid,username,usernameLower:lower,
+        uid:user.uid,username,usernameLower:lower,
         bio:"New to Game Hub!",avatar:"classic",
         background:"#17263e",equipped:"classic"
       };
       $("headerName").textContent=username;
       go("profile");
-    }catch(e){status(fail(e));}
-    finally{save.disabled=false;}
-  });
-  p.append(save);
+    }catch(e){notice(error(e));}
+  }));
 }
 
 // ====================================================
-// DISCOVER + FEATURED CAROUSEL
+// DISCOVER
 // ====================================================
 
 function discover(){
   txt(content,"h1","Discover Games");
   txt(content,"p","Play something great. Or something completely chaotic.","muted");
-
   const feature=el("section","feature");
-  const banner=new Image();
-  banner.alt="Featured game";
-  banner.onerror=()=>{banner.hidden=true;};
-  const shade=el("div","shade");
+  const image=new Image();image.alt="Featured game";
+  image.onerror=()=>image.hidden=true;
   const info=el("div","featureinfo");
-  const tag=txt(info,"span","FEATURED GAME","tag");
+  txt(info,"strong","FEATURED GAME");
   const title=txt(info,"h2","");
-  const description=txt(info,"p","");
-  const view=button("View Game",()=>{
-    selectedGame=games[featuredIndex];
-    go("detail");
-  });
-  info.append(view);
-
-  const controls=el("div","hero-controls");
-  const previous=button("❮",()=>change(-1));
-  const next=button("❯",()=>change(1));
-  controls.append(previous,next);
-  feature.append(banner,shade,info,controls);
+  const desc=txt(info,"p","");
+  info.append(button("View Game",()=>{
+    selectedGame=games[featuredIndex];go("detail");
+  }));
+  const controls=el("div","controls");
+  controls.append(button("❮",()=>change(-1)),button("❯",()=>change(1)));
+  feature.append(image,el("div","shade"),info,controls);
   content.append(feature);
-
-  function change(delta){
-    featuredIndex=(featuredIndex+delta+games.length)%games.length;
-    const game=games[featuredIndex];
-    title.textContent=game.name;
-    description.textContent=game.description;
-    banner.hidden=false;
-    if(game.banner||game.image){
-      banner.src=encodeURI(game.banner||game.image);
-    }else{
-      banner.hidden=true;
-    }
+  function change(n){
+    featuredIndex=(featuredIndex+n+games.length)%games.length;
+    const g=games[featuredIndex];
+    title.textContent=g.name;desc.textContent=g.description;
+    if(g.banner||g.image){
+      image.hidden=false;image.src=encodeURI(g.banner||g.image);
+    }else image.hidden=true;
   }
   change(0);
   carouselTimer=setInterval(()=>{
     if(page==="discover"&&feature.isConnected)change(1);
-    else{clearInterval(carouselTimer);carouselTimer=null;}
+    else clearInterval(carouselTimer);
   },5000);
-
   txt(content,"h2","All Games");
   const search=field("Search games...");
-  content.append(search);
   const grid=el("div","grid");
-  content.append(grid);
-
+  content.append(search,grid);
   function draw(){
     grid.replaceChildren();
-    const term=search.value.trim().toLowerCase();
-    games.filter(g=>
-      g.name.toLowerCase().includes(term)||
-      g.genre.toLowerCase().includes(term)
-    ).forEach(g=>{
+    for(const g of games.filter(g=>g.name.toLowerCase().includes(search.value.toLowerCase()))){
       const card=el("article","card");
-      const art=el("div","art");
-      artwork(art,g.image,g.icon);
+      const artwork=el("div","art");art(artwork,g.image,g.icon);
       const body=el("div","cardbody");
-      txt(body,"h3",g.name);
-      txt(body,"p",g.genre,"muted small");
-      txt(body,"p",g.description);
-      body.append(button("View Game",()=>{
-        selectedGame=g;go("detail");
-      }));
-      card.append(art,body);
-      grid.append(card);
-    });
+      txt(body,"h3",g.name);txt(body,"p",g.description,"muted");
+      body.append(button("View Game",()=>{selectedGame=g;go("detail");}));
+      card.append(artwork,body);grid.append(card);
+    }
   }
-  search.oninput=draw;
-  draw();
-
+  search.oninput=draw;draw();
   txt(content,"h2","Coming Soon");
-  const soon=el("article","card");
-  const soonArt=el("div","art",upcoming.icon);
-  const soonBody=el("div","cardbody");
-  txt(soonBody,"h3",upcoming.name);
-  txt(soonBody,"p",upcoming.description,"muted");
-  const disabled=button("Coming Soon",()=>{});
-  disabled.disabled=true;
-  soonBody.append(disabled);
-  soon.append(soonArt,soonBody);
-  const soonGrid=el("div","grid");
-  soonGrid.append(soon);
-  content.append(soonGrid);
+  const soon=el("div","panel");
+  txt(soon,"h2","⚾ Doodle Sluggers");
+  txt(soon,"p","An original arcade baseball game. Coming soon!");
+  content.append(soon);
 }
-
 function detail(){
   const g=selectedGame;
   txt(content,"h1",g.name);
-  const hero=el("div","hero");
-  artwork(hero,g.detail||g.banner||g.image,g.icon);
+  const hero=el("div","hero");art(hero,g.detail||g.banner||g.image,g.icon);
   content.append(hero);
   const p=panel(g.genre);
   txt(p,"p",g.description);
-  const link=el("a","btn","▶ Play Game");
-  link.href=g.url;
-  link.target="_blank";
-  link.rel="noopener noreferrer";
-  p.append(link);
-  p.append(button("Back to Discover",()=>go("discover"),"btn secondary"));
+  const a=el("a","btn","▶ Play Game");
+  a.href=g.url;a.target="_blank";a.rel="noopener noreferrer";
+  p.append(a,button("Back",()=>go("discover"),"btn secondary"));
 }
 
 // ====================================================
-// SHOP — PREVIEW ONLY
+// SHOP + GARAGE
 // ====================================================
 
 function shopPage(){
   txt(content,"h1","🛒 Game Hub Shop");
-  txt(content,"p","Cosmetics, crates and collections for every game.","muted");
-  const intro=panel("🪙 Game Points");
-  txt(intro,"p","Your GP balance will appear here once the secure economy backend is connected.");
-  txt(intro,"p","Purchases are currently disabled. No GP is being charged or awarded.","muted");
-
-  txt(content,"h2","Crates & Packs");
+  txt(content,"p","Preview only — secure GP purchases are not connected yet.","muted");
   const grid=el("div","grid");
-  for(const c of crates){
-    const card=el("article","card shopitem");
-    const art=el("div","shopart",c.icon);
-    card.append(art);
-    txt(card,"h3",c.name);
-    txt(card,"p",c.description,"muted");
-    txt(card,"p","100 GP","price");
-    const b=button(c.ready?"Purchases Coming Soon":"Game Coming Soon",()=>{});
-    b.disabled=true;
-    card.append(b);
-    grid.append(card);
+  for(const [emoji,name,description,ready] of crates){
+    const card=el("article","card");
+    txt(card,"div",emoji,"art");
+    const body=el("div","cardbody");
+    txt(body,"h3",name);txt(body,"p",description,"muted");
+    txt(body,"p","100 GP","price");
+    const b=button(ready?"Purchases Coming Soon":"Game Coming Soon",()=>{});
+    b.disabled=true;body.append(b);card.append(body);grid.append(card);
   }
   content.append(grid);
-
-  const refund=panel("Keep or Return");
-  txt(refund,"p","After a crate reveal, choose to keep your reward or return it for GP.");
+  const p=panel("Keep or Return");
   const rg=el("div","raritygrid");
-  for(const r of rarities){
-    const item=el("div","rarity");
-    const label=txt(item,"h3",r.name);
-    label.style.color=r.color;
-    txt(item,"p",`+${r.refund} GP`,"price");
-    rg.append(item);
+  for(const [name,color,refund] of rarities){
+    const r=el("div","rarity");
+    const h=txt(r,"h3",name);h.style.color=color;
+    txt(r,"p",`+${refund} GP`,"price");rg.append(r);
   }
-  refund.append(rg);
-
-  const craft=panel("🔨 Fusion & Crafting");
-  txt(craft,"p","Fusion: combine five eligible duplicate cosmetics of the same rarity to receive one cosmetic of the next rarity.");
-  txt(craft,"p","Blueprint crafting: collect five blueprints and spend 150 GP to craft a special cosmetic.");
-  txt(craft,"p","Trading: both players confirm the exchange, followed by a 30-second cooldown after a successful trade.");
-  txt(craft,"p","All these features will be activated only after the trusted backend is ready.","muted");
+  p.append(rg);
+  const craft=panel("Crafting & Trading — Planned");
+  txt(craft,"p","Fusion, blueprints, secure item trading and GP rewards will be connected later.");
 }
-
-// ====================================================
-// GARAGE AND COLLECTIONS
-// ====================================================
-
 function garagePage(){
   txt(content,"h1","🔧 Garage & Collections");
-  txt(content,"p","One place for all your game's cosmetics.","muted");
-  const tabs=el("div","garagetabs");
-  const display=el("div");
-  for(const g of garages){
-    const b=button(`${g.icon} ${g.name.split(" ")[0]}`,()=>{
-      selectedGarage=g.id;
-      show();
-    },"btn secondary");
-    b.dataset.id=g.id;
-    tabs.append(b);
-  }
+  const tabs=el("div","tabs"),display=el("div");
+  const entries=[
+    ["boost","🏎️ Boostball Garage","Cars, paint and boost trails"],
+    ["counter","🔫 Counter Opps Armoury","Weapon skins and loadouts"],
+    ["chaos","🃏 Card Chaos Collection","Cards and character cosmetics"],
+    ["baseball","⚾ Doodle Sluggers Locker","Bats and characters — coming soon"]
+  ];
+  entries.forEach(([id,label])=>{
+    const b=button(label,()=>{selectedGarage=id;draw();},"btn secondary");
+    b.dataset.id=id;tabs.append(b);
+  });
   content.append(tabs,display);
-  function show(){
-    tabs.querySelectorAll("button").forEach(b=>{
-      b.className=b.dataset.id===selectedGarage?"btn":"btn secondary";
-    });
+  function draw(){
+    tabs.querySelectorAll("button").forEach(b=>
+      b.className=b.dataset.id===selectedGarage?"btn":"btn secondary");
     display.replaceChildren();
-    const g=garages.find(x=>x.id===selectedGarage);
-    const preview=el("div","preview");
-    txt(preview,"div",g.icon,"previewicon");
-    txt(preview,"h2",g.name);
-    txt(preview,"p",g.description,"muted");
-    display.append(preview);
-    const note=el("div","panel");
-    txt(note,"h2","Loadout Management");
-    txt(note,"p",g.id==="baseball"
-      ?"Doodle Sluggers is coming soon."
-      :"Cosmetic equipment slots and live previews are being prepared.");
-    if(g.id!=="baseball")
-      note.append(button("Browse Shop",()=>go("shop")));
-    display.append(note);
+    const entry=entries.find(x=>x[0]===selectedGarage);
+    const p=el("div","panel");
+    txt(p,"h2",entry[1]);txt(p,"p",entry[2]);
+    txt(p,"p","Cosmetic equipment slots are coming in a later update.","muted");
+    p.append(button("Browse Shop",()=>go("shop")));
+    display.append(p);
   }
-  show();
+  draw();
 }
 
 // ====================================================
-// PROFILE
+// PHOTO CROPPER — DRAG + ZOOM
+// ====================================================
+
+let cropImage=null,cropType="avatar",cropCallback=null;
+let zoom=1,offsetX=0,offsetY=0,dragging=false,lastX=0,lastY=0;
+const canvas=$("cropCanvas"),ctx=canvas.getContext("2d");
+const stage=$("cropStage");
+
+function dimensions(){
+  return cropType==="avatar"?[400,400]:[1200,450];
+}
+function drawCrop(){
+  if(!cropImage)return;
+  const [w,h]=dimensions();
+  canvas.width=w;canvas.height=h;
+  const scale=Math.max(w/cropImage.width,h/cropImage.height)*zoom;
+  const dw=cropImage.width*scale,dh=cropImage.height*scale;
+  offsetX=Math.max(-(dw-w)/2,Math.min((dw-w)/2,offsetX));
+  offsetY=Math.max(-(dh-h)/2,Math.min((dh-h)/2,offsetY));
+  ctx.clearRect(0,0,w,h);
+  ctx.drawImage(cropImage,(w-dw)/2+offsetX,(h-dh)/2+offsetY,dw,dh);
+}
+function openCrop(file,type,callback){
+  if(!file)return;
+  if(!file.type.startsWith("image/")||file.size>15*1024*1024){
+    alert("Choose an image under 15 MB.");return;
+  }
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      cropImage=img;cropType=type;cropCallback=callback;
+      zoom=1;offsetX=0;offsetY=0;
+      $("cropZoom").value=1;$("cropZoomLabel").textContent="1.00×";
+      $("cropTitle").textContent=type==="avatar"?"Crop Profile Picture":"Crop Banner";
+      stage.classList.toggle("circle",type==="avatar");
+      $("cropOverlay").hidden=false;drawCrop();
+    };
+    img.onerror=()=>alert("Couldn't open this image.");
+    img.src=reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+$("cropZoom").oninput=e=>{
+  zoom=Number(e.target.value);
+  $("cropZoomLabel").textContent=zoom.toFixed(2)+"×";
+  drawCrop();
+};
+stage.addEventListener("pointerdown",e=>{
+  if(!cropImage)return;
+  dragging=true;lastX=e.clientX;lastY=e.clientY;
+  stage.setPointerCapture(e.pointerId);
+});
+stage.addEventListener("pointermove",e=>{
+  if(!dragging)return;
+  const rect=stage.getBoundingClientRect();
+  const [w,h]=dimensions();
+  offsetX+=(e.clientX-lastX)*w/rect.width;
+  offsetY+=(e.clientY-lastY)*h/rect.height;
+  lastX=e.clientX;lastY=e.clientY;drawCrop();
+});
+stage.addEventListener("pointerup",()=>dragging=false);
+stage.addEventListener("pointercancel",()=>dragging=false);
+$("cropCancel").onclick=()=>{
+  $("cropOverlay").hidden=true;cropImage=null;
+};
+$("cropSave").onclick=()=>{
+  if(!cropImage)return;
+  drawCrop();
+  const output=document.createElement("canvas");
+  const [w,h]=dimensions();output.width=w;output.height=h;
+  output.getContext("2d").drawImage(canvas,0,0);
+  output.toBlob(blob=>{
+    if(blob)cropCallback(blob);
+    $("cropOverlay").hidden=true;cropImage=null;
+  },"image/jpeg",.82);
+};
+
+// ====================================================
+// CUSTOM COLOUR + GRADIENT CONTROLS
+// ====================================================
+
+function colorControl(parent,label,initial,change){
+  const row=el("div","colorrow");
+  txt(row,"strong",label);
+  const picker=el("input");picker.type="color";
+  picker.value=safeColor(initial);
+  const hex=field("#RRGGBB",picker.value);
+  hex.maxLength=7;hex.style.width="125px";
+  picker.oninput=()=>{hex.value=picker.value;change(picker.value);};
+  hex.onchange=()=>{
+    if(validHex(hex.value)){
+      picker.value=hex.value;change(hex.value);
+    }else hex.value=picker.value;
+  };
+  row.append(picker,hex);parent.append(row);
+}
+function backgroundEditor(parent,bg,change){
+  const modes=el("div","modes");
+  const settings=el("div");
+  parent.append(modes,settings);
+  function redraw(){
+    modes.replaceChildren();settings.replaceChildren();
+    for(const [id,label] of [
+      ["solid","Solid"],["gradient2","2-Colour Gradient"],
+      ["gradient3","3-Colour Gradient"]
+    ]){
+      const b=button(label,()=>{
+        bg.mode=id;change();redraw();
+      },"btn secondary"+(bg.mode===id?" active":""));
+      modes.append(b);
+    }
+    const count=bg.mode==="solid"?1:bg.mode==="gradient2"?2:3;
+    for(let i=0;i<count;i++){
+      colorControl(settings,`Colour ${i+1}`,bg.colors[i],value=>{
+        bg.colors[i]=value;change();
+      });
+    }
+    if(count>1){
+      const row=el("div","sliderrow");
+      txt(row,"strong","Angle");
+      const slider=el("input");slider.type="range";
+      slider.min=0;slider.max=360;slider.value=bg.angle;
+      const value=txt(row,"span",`${bg.angle}°`);
+      slider.oninput=()=>{
+        bg.angle=Number(slider.value);
+        value.textContent=`${bg.angle}°`;change();
+      };
+      row.insertBefore(slider,value);settings.append(row);
+    }
+  }
+  redraw();
+}
+
+// ====================================================
+// UPLOAD IMAGE TO CLOUDFLARE
+// ====================================================
+
+async function uploadImage(blob,type){
+  if(!WORKER_URL)throw Error("Cloudflare Worker isn't configured yet.");
+  if(!user)throw Error("Sign in first.");
+  const token=await user.getIdToken();
+  const res=await fetch(`${WORKER_URL.replace(/\/$/,"")}/upload/${type}`,{
+    method:"PUT",
+    headers:{
+      "Authorization":`Bearer ${token}`,
+      "Content-Type":"image/jpeg"
+    },
+    body:blob
+  });
+  if(!res.ok){
+    const message=await res.text();
+    throw Error(`Upload failed (${res.status}): ${message}`);
+  }
+  return await res.json();
+}
+
+// ====================================================
+// PROFILE EDITOR
 // ====================================================
 
 async function saveProfile(changes){
-  if(!currentUser||!profile)return;
-  await updateDoc(doc(db,"users",currentUser.uid),changes);
+  await updateDoc(doc(db,"users",user.uid),changes);
   Object.assign(profile,changes);
 }
-
 function profilePage(){
-  if(!requireAccount())return;
-  txt(content,"h1","Your Profile");
-  const banner=el("div","profile-banner");
-  banner.style.background=profile.background||"#17263e";
-  banner.append(avatarElement(profile,true));
-  txt(banner,"h2",profile.username);
-  txt(banner,"p",profile.bio||"");
-  content.append(banner);
+  if(!requireUser())return;
+  const a=structuredClone(appearanceFor(profile));
+  const pending={avatar:null,banner:null};
+  let avatarPreviewURL="",bannerPreviewURL="";
+  txt(content,"h1","🎨 Profile Appearance Studio");
+  txt(content,"p","Custom photos, text avatars, colours and gradients.","muted");
+  const previewHolder=el("div");
+  content.append(previewHolder);
+  function refresh(){
+    previewHolder.replaceChildren();
+    const p=profileBanner(profile,a);
+    if(a.avatarMode==="photo"&&pending.avatar){
+      const avatar=p.querySelector(".avatar");
+      avatar.replaceChildren();
+      const img=new Image();img.src=avatarPreviewURL;img.alt="New avatar";
+      avatar.append(img);
+    }
+    if(a.bannerMode==="photo"&&pending.banner){
+      p.style.background=`center / cover url("${bannerPreviewURL}")`;
+    }
+    previewHolder.append(p);
+  }
+  refresh();
+
+  const editor=panel("Customise Your Profile");
+  const columns=el("div","editorgrid");
+  editor.append(columns);
+  const left=el("div","editorbox");
+  const right=el("div","editorbox");
+  columns.append(left,right);
+
+  // AVATAR
+  txt(left,"h2","Profile Picture");
+  const avatarPreview=el("div","previewavatar");
+  left.append(avatarPreview);
+  const avatarModes=el("div","modes");
+  const avatarOptions=el("div");
+  left.append(avatarModes,avatarOptions);
+
+  function drawAvatar(){
+    avatarModes.replaceChildren();avatarOptions.replaceChildren();
+    avatarPreview.replaceChildren();
+    for(const [id,label] of [
+      ["preset","Emoji"],["text","Custom Text"],["photo","Photo"]
+    ]){
+      avatarModes.append(button(label,()=>{
+        a.avatarMode=id;drawAvatar();refresh();
+      },"btn secondary"+(a.avatarMode===id?" active":"")));
+    }
+    if(a.avatarMode==="preset"){
+      avatarPreview.textContent=avatars.find(x=>x[0]===profile.avatar)?.[1]||"🎮";
+      const grid=el("div","avatargrid");
+      for(const [id,emoji] of avatars){
+        grid.append(button(emoji,()=>{
+          profile.avatar=id;
+          avatarPreview.textContent=emoji;
+          refresh();
+        }));
+      }
+      avatarOptions.append(grid);
+    }else if(a.avatarMode==="text"){
+      paint(avatarPreview,bgCSS(a.avatarBg));
+      avatarPreview.textContent=a.avatarText;
+      const input=field("Avatar letters or word",a.avatarText);
+      input.maxLength=6;
+      input.oninput=()=>{
+        a.avatarText=input.value;
+        avatarPreview.textContent=a.avatarText;refresh();
+      };
+      avatarOptions.append(input);
+      txt(avatarOptions,"h3","Avatar Background");
+      backgroundEditor(avatarOptions,a.avatarBg,()=>{
+        paint(avatarPreview,bgCSS(a.avatarBg));refresh();
+      });
+    }else{
+      const url=pending.avatar?avatarPreviewURL:
+        imageURL(user.uid,"avatar",a.avatarVersion);
+      if(url){
+        const img=new Image();img.src=url;img.alt="Avatar preview";
+        img.style.cssText="width:100%;height:100%;object-fit:cover";
+        avatarPreview.append(img);
+      }else avatarPreview.textContent="📷";
+      const upload=el("input","field");
+      upload.type="file";upload.accept="image/*";
+      upload.onchange=()=>{
+        openCrop(upload.files[0],"avatar",blob=>{
+          if(avatarPreviewURL)URL.revokeObjectURL(avatarPreviewURL);
+          pending.avatar=blob;
+          avatarPreviewURL=URL.createObjectURL(blob);
+          drawAvatar();refresh();
+        });
+        upload.value="";
+      };
+      avatarOptions.append(upload);
+    }
+  }
+  drawAvatar();
+
+  // BANNER
+  txt(right,"h2","Profile Banner");
+  const bannerPreview=el("div","previewbanner");
+  right.append(bannerPreview);
+  const bannerModes=el("div","modes");
+  const bannerOptions=el("div");
+  right.append(bannerModes,bannerOptions);
+  function drawBanner(){
+    bannerModes.replaceChildren();bannerOptions.replaceChildren();
+    if(a.bannerMode==="photo"){
+      bannerPreview.style.background=pending.banner
+        ?`center / cover url("${bannerPreviewURL}")`
+        :`center / cover url("${imageURL(user.uid,"banner",a.bannerVersion)}")`;
+    }else paint(bannerPreview,bgCSS(a.bannerBg));
+    for(const [id,label] of [["color","Colours / Gradients"],["photo","Photo"]]){
+      bannerModes.append(button(label,()=>{
+        a.bannerMode=id;drawBanner();refresh();
+      },"btn secondary"+(a.bannerMode===id?" active":"")));
+    }
+    if(a.bannerMode==="photo"){
+      const upload=el("input","field");
+      upload.type="file";upload.accept="image/*";
+      upload.onchange=()=>{
+        openCrop(upload.files[0],"banner",blob=>{
+          if(bannerPreviewURL)URL.revokeObjectURL(bannerPreviewURL);
+          pending.banner=blob;
+          bannerPreviewURL=URL.createObjectURL(blob);
+          drawBanner();refresh();
+        });
+        upload.value="";
+      };
+      bannerOptions.append(upload);
+    }else{
+      backgroundEditor(bannerOptions,a.bannerBg,()=>{
+        paint(bannerPreview,bgCSS(a.bannerBg));refresh();
+      });
+    }
+  }
+  drawBanner();
+
+  const colors=panel("Profile Text Colours");
+  colorControl(colors,"Username",a.usernameColor,v=>{
+    a.usernameColor=v;refresh();
+  });
+  colorControl(colors,"Bio",a.bioColor,v=>{
+    a.bioColor=v;refresh();
+  });
+
+  const savePanel=panel("Save Changes");
+  txt(savePanel,"p",WORKER_URL
+    ?"Photos will be uploaded to Cloudflare and appearance settings saved in Firebase."
+    :"Photo uploads need Cloudflare setup. Colours, gradients and text avatars can still be saved.",
+    "muted");
+  const save=button("💾 Save Profile Appearance",async()=>{
+    save.disabled=true;
+    try{
+      if(a.avatarMode==="photo"&&pending.avatar){
+        if(!WORKER_URL)throw Error("Set up Cloudflare before saving uploaded photos.");
+        await uploadImage(pending.avatar,"avatar");
+        a.avatarVersion=Date.now();
+      }
+      if(a.bannerMode==="photo"&&pending.banner){
+        if(!WORKER_URL)throw Error("Set up Cloudflare before saving uploaded banners.");
+        await uploadImage(pending.banner,"banner");
+        a.bannerVersion=Date.now();
+      }
+      if((a.avatarMode==="photo"&&!WORKER_URL)||
+         (a.bannerMode==="photo"&&!WORKER_URL))
+        throw Error("Photo mode needs the Cloudflare Worker.");
+      await saveProfile({
+        avatar:profile.avatar,
+        appearance:a
+      });
+      notice("Profile appearance saved!");
+      go("profile");
+    }catch(e){notice(error(e));}
+    finally{save.disabled=false;}
+  });
+  savePanel.append(save);
+  savePanel.append(button("Cancel Changes",()=>go("discover"),"btn secondary"));
 
   const bioPanel=panel("Edit Bio");
   const bio=el("textarea","field");
-  bio.value=profile.bio||"";
-  bio.maxLength=500;
-  bio.rows=4;
+  bio.rows=4;bio.maxLength=500;bio.value=profile.bio||"";
   bioPanel.append(bio);
   bioPanel.append(button("Save Bio",async()=>{
     try{
       await saveProfile({bio:bio.value});
-      status("Bio saved!");
-    }catch(e){status(fail(e));}
+      go("profile");notice("Bio saved!");
+    }catch(e){notice(error(e));}
   }));
-
-  const avatarPanel=panel("Choose Avatar");
-  const ag=el("div","avatar-grid");
-  for(const a of avatars){
-    const b=button(a.emoji,async()=>{
-      try{
-        await saveProfile({avatar:a.id});
-        go("profile");
-      }catch(e){status(fail(e));}
-    },"avatar-choice");
-    b.title=a.id;
-    ag.append(b);
-  }
-  avatarPanel.append(ag);
-
-  const colorPanel=panel("Profile Background");
-  const cg=el("div","color-grid");
-  for(const c of colors){
-    const b=button("",async()=>{
-      try{
-        await saveProfile({background:c});
-        go("profile");
-      }catch(e){status(fail(e));}
-    },"color-choice");
-    b.style.background=c;
-    b.title=c;
-    cg.append(b);
-  }
-  colorPanel.append(cg);
-  const picker=el("input");
-  picker.type="color";
-  picker.value=/^#[0-9a-f]{6}$/i.test(profile.background||"")
-    ?profile.background:"#17263e";
-  colorPanel.append(picker);
-  colorPanel.append(button("Save Custom Colour",async()=>{
-    try{
-      await saveProfile({background:picker.value});
-      go("profile");
-    }catch(e){status(fail(e));}
-  }));
-}
-
-// ====================================================
-// PUBLIC PROFILES
-// ====================================================
-
-function publicProfilePage(){
-  if(!selectedPlayer){go("friends");return;}
-  txt(content,"h1","Player Profile");
-  const p=panel(selectedPlayer.username||"Player");
-  p.append(avatarElement(selectedPlayer,true));
-  txt(p,"p",selectedPlayer.bio||"","muted");
-  p.append(button("Back to Friends",()=>go("friends"),"btn secondary"));
 }
 
 // ====================================================
 // FRIENDS
 // ====================================================
 
+function publicProfilePage(){
+  if(!selectedPlayer){go("friends");return;}
+  txt(content,"h1","Player Profile");
+  content.append(profileBanner(selectedPlayer));
+  content.append(button("Back to Friends",()=>go("friends"),"btn secondary"));
+}
 async function friendsPage(){
-  if(!requireAccount())return;
+  if(!requireUser())return;
   txt(content,"h1","👥 Friends");
-  const searchPanel=panel("Find a Player");
-  const name=field("Exact username");
-  searchPanel.append(name);
-  searchPanel.append(button("Search",async()=>{
-    const n=name.value.trim().toLowerCase();
-    if(!validName(n)){status("Enter a valid username.");return;}
+  const find=panel("Find Player");
+  const input=field("Exact username");
+  find.append(input);
+  find.append(button("Search",async()=>{
+    const name=input.value.trim().toLowerCase();
+    if(!validName(name)){notice("Invalid username.");return;}
     try{
-      const reservation=await getDoc(doc(db,"usernames",n));
-      if(!reservation.exists()){status("Player not found.");return;}
+      const reservation=await getDoc(doc(db,"usernames",name));
+      if(!reservation.exists()){notice("Player not found.");return;}
       const uid=reservation.data().uid;
-      const user=await getDoc(doc(db,"users",uid));
-      if(!user.exists()){status("Player profile not found.");return;}
-      const found={uid,...user.data()};
-      selectedPlayer=found;
-      searchPanel.querySelector(".userrow")?.remove();
-      playerRow(searchPanel,found,[
-        {label:"View Profile",action:()=>go("publicProfile")},
-        {label:"Add Friend",action:async()=>{
-          if(uid===currentUser.uid){status("That's your account.");return;}
+      const snap=await getDoc(doc(db,"users",uid));
+      if(!snap.exists()){notice("Profile unavailable.");return;}
+      const player={uid,...snap.data()};
+      find.querySelector(".userrow")?.remove();
+      playerRow(find,player,[
+        {label:"View",fn:()=>{selectedPlayer=player;go("publicProfile");}},
+        {label:"Add Friend",fn:async()=>{
+          if(uid===user.uid){notice("That's your account.");return;}
           try{
-            await setDoc(doc(db,"friendRequests",`${currentUser.uid}_${uid}`),{
-              sender:currentUser.uid,
-              receiver:uid,
-              status:"pending",
-              createdAt:serverTimestamp()
+            await setDoc(doc(db,"friendRequests",`${user.uid}_${uid}`),{
+              sender:user.uid,receiver:uid,
+              status:"pending",createdAt:serverTimestamp()
             });
-            status("Friend request sent!");
-          }catch(e){status(fail(e));}
+            notice("Friend request sent!");
+          }catch(e){notice(error(e));}
         }}
       ]);
-    }catch(e){status(fail(e));}
+    }catch(e){notice(error(e));}
   }));
-
   const incoming=panel("Incoming Requests");
   const outgoing=panel("Sent Requests");
-  const friends=panel("Accepted Friends");
-  txt(incoming,"p","Loading...","muted");
-
+  const accepted=panel("Friends");
   try{
-    const uid=currentUser.uid;
-    const [received,sent]=await Promise.all([
+    const uid=user.uid;
+    const [r,s]=await Promise.all([
       getDocs(query(collection(db,"friendRequests"),where("receiver","==",uid))),
       getDocs(query(collection(db,"friendRequests"),where("sender","==",uid)))
     ]);
     if(page!=="friends")return;
-    incoming.querySelector("p")?.remove();
-
-    const all=new Map();
-    for(const d of [...received.docs,...sent.docs])all.set(d.id,{id:d.id,...d.data()});
-    let incomingCount=0,outgoingCount=0,friendCount=0;
-
-    async function getPlayer(otherUid){
-      const s=await getDoc(doc(db,"users",otherUid));
-      return s.exists()?{uid:otherUid,...s.data()}:{uid:otherUid,username:"Unknown"};
-    }
-
-    for(const req of all.values()){
-      const otherUid=req.sender===uid?req.receiver:req.sender;
-      const player=await getPlayer(otherUid);
+    const requests=new Map();
+    [...r.docs,...s.docs].forEach(d=>requests.set(d.id,{id:d.id,...d.data()}));
+    let counts=[0,0,0];
+    for(const req of requests.values()){
+      const other=req.sender===uid?req.receiver:req.sender;
+      const snap=await getDoc(doc(db,"users",other));
+      const p=snap.exists()?{uid:other,...snap.data()}:{uid:other,username:"Unknown"};
       if(page!=="friends")return;
       if(req.status==="accepted"){
-        friendCount++;
-        playerRow(friends,player,[{
-          label:"View",action:()=>{
-            selectedPlayer=player;go("publicProfile");
-          }
-        }]);
+        counts[2]++;
+        playerRow(accepted,p,[{label:"View",fn:()=>{
+          selectedPlayer=p;go("publicProfile");
+        }}]);
       }else if(req.receiver===uid){
-        incomingCount++;
-        playerRow(incoming,player,[
-          {label:"Accept",action:async()=>{
-            try{
-              await updateDoc(doc(db,"friendRequests",req.id),{status:"accepted"});
-              go("friends");
-            }catch(e){status(fail(e));}
+        counts[0]++;
+        playerRow(incoming,p,[
+          {label:"Accept",fn:async()=>{
+            try{await updateDoc(doc(db,"friendRequests",req.id),{status:"accepted"});go("friends");}
+            catch(e){notice(error(e));}
           }},
-          {label:"Decline",action:async()=>{
-            try{
-              await deleteDoc(doc(db,"friendRequests",req.id));
-              go("friends");
-            }catch(e){status(fail(e));}
+          {label:"Decline",fn:async()=>{
+            try{await deleteDoc(doc(db,"friendRequests",req.id));go("friends");}
+            catch(e){notice(error(e));}
           }}
         ]);
       }else{
-        outgoingCount++;
-        playerRow(outgoing,player,[{
-          label:"Cancel",action:async()=>{
-            try{
-              await deleteDoc(doc(db,"friendRequests",req.id));
-              go("friends");
-            }catch(e){status(fail(e));}
-          }
-        }]);
+        counts[1]++;
+        playerRow(outgoing,p,[{label:"Cancel",fn:async()=>{
+          try{await deleteDoc(doc(db,"friendRequests",req.id));go("friends");}
+          catch(e){notice(error(e));}
+        }}]);
       }
     }
-    if(!incomingCount)txt(incoming,"p","No incoming requests.","muted");
-    if(!outgoingCount)txt(outgoing,"p","No pending requests.","muted");
-    if(!friendCount)txt(friends,"p","No accepted friends yet.","muted");
-  }catch(e){
-    status("Could not load friends: "+fail(e));
-  }
+    if(!counts[0])txt(incoming,"p","No incoming requests.","muted");
+    if(!counts[1])txt(outgoing,"p","No pending requests.","muted");
+    if(!counts[2])txt(accepted,"p","No friends yet.","muted");
+  }catch(e){notice(error(e));}
 }
 
 // ====================================================
@@ -880,105 +1070,73 @@ async function friendsPage(){
 // ====================================================
 
 async function inventoryPage(){
-  if(!requireAccount())return;
+  if(!requireUser())return;
   txt(content,"h1","🎨 Profile Inventory");
-  txt(content,"p","Your existing profile skins. Game-specific cosmetics will be managed in Garage.","muted");
-  const grid=el("div","grid");
-  content.append(grid);
-
-  let owned=new Set(["classic"]);
+  const grid=el("div","grid");content.append(grid);
+  const owned=new Set(["classic"]);
   try{
-    const snap=await getDocs(collection(db,"users",currentUser.uid,"inventory"));
+    const snap=await getDocs(collection(db,"users",user.uid,"inventory"));
     snap.forEach(d=>owned.add(d.id));
-  }catch(e){status(fail(e));}
-
+  }catch(e){notice(error(e));}
   if(page!=="inventory")return;
-
-  for(const s of skins){
-    const has=owned.has(s.id);
-    const card=el("article","skin"+(profile.equipped===s.id?" selected":""));
-    txt(card,"div",s.emoji,"skinart");
-    txt(card,"h3",s.name);
-    txt(card,"p",has?"Owned":s.free?"Free to claim":"Locked","muted");
-    const b=button(
-      profile.equipped===s.id?"Equipped":has?"Equip":s.free?"Claim Free":"Locked",
-      async()=>{
-        try{
-          if(!has&&s.free){
-            await setDoc(doc(db,"users",currentUser.uid,"inventory",s.id),{
-              skinId:s.id,source:"free"
-            });
-          }else if(!has)return;
-          await saveProfile({equipped:s.id});
-          go("inventory");
-        }catch(e){status(fail(e));}
-      }
-    );
-    b.disabled=profile.equipped===s.id||(!has&&!s.free);
-    card.append(b);
-    grid.append(card);
+  for(const [id,name,emoji,free] of skins){
+    const has=owned.has(id);
+    const card=el("div","panel");
+    txt(card,"div",emoji,"art");txt(card,"h3",name);
+    txt(card,"p",has?"Owned":free?"Free to claim":"Locked","muted");
+    const b=button(profile.equipped===id?"Equipped":has?"Equip":free?"Claim Free":"Locked",async()=>{
+      try{
+        if(!has&&free)
+          await setDoc(doc(db,"users",user.uid,"inventory",id),{skinId:id,source:"free"});
+        else if(!has)return;
+        await saveProfile({equipped:id});
+        go("inventory");
+      }catch(e){notice(error(e));}
+    });
+    b.disabled=profile.equipped===id||(!has&&!free);
+    card.append(b);grid.append(card);
   }
 }
 
 // ====================================================
-// NEWS
+// NEWS + ADMIN
 // ====================================================
 
 async function newsPage(){
   txt(content,"h1","📢 News");
-  const p=panel("Latest Announcements");
-  txt(p,"p","Loading...","muted");
+  const p=panel("Announcements");
   try{
-    const snap=await getDocs(query(
-      collection(db,"announcements"),
-      orderBy("createdAt","desc"),
-      limit(30)
-    ));
+    const snap=await getDocs(query(collection(db,"announcements"),orderBy("createdAt","desc"),limit(30)));
     if(page!=="news")return;
-    p.querySelector("p")?.remove();
-    if(snap.empty)txt(p,"p","No announcements yet.","muted");
+    if(snap.empty)txt(p,"p","No announcements yet.");
     snap.forEach(d=>{
-      const a=el("div","notice");
-      txt(a,"h3",d.data().title||"Announcement");
-      txt(a,"p",d.data().body||"");
-      p.append(a);
+      const n=el("div","notice");
+      txt(n,"h3",d.data().title||"Announcement");
+      txt(n,"p",d.data().body||"");p.append(n);
     });
-  }catch(e){status(fail(e));}
+  }catch(e){notice(error(e));}
 }
-
-// ====================================================
-// ADMIN — CUSTOM CLAIM REQUIRED
-// ====================================================
-
 function adminPage(){
   if(!isAdmin){go("discover");return;}
-  txt(content,"h1","🛡️ Admin Dashboard");
+  txt(content,"h1","🛡️ Admin");
   const p=panel("Publish Announcement");
-  const title=field("Announcement title");
-  const body=el("textarea","field");
-  body.placeholder="Announcement text";
-  body.rows=5;
+  const title=field("Title");
   title.maxLength=100;
-  body.maxLength=1000;
+  const body=el("textarea","field");
+  body.rows=5;body.maxLength=1000;body.placeholder="Announcement";
   p.append(title,body);
   p.append(button("Publish",async()=>{
-    const t=title.value.trim(),b=body.value.trim();
-    if(!t||!b){status("Title and message are required.");return;}
+    if(!title.value.trim()||!body.value.trim())return;
     try{
       await addDoc(collection(db,"announcements"),{
-        title:t,body:b,author:currentUser.uid,
-        createdAt:serverTimestamp()
+        title:title.value.trim(),body:body.value.trim(),
+        author:user.uid,createdAt:serverTimestamp()
       });
-      title.value="";body.value="";
-      status("Announcement published.");
-    }catch(e){status(fail(e));}
+      title.value="";body.value="";notice("Published!");
+    }catch(e){notice(error(e));}
   }));
-  const info=panel("Admin Security");
-  txt(info,"p","Admin access is controlled by the Firebase custom claim admin: true.");
-  txt(info,"p","GP grants, item grants and trade moderation will be added through the trusted backend.","muted");
 }
 
-// Initial screen
 render();
 </script>
 </body>
