@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,9 +83,20 @@ footer{text-align:center;padding:25px;color:var(--muted)}
  #content{padding:14px}.editorgrid{grid-template-columns:1fr}
  .featureinfo{padding:30px 20px}.featureinfo h2{font-size:30px}
 }
+#launchOverlay{position:fixed;inset:0;z-index:100;pointer-events:none;display:none;overflow:hidden;background:#06121b15}
+#launchOverlay.active{display:block;animation:impactshake .6s ease-in 1.05s}
+#launchBall{position:absolute;left:50%;top:50%;font-size:90px;transform:translate(-50%,-50%) scale(.05) rotate(-360deg);animation:balllaunch 1.2s cubic-bezier(.2,.05,.8,1) forwards;filter:drop-shadow(0 15px 10px #0008)}
+#launchCrack{position:absolute;inset:0;opacity:0;background:repeating-conic-gradient(from 15deg at 50% 50%,transparent 0deg 13deg,#eafaffbb 13.15deg 13.35deg,transparent 13.5deg 27deg);clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%);animation:glass 1.7s 1.07s forwards}
+#launchText{position:absolute;top:12%;width:100%;text-align:center;font-size:clamp(36px,7vw,85px);font-weight:1000;color:#ffdd75;text-shadow:0 7px 15px #000;opacity:0;animation:showlaunch 2.2s 1.25s forwards}
+@keyframes balllaunch{to{transform:translate(-50%,-50%) scale(14) rotate(60deg)}}
+@keyframes impactshake{0%,100%{translate:0 0}30%{translate:13px -8px}55%{translate:-12px 7px}75%{translate:8px 3px}}
+@keyframes glass{0%{opacity:0}15%{opacity:1}75%{opacity:.9}100%{opacity:0}}
+@keyframes showlaunch{0%{opacity:0;transform:scale(.7)}25%,70%{opacity:1;transform:scale(1)}100%{opacity:0}}
+.launchcount{font-size:clamp(25px,5vw,48px);font-weight:900;color:#ffd579;letter-spacing:.06em;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
+<div id="launchOverlay" aria-hidden="true"><div id="launchBall">⚾</div><div id="launchCrack"></div><div id="launchText">DOODLE SLUGGERS IS LIVE!</div></div>
 <div class="layout">
 <aside>
   <div class="logo">GAME<span>HUB</span></div>
@@ -180,22 +190,72 @@ const db=getFirestore(app);
 const $=id=>document.getElementById(id);
 const content=$("content");
 
+const RELEASE_UTC=Date.parse("2026-10-28T22:00:00Z"); // 9:00 AM AEDT, 29 October 2026
+const DOODLE_URL="https://w1ldcardstudios.github.io/doodle-sluggers/";
+let trustedTime=null;
+let trustedAt=0;
+let launchPlayed=false;
+function nowTrusted(){return trustedTime===null?null:trustedTime+(performance.now()-trustedAt);}
+async function syncLaunchClock(){
+ try{
+  const before=performance.now();
+  const res=await fetch(location.href,{method:"HEAD",cache:"no-store"});
+  const date=res.headers.get("date");
+  if(!res.ok||!date)throw Error("No server date");
+  const parsed=Date.parse(date);
+  if(!Number.isFinite(parsed))throw Error("Invalid date");
+  trustedTime=parsed+(performance.now()-before)/2;
+  trustedAt=performance.now();
+ }catch(e){console.warn("Launch clock could not sync",e);}
+ updateLaunch();
+}
+function launchReady(){const n=nowTrusted();return n!==null&&n>=RELEASE_UTC;}
+function launchCountdown(){
+ const n=nowTrusted();
+ if(n===null)return "Synchronising world clock...";
+ const t=Math.max(0,Math.ceil((RELEASE_UTC-n)/1000));
+ const h=String(Math.floor(t/3600)).padStart(2,"0");
+ const m=String(Math.floor(t%3600/60)).padStart(2,"0");
+ const sec=String(t%60).padStart(2,"0");
+ return `${h}:${m}:${sec}`;
+}
+function updateLaunch(){
+ document.querySelectorAll("[data-doodle-countdown]").forEach(n=>{
+  n.textContent=launchReady()?"AVAILABLE NOW!":launchCountdown();
+ });
+ document.querySelectorAll("[data-doodle-action]").forEach(b=>{
+  b.textContent=launchReady()?"▶ Play Now":"🔒 Coming Soon";
+  b.disabled=!launchReady();
+ });
+ if(launchReady()&&!launchPlayed){
+  launchPlayed=true;
+  if(!sessionStorage.getItem("doodleLaunchShown")){
+   sessionStorage.setItem("doodleLaunchShown","1");
+   const overlay=document.getElementById("launchOverlay");
+   overlay.classList.add("active");
+   setTimeout(()=>overlay.classList.remove("active"),3800);
+  }
+ }
+}
+setInterval(updateLaunch,200);
+setInterval(syncLaunchClock,60000);
+syncLaunchClock();
 const games=[
   {id:"counter",name:"Counter Opps",genre:"Shooter",icon:"🎯",
    image:"counter-opps.png",banner:"counter-opps-banner.png",
    detail:"counter-opps-detail.png",
    description:"Tactical shooting, bots and competitive rounds.",
-   url:"https://himynameishitler.github.io/Counter-Opps-/"},
+   url:"https://w1ldcardstudios.github.io/Counter-Opps-/"},
   {id:"boost",name:"Boostball",genre:"Sports",icon:"🚗",
    image:"",banner:"",detail:"",
    description:"Drive, boost, jump and score in car soccer.",
-   url:"https://himynameishitler.github.io/boostball/"},
+   url:"https://w1ldcardstudios.github.io/boostball/"},
   {id:"chaos",name:"Card Chaos",genre:"Action",icon:"🃏",
    image:"Neon Jester Card Chaos.png",
    banner:"Neon Card Chaos Arena.png",
    detail:"Neon Card Chaos Arena (1).png",
    description:"Unlock cards and build chaotic card combinations.",
-   url:"https://himynameishitler.github.io/card-chaos/"}
+   url:"https://w1ldcardstudios.github.io/card-chaos/"}
 ];
 const crates=[
   ["🔫","Counter Opps Weapon Crate","One weapon cosmetic.",true],
@@ -583,7 +643,15 @@ function discover(){
   txt(content,"h2","Coming Soon");
   const soon=el("div","panel");
   txt(soon,"h2","⚾ Doodle Sluggers");
-  txt(soon,"p","An original arcade baseball game. Coming soon!");
+  txt(soon,"p","Launch: 28 October 2026, 9:00 AM AEDT, 29 October 2026");
+  const countdown=txt(soon,"div",launchCountdown(),"launchcount");
+  countdown.dataset.doodleCountdown="1";
+  const play=button("🔒 Coming Soon",()=>{
+    if(launchReady())window.open(DOODLE_URL,"_blank","noopener,noreferrer");
+  });
+  play.dataset.doodleAction="1";
+  play.disabled=!launchReady();
+  soon.append(play);
   content.append(soon);
 }
 function detail(){
@@ -593,9 +661,19 @@ function detail(){
   content.append(hero);
   const p=panel(g.genre);
   txt(p,"p",g.description);
-  const a=el("a","btn","▶ Play Game");
-  a.href=g.url;a.target="_blank";a.rel="noopener noreferrer";
-  p.append(a,button("Back",()=>go("discover"),"btn secondary"));
+  if(g.id==="doodle"){
+    const cd=txt(p,"div",launchCountdown(),"launchcount");
+    cd.dataset.doodleCountdown="1";
+    const b=button("🔒 Coming Soon",()=>{
+      if(launchReady())window.open(g.url,"_blank","noopener,noreferrer");
+    });
+    b.dataset.doodleAction="1";b.disabled=!launchReady();p.append(b);
+  }else{
+    const a=el("a","btn","▶ Play Game");
+    a.href=g.url;a.target="_blank";a.rel="noopener noreferrer";
+    p.append(a);
+  }
+  p.append(button("Back",()=>go("discover"),"btn secondary"));
 }
 
 // ====================================================
