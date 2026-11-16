@@ -1,0 +1,15 @@
+
+[
+  {
+    "id": "drift-hunters",
+    "title": "Drift Hunters",
+    "category": "Racing",
+    "description": "A browser drifting game.",
+    "thumbnail": "/assets/drift-hunters.webp",
+    "embedUrl": "",
+    "launchUrl": "https://example.com",
+    "playMode": "external",
+    "featured": true,
+    "tags": ["drifting", "cars", "3d"]
+  }
+]
