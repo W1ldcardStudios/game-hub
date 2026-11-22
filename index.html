@@ -1,1237 +1,521 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Game Hub v4.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameHub | Play Free Games</title>
+
 <style>
-:root{color-scheme:dark;--bg:#080e1a;--panel:#152238;--line:#344865;--muted:#a9b9d0;--blue:#579dff}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:white;font-family:system-ui,Arial,sans-serif}
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-button:disabled{opacity:.5;cursor:not-allowed}
-[hidden]{display:none!important}
-a{color:inherit;text-decoration:none}
-.layout{display:flex;min-height:100vh}
-aside{width:210px;background:#101b2c;border-right:1px solid var(--line);padding:18px 12px;flex-shrink:0}
-.logo{font-size:25px;font-weight:900;margin:12px 8px 25px}
-.logo span{color:var(--blue)}
-.nav{display:block;width:100%;border:0;background:transparent;color:var(--muted);padding:13px;text-align:left;border-radius:10px;margin:5px 0}
-.nav:hover,.nav.active{background:#294569;color:white}
-main{flex:1;min-width:0}
-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:17px 25px;background:#101b2c;border-bottom:1px solid var(--line)}
-#content{max-width:1350px;margin:auto;padding:24px}
-h1{margin:0 0 12px}h2{margin:0 0 12px}h3{margin:0 0 8px}
-p{line-height:1.5}
-.muted{color:var(--muted)}
-.btn{border:0;background:#347edb;color:white;padding:11px 16px;border-radius:9px;font-weight:700;margin:3px}
-.btn:hover:not(:disabled){background:#589cf1}
-.btn.secondary{background:#304660}
-.btn.danger{background:#a64054}
-.field{width:100%;padding:11px;background:#0c1829;border:1px solid #4c6281;border-radius:9px;color:white;margin:8px 0}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:21px;margin:18px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden}
-.cardbody{padding:17px}
-.art{height:165px;display:grid;place-items:center;font-size:70px;background:linear-gradient(120deg,#314e7b,#152238)}
-.art img{width:100%;height:100%;object-fit:cover}
-.feature{position:relative;min-height:340px;border-radius:17px;overflow:hidden;background:#203958;margin:20px 0}
-.feature>img{position:absolute;width:100%;height:100%;object-fit:cover}
-.shade{position:absolute;inset:0;background:linear-gradient(90deg,#080e1af5,#080e1acc,#080e1a10)}
-.featureinfo{position:relative;max-width:540px;padding:42px 32px}
-.featureinfo h2{font-size:42px}
-.controls{position:absolute;right:15px;bottom:15px;display:flex;gap:7px}
-.controls button{border:1px solid #ffffff66;border-radius:50%;width:43px;height:43px;background:#10223edc;color:white;font-size:20px}
-.hero{height:300px;background:#233a5a;border-radius:15px;overflow:hidden;display:grid;place-items:center;font-size:90px}
-.hero img{width:100%;height:100%;object-fit:cover}
-.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.balance{background:#263e60;padding:10px 13px;border-radius:10px;color:#ffdc88;font-weight:800}
-.avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:#365b91;color:white;font-size:25px;font-weight:900;text-align:center;overflow-wrap:anywhere;flex-shrink:0}
-.avatar.big{width:105px;height:105px;font-size:34px;border:4px solid #ffffff88}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.banner{min-height:225px;border-radius:16px;padding:23px;display:flex;align-items:flex-end;gap:17px;background-size:cover;background-position:center;border:1px solid #ffffff44}
-.banner h2,.banner p{text-shadow:0 2px 8px #000b}
-.editorgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.editorbox{background:#0d1a2e;border:1px solid var(--line);padding:18px;border-radius:14px}
-.previewavatar{width:125px;height:125px;border-radius:50%;margin:15px auto;display:grid;place-items:center;overflow:hidden;font-size:36px;font-weight:900;overflow-wrap:anywhere;text-align:center}
-.previewbanner{height:145px;border-radius:12px;margin:15px 0;background-size:cover;background-position:center}
-.modes{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
-.modes button.active{outline:2px solid #9acbff}
-.colorrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:9px 0}
-.colorrow input[type=color]{width:55px;height:43px;border:0;background:transparent}
-.colorrow input[type=text]{max-width:125px}
-.sliderrow{display:flex;align-items:center;gap:12px;margin:12px 0}
-.sliderrow input{flex:1;min-width:0}
-.avatargrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(55px,1fr));gap:8px}
-.avatargrid button{font-size:27px;padding:10px;background:#2b4265;color:white;border:1px solid #53749c;border-radius:10px}
-.userrow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--line)}
-.notice{background:#263d5d;padding:14px;border-radius:10px;margin:12px 0}
-.tabs{display:flex;gap:10px;margin:15px 0;flex-wrap:wrap}
-.overlay{position:fixed;inset:0;z-index:20;background:#000c;display:grid;place-items:center;padding:15px}
-.modal{background:var(--panel);border:1px solid #5a7395;border-radius:15px;padding:24px;width:min(470px,100%);max-height:95vh;overflow:auto}
-.cropstage{width:100%;aspect-ratio:8/3;background:#070c15;touch-action:none;overflow:hidden;border-radius:10px;cursor:grab;margin:15px auto}
-.cropstage.circle{max-width:320px;aspect-ratio:1/1;border-radius:50%}
-.cropstage canvas{display:block;width:100%;height:100%}
-.raritygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:12px}
-.rarity{background:#263d5c;padding:16px;border-radius:11px;text-align:center}
-.price{font-size:19px;font-weight:900;color:#ffd478}
-footer{text-align:center;padding:25px;color:var(--muted)}
-@media(max-width:760px){
- aside{width:64px;padding:10px 4px}.logo{font-size:11px;margin:12px 2px 20px}.logo span{display:none}
- .nav{font-size:0;text-align:center;padding:12px 0}.nav .emoji{font-size:22px}
- #content{padding:14px}.editorgrid{grid-template-columns:1fr}
- .featureinfo{padding:30px 20px}.featureinfo h2{font-size:30px}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-#launchOverlay{position:fixed;inset:0;z-index:100;pointer-events:none;display:none;overflow:hidden;background:#06121b15}
-#launchOverlay.active{display:block;animation:impactshake .6s ease-in 1.05s}
-#launchBall{position:absolute;left:50%;top:50%;font-size:90px;transform:translate(-50%,-50%) scale(.05) rotate(-360deg);animation:balllaunch 1.2s cubic-bezier(.2,.05,.8,1) forwards;filter:drop-shadow(0 15px 10px #0008)}
-#launchCrack{position:absolute;inset:0;opacity:0;background:repeating-conic-gradient(from 15deg at 50% 50%,transparent 0deg 13deg,#eafaffbb 13.15deg 13.35deg,transparent 13.5deg 27deg);clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%);animation:glass 1.7s 1.07s forwards}
-#launchText{position:absolute;top:12%;width:100%;text-align:center;font-size:clamp(36px,7vw,85px);font-weight:1000;color:#ffdd75;text-shadow:0 7px 15px #000;opacity:0;animation:showlaunch 2.2s 1.25s forwards}
-@keyframes balllaunch{to{transform:translate(-50%,-50%) scale(14) rotate(60deg)}}
-@keyframes impactshake{0%,100%{translate:0 0}30%{translate:13px -8px}55%{translate:-12px 7px}75%{translate:8px 3px}}
-@keyframes glass{0%{opacity:0}15%{opacity:1}75%{opacity:.9}100%{opacity:0}}
-@keyframes showlaunch{0%{opacity:0;transform:scale(.7)}25%,70%{opacity:1;transform:scale(1)}100%{opacity:0}}
-.launchcount{font-size:clamp(25px,5vw,48px);font-weight:900;color:#ffd579;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+
+body {
+    background: #10121a;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    height: 75px;
+    background: #191c28;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 900;
+    color: #8c70ff;
+}
+
+.search {
+    width: 35%;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid #35394a;
+    background: #252938;
+    color: white;
+    outline: none;
+    font-size: 15px;
+}
+
+.search:focus {
+    border-color: #8c70ff;
+}
+
+.hero {
+    margin: 30px 5%;
+    padding: 45px;
+    border-radius: 20px;
+    background: linear-gradient(120deg, #5435c5, #a348b7, #e66b83);
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    color: #eee;
+    margin-bottom: 20px;
+}
+
+.hero button {
+    padding: 13px 25px;
+    background: white;
+    color: #33216e;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.categories {
+    display: flex;
+    gap: 10px;
+    padding: 0 5%;
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+
+.category {
+    background: #252938;
+    border: 1px solid #363b50;
+    color: white;
+    padding: 11px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.category.active,
+.category:hover {
+    background: #7959e9;
+}
+
+.section {
+    padding: 0 5%;
+    margin-bottom: 40px;
+}
+
+.section h2 {
+    margin-bottom: 20px;
+    font-size: 23px;
+}
+
+.games {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 20px;
+}
+
+.game {
+    background: #1d2130;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid #292e40;
+}
+
+.game:hover {
+    transform: translateY(-6px);
+    border-color: #8c70ff;
+}
+
+.thumbnail {
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+}
+
+.game-info {
+    padding: 13px;
+}
+
+.game-info h3 {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.game-info p {
+    font-size: 12px;
+    color: #9299ae;
+}
+
+.tag {
+    display: inline-block;
+    background: #34304d;
+    color: #bcaaff;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 10px;
+    margin-top: 8px;
+}
+
+footer {
+    text-align: center;
+    padding: 35px;
+    color: #737b91;
+    background: #191c28;
+}
+
+.empty {
+    color: #888;
+    padding: 25px 0;
+    display: none;
+}
+
+@media(max-width: 650px) {
+    header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 15px 5%;
+        gap: 12px;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    .hero {
+        padding: 30px;
+    }
+
+    .hero h1 {
+        font-size: 29px;
+    }
+
+    .games {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+}
 </style>
 </head>
+
 <body>
-<div id="launchOverlay" aria-hidden="true"><div id="launchBall">⚾</div><div id="launchCrack"></div><div id="launchText">DOODLE SLUGGERS IS LIVE!</div></div>
-<div class="layout">
-<aside>
-  <div class="logo">GAME<span>HUB</span></div>
-  <button class="nav active" data-page="discover"><span class="emoji">🏠</span> Discover</button>
-  <button class="nav" data-page="shop"><span class="emoji">🛒</span> Shop</button>
-  <button class="nav" data-page="garage"><span class="emoji">🔧</span> Garage</button>
-  <button class="nav" data-page="friends"><span class="emoji">👥</span> Friends</button>
-  <button class="nav" data-page="inventory"><span class="emoji">🎨</span> Inventory</button>
-  <button class="nav" data-page="profile"><span class="emoji">👤</span> Profile</button>
-  <button class="nav" data-page="news"><span class="emoji">📢</span> News</button>
-  <button class="nav" data-page="admin" id="adminNav" hidden><span class="emoji">🛡️</span> Admin</button>
-</aside>
-<main>
+
 <header>
-  <strong>🎮 Game Hub v4.0</strong>
-  <div class="row">
-    <span class="balance">🪙 GP — Coming Soon</span>
-    <span id="headerName">Guest</span>
-    <button class="btn" id="authButton">Sign In</button>
-    <button class="btn secondary" id="logoutButton" hidden>Sign Out</button>
-  </div>
+    <div class="logo">🎮 GameHub</div>
+    <input class="search" id="search"
+        placeholder="Search thousands of games...">
 </header>
-<div id="content"></div>
-<footer>Game Hub v4.0 · Play · Connect · Customise</footer>
-</main>
+
+<div class="hero">
+    <h1>Find your next favourite game.</h1>
+    <p>Discover games, explore new worlds and play whenever you want.</p>
+    <button onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">
+        Explore Games →
+    </button>
 </div>
 
-<div id="authOverlay" class="overlay" hidden>
-<div class="modal">
-  <h2>Game Hub Account</h2>
-  <div class="tabs">
-    <button class="btn" id="loginTab">Sign In</button>
-    <button class="btn secondary" id="registerTab">Register</button>
-  </div>
-  <input class="field" id="email" type="email" placeholder="Email">
-  <input class="field" id="password" type="password" placeholder="Password">
-  <p id="authError" style="color:#ff9ca9"></p>
-  <button class="btn" id="submitAuth">Sign In</button>
-  <button class="btn secondary" id="closeAuth">Cancel</button>
-</div>
-</div>
+<nav class="categories" id="categories">
+    <button class="category active" data-cat="All">🔥 All Games</button>
+    <button class="category" data-cat="Action">⚔️ Action</button>
+    <button class="category" data-cat="Racing">🏎️ Racing</button>
+    <button class="category" data-cat="Sports">⚽ Sports</button>
+    <button class="category" data-cat="Puzzle">🧩 Puzzle</button>
+    <button class="category" data-cat="Strategy">🧠 Strategy</button>
+    <button class="category" data-cat="Multiplayer">👥 Multiplayer</button>
+</nav>
 
-<div id="cropOverlay" class="overlay" hidden>
-<div class="modal" style="width:min(590px,100%)">
-  <h2 id="cropTitle">Crop Photo</h2>
-  <p class="muted">Drag to reposition. Adjust zoom below.</p>
-  <div class="cropstage" id="cropStage">
-    <canvas id="cropCanvas"></canvas>
-  </div>
-  <div class="sliderrow">
-    <span>Zoom</span>
-    <input id="cropZoom" type="range" min="1" max="3" step=".01" value="1">
-    <span id="cropZoomLabel">1.00×</span>
-  </div>
-  <button class="btn" id="cropSave">Use Photo</button>
-  <button class="btn secondary" id="cropCancel">Cancel</button>
-</div>
-</div>
+<section class="section" id="library">
+    <h2>⭐ Popular Games</h2>
+    <div class="games" id="games"></div>
+    <p class="empty" id="empty">No games found. Try another search!</p>
+</section>
 
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-import {
-  getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,signOut
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-import {
-  getFirestore,doc,getDoc,getDocs,setDoc,updateDoc,deleteDoc,
-  collection,query,where,limit,runTransaction,serverTimestamp,
-  addDoc,orderBy
-} from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+<section class="section">
+    <h2>🕹️ Recently Played</h2>
+    <div class="games" id="recent"></div>
+</section>
 
-// YOUR EXISTING FIREBASE PROJECT
-const firebaseConfig={
-  apiKey:"AIzaSyAuux4SVi5PPQUL7A0AypYoWg37rGYu0ek",
-  authDomain:"gamehub-53ffd.firebaseapp.com",
-  projectId:"gamehub-53ffd",
-  storageBucket:"gamehub-53ffd.firebasestorage.app",
-  messagingSenderId:"151536898929",
-  appId:"1:151536898929:web:10b054c2d955bc2f9c9cd0",
-  measurementId:"G-FFQC75X66X"
-};
+<footer>
+    <h3>🎮 GameHub</h3>
+    <p style="margin-top:10px">Your games. Your world.</p>
+    <p style="margin-top:15px">Game links belong to their respective creators.</p>
+</footer>
 
-// AFTER DEPLOYING YOUR WORKER, PUT ITS URL HERE.
-// Example: https://gamehub-images.your-account.workers.dev
-const WORKER_URL =
-  "https://gamehub-images.netlify.app/.netlify/functions/profile-images";
+<script>
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-const $=id=>document.getElementById(id);
-const content=$("content");
-
-const RELEASE_UTC=Date.parse("2026-10-28T22:00:00Z"); // 9:00 AM AEDT, 29 October 2026
-const DOODLE_URL="https://w1ldcardstudios.github.io/doodle-sluggers/";
-let trustedTime=null;
-let trustedAt=0;
-let launchPlayed=false;
-function nowTrusted(){return trustedTime===null?null:trustedTime+(performance.now()-trustedAt);}
-async function syncLaunchClock(){
- try{
-  const before=performance.now();
-  const res=await fetch(location.href,{method:"HEAD",cache:"no-store"});
-  const date=res.headers.get("date");
-  if(!res.ok||!date)throw Error("No server date");
-  const parsed=Date.parse(date);
-  if(!Number.isFinite(parsed))throw Error("Invalid date");
-  trustedTime=parsed+(performance.now()-before)/2;
-  trustedAt=performance.now();
- }catch(e){console.warn("Launch clock could not sync",e);}
- updateLaunch();
-}
-function launchReady(){const n=nowTrusted();return n!==null&&n>=RELEASE_UTC;}
-function launchCountdown(){
- const n=nowTrusted();
- if(n===null)return "Synchronising world clock...";
- const t=Math.max(0,Math.ceil((RELEASE_UTC-n)/1000));
- const h=String(Math.floor(t/3600)).padStart(2,"0");
- const m=String(Math.floor(t%3600/60)).padStart(2,"0");
- const sec=String(t%60).padStart(2,"0");
- return `${h}:${m}:${sec}`;
-}
-function updateLaunch(){
- document.querySelectorAll("[data-doodle-countdown]").forEach(n=>{
-  n.textContent=launchReady()?"AVAILABLE NOW!":launchCountdown();
- });
- document.querySelectorAll("[data-doodle-action]").forEach(b=>{
-  b.textContent=launchReady()?"▶ Play Now":"🔒 Coming Soon";
-  b.disabled=!launchReady();
- });
- if(launchReady()&&!launchPlayed){
-  launchPlayed=true;
-  if(!sessionStorage.getItem("doodleLaunchShown")){
-   sessionStorage.setItem("doodleLaunchShown","1");
-   const overlay=document.getElementById("launchOverlay");
-   overlay.classList.add("active");
-   setTimeout(()=>overlay.classList.remove("active"),3800);
-  }
- }
-}
-setInterval(updateLaunch,200);
-setInterval(syncLaunchClock,60000);
-syncLaunchClock();
-const games=[
-  {id:"counter",name:"Counter Opps",genre:"Shooter",icon:"🎯",
-   image:"counter-opps.png",banner:"counter-opps-banner.png",
-   detail:"counter-opps-detail.png",
-   description:"Tactical shooting, bots and competitive rounds.",
-   url:"https://w1ldcardstudios.github.io/Counter-Opps-/"},
-  {id:"boost",name:"Boostball",genre:"Sports",icon:"🚗",
-   image:"",banner:"",detail:"",
-   description:"Drive, boost, jump and score in car soccer.",
-   url:"https://w1ldcardstudios.github.io/boostball/"},
-  {id:"chaos",name:"Card Chaos",genre:"Action",icon:"🃏",
-   image:"Neon Jester Card Chaos.png",
-   banner:"Neon Card Chaos Arena.png",
-   detail:"Neon Card Chaos Arena (1).png",
-   description:"Unlock cards and build chaotic card combinations.",
-   url:"https://w1ldcardstudios.github.io/card-chaos/"}
-];
-const crates=[
-  ["🔫","Counter Opps Weapon Crate","One weapon cosmetic.",true],
-  ["🏎️","Boostball Car Drop","One car cosmetic.",true],
-  ["🃏","Card Chaos Pack","Five cards.",true],
-  ["🏏","Doodle Sluggers Bat Crate","One bat cosmetic.",false],
-  ["⚾","Doodle Sluggers Character Crate","One character cosmetic.",false]
-];
-const rarities=[
-  ["Common","#c0c5cd",5],["Rare","#579dff",10],
-  ["Epic","#bb7bff",15],["Legendary","#ffd36d",20],
-  ["Mythic","#ff82bc",30]
-];
-const avatars=[
-  ["classic","🎮"],["cat","🐈"],["robot","🤖"],["star","⭐"],
-  ["rocket","🚀"],["fox","🦊"],["ghost","👻"],["dragon","🐉"],
-  ["alien","👽"],["crown","👑"],["panda","🐼"],["flame","🔥"]
-];
-const skins=[
-  ["classic","Classic","🎮",true],["blue","Blue Flame","🔥",true],
-  ["star","Star Player","⭐",true],["robot","Robot","🤖",true],
-  ["cat","Cat","🐈",true],["galaxy","Galaxy","🌌",false],
-  ["royal","Royal","👑",false],["diamond","Diamond","💎",false],
-  ["developer","Developer","🛠️",false]
-];
-
-let user=null,profile=null,isAdmin=false,page="discover";
-let selectedGame=games[0],selectedPlayer=null;
-let featuredIndex=0,carouselTimer=null,selectedGarage="boost";
-let authMode="login";
-
-function el(tag,cls="",value=""){
-  const x=document.createElement(tag);
-  x.className=cls;x.textContent=value;return x;
-}
-function txt(parent,tag,value,cls=""){
-  const x=el(tag,cls,value);parent.append(x);return x;
-}
-function button(label,fn,cls="btn"){
-  const x=el("button",cls,label);x.type="button";x.onclick=fn;return x;
-}
-function panel(title){
-  const x=el("section","panel");
-  if(title)txt(x,"h2",title);
-  content.append(x);return x;
-}
-function field(placeholder,value=""){
-  const x=el("input","field");
-  x.placeholder=placeholder;x.value=value;return x;
-}
-function notice(message){
-  $("notice")?.remove();
-  const x=el("div","notice",message);x.id="notice";
-  content.prepend(x);
-}
-function error(e){console.error(e);return e?.message||"Something went wrong.";}
-function validName(s){return /^[A-Za-z0-9_]{3,20}$/.test(s);}
-function validHex(s){return /^#[0-9a-fA-F]{6}$/.test(s);}
-function safeColor(s){return validHex(s)?s:"#ffffff";}
-function art(parent,path,emoji){
-  if(!path){parent.textContent=emoji;return;}
-  const img=new Image();img.alt="Game artwork";
-  img.src=encodeURI(path);
-  img.onerror=()=>{img.remove();parent.textContent=emoji;};
-  parent.append(img);
-}
-function requireUser(){
-  if(!user){$("authOverlay").hidden=false;return false;}
-  if(!profile){page="setup";render();return false;}
-  return true;
-}
-function go(next){
-  clearInterval(carouselTimer);carouselTimer=null;
-  if(["profile","friends","inventory","garage","admin"].includes(next)&&!requireUser())return;
-  if(next==="admin"&&!isAdmin)next="discover";
-  page=next;render();window.scrollTo(0,0);
-}
-function render(){
-  content.replaceChildren();
-  document.querySelectorAll(".nav").forEach(n=>
-    n.classList.toggle("active",n.dataset.page===page));
-  const routes={
-    discover,detail,shop:shopPage,garage:garagePage,
-    profile:profilePage,setup,friends:friendsPage,
-    inventory:inventoryPage,news:newsPage,admin:adminPage,
-    publicProfile:publicProfilePage
-  };
-  (routes[page]||discover)();
-}
-document.querySelectorAll(".nav").forEach(n=>n.onclick=()=>go(n.dataset.page));
-
-// ====================================================
-// PROFILE APPEARANCE
-// ====================================================
-
-const baseBg=()=>({
-  mode:"solid",
-  colors:["#345d9d","#8e4bd1","#ff6894"],
-  angle:120
-});
-const baseAppearance=()=>({
-  avatarMode:"preset",
-  avatarText:"GH",
-  avatarBg:baseBg(),
-  bannerMode:"color",
-  bannerBg:{
-    mode:"gradient2",
-    colors:["#17263e","#345d9d","#a64bc4"],
-    angle:120
-  },
-  usernameColor:"#ffffff",
-  bioColor:"#e4eaf5",
-  avatarVersion:0,
-  bannerVersion:0
-});
-
-function normalizeBg(input,fallback){
-  const bg={...fallback,...(input||{})};
-  if(!["solid","gradient2","gradient3"].includes(bg.mode))bg.mode="solid";
-  bg.colors=[0,1,2].map(i=>safeColor(bg.colors?.[i]||fallback.colors[i]));
-  bg.angle=Math.max(0,Math.min(360,Number(bg.angle)||0));
-  return bg;
-}
-function appearanceFor(p){
-  const base=baseAppearance();
-  const raw=p?.appearance||{};
-  return {
-    ...base,
-    avatarMode:["preset","text","photo"].includes(raw.avatarMode)?raw.avatarMode:"preset",
-    avatarText:String(raw.avatarText||"GH").slice(0,6),
-    avatarBg:normalizeBg(raw.avatarBg,base.avatarBg),
-    bannerMode:raw.bannerMode==="photo"?"photo":"color",
-    bannerBg:normalizeBg(raw.bannerBg,base.bannerBg),
-    usernameColor:safeColor(raw.usernameColor),
-    bioColor:safeColor(raw.bioColor),
-    avatarVersion:Number(raw.avatarVersion)||0,
-    bannerVersion:Number(raw.bannerVersion)||0
-  };
-}
-function bgCSS(bg){
-  const c=bg.colors.map(safeColor);
-  if(bg.mode==="gradient2")
-    return `linear-gradient(${bg.angle}deg,${c[0]},${c[1]})`;
-  if(bg.mode==="gradient3")
-    return `linear-gradient(${bg.angle}deg,${c[0]},${c[1]},${c[2]})`;
-  return c[0];
-}
-
-function imageURL(uid, type, version = 0) {
-  if (!uid) return "";
-
-  const params = new URLSearchParams({
-    uid,
-    type,
-    v: String(version)
-  });
-
-  return `${WORKER_URL}?${params.toString()}`;
-}
-
-async function uploadImage(blob, type) {
-  if (!user) {
-    throw new Error("You must sign in first.");
-  }
-
-  if (!["avatar", "banner"].includes(type)) {
-    throw new Error("Invalid image type.");
-  }
-
-  const token = await user.getIdToken();
-
-  const response = await fetch(
-    `${WORKER_URL}?type=${encodeURIComponent(type)}`,
+const games = [
     {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "image/jpeg"
-      },
-      body: blob
+        name:"2048",
+        category:"Puzzle",
+        emoji:"🔢",
+        color:"#d69d48",
+        url:"https://play2048.co/"
+    },
+    {
+        name:"Slither.io",
+        category:"Multiplayer",
+        emoji:"🐍",
+        color:"#319c68",
+        url:"https://slither.io/"
+    },
+    {
+        name:"Agar.io",
+        category:"Multiplayer",
+        emoji:"🔵",
+        color:"#347acb",
+        url:"https://agar.io/"
+    },
+    {
+        name:"Chess",
+        category:"Strategy",
+        emoji:"♟️",
+        color:"#686868",
+        url:"https://www.chess.com/play/computer"
+    },
+    {
+        name:"Little Alchemy 2",
+        category:"Puzzle",
+        emoji:"🧪",
+        color:"#537ba5",
+        url:"https://littlealchemy2.com/"
+    },
+    {
+        name:"Tetris",
+        category:"Puzzle",
+        emoji:"🟪",
+        color:"#774dd4",
+        url:"https://tetris.com/play-tetris"
+    },
+    {
+        name:"GeoGuessr",
+        category:"Strategy",
+        emoji:"🌍",
+        color:"#429b83",
+        url:"https://www.geoguessr.com/"
+    },
+    {
+        name:"Krunker",
+        category:"Action",
+        emoji:"🎯",
+        color:"#b15c3c",
+        url:"https://krunker.io/"
+    },
+    {
+        name:"Diep.io",
+        category:"Action",
+        emoji:"🔫",
+        color:"#4383b8",
+        url:"https://diep.io/"
+    },
+    {
+        name:"Cookie Clicker",
+        category:"Strategy",
+        emoji:"🍪",
+        color:"#a66a38",
+        url:"https://orteil.dashnet.org/cookieclicker/"
+    },
+    {
+        name:"Chess Online",
+        category:"Strategy",
+        emoji:"👑",
+        color:"#4a5268",
+        url:"https://lichess.org/"
+    },
+    {
+        name:"Wordle",
+        category:"Puzzle",
+        emoji:"🟩",
+        color:"#548d53",
+        url:"https://www.nytimes.com/games/wordle/index.html"
+    },
+    {
+        name:"Moto X3M",
+        category:"Racing",
+        emoji:"🏍️",
+        color:"#bd543f",
+        url:"https://www.coolmathgames.com/0-moto-x3m"
+    },
+    {
+        name:"Drift Hunters",
+        category:"Racing",
+        emoji:"🏎️",
+        color:"#3e668c",
+        url:"https://www.drifthunters.com/"
+    },
+    {
+        name:"Shell Shockers",
+        category:"Action",
+        emoji:"🥚",
+        color:"#b5a044",
+        url:"https://shellshock.io/"
+    },
+    {
+        name:"Paper.io",
+        category:"Multiplayer",
+        emoji:"📄",
+        color:"#6a6ac5",
+        url:"https://paper-io.com/"
+    },
+    {
+        name:"Football Legends",
+        category:"Sports",
+        emoji:"⚽",
+        color:"#428c4d",
+        url:"https://www.crazygames.com/game/football-legends"
+    },
+    {
+        name:"Basketball Stars",
+        category:"Sports",
+        emoji:"🏀",
+        color:"#c87835",
+        url:"https://www.crazygames.com/game/basketball-stars"
+    },
+    {
+        name:"Subway Surfers",
+        category:"Action",
+        emoji:"🚇",
+        color:"#4086b9",
+        url:"https://poki.com/en/g/subway-surfers"
+    },
+    {
+        name:"Temple Run 2",
+        category:"Action",
+        emoji:"🏃",
+        color:"#9b7142",
+        url:"https://poki.com/en/g/temple-run-2"
+    },
+    {
+        name:"Idle Breakout",
+        category:"Strategy",
+        emoji:"🧱",
+        color:"#586caa",
+        url:"https://www.coolmathgames.com/0-idle-breakout"
+    },
+    {
+        name:"Fireboy and Watergirl",
+        category:"Puzzle",
+        emoji:"🔥",
+        color:"#a14e53",
+        url:"https://www.coolmathgames.com/0-fireboy-and-water-girl"
+    },
+    {
+        name:"Monkey Mart",
+        category:"Strategy",
+        emoji:"🐵",
+        color:"#a78b46",
+        url:"https://poki.com/en/g/monkey-mart"
+    },
+    {
+        name:"Stickman Hook",
+        category:"Action",
+        emoji:"🪝",
+        color:"#7e58a8",
+        url:"https://poki.com/en/g/stickman-hook"
     }
-  );
+];
 
-  if (!response.ok) {
-    throw new Error(await response.text());
-  }
+let selectedCategory = "All";
 
-  return await response.json();
-}
-function paint(node,background){
-  node.style.background=background;
-}
-function avatarElement(p,big=false,local=null){
-  const a=local||appearanceFor(p);
-  const x=el("div","avatar"+(big?" big":""));
-  if(a.avatarMode==="photo"&&p?.uid&&WORKER_URL){
-    const img=new Image();
-    img.alt="Profile picture";
-    img.src=imageURL(p.uid,"avatar",a.avatarVersion);
-    img.onerror=()=>{
-      img.remove();
-      x.textContent="📷";
-    };
-    x.append(img);
-  }else if(a.avatarMode==="text"){
-    paint(x,bgCSS(a.avatarBg));
-    x.textContent=a.avatarText||"GH";
-    x.style.fontSize=big?"27px":"15px";
-  }else{
-    x.textContent=avatars.find(v=>v[0]===p?.avatar)?.[1]||"🎮";
-  }
-  return x;
-}
-function paintBanner(node,p,a){
-  if(a.bannerMode==="photo"&&p?.uid&&WORKER_URL){
-    node.style.background=`center / cover url("${imageURL(p.uid,"banner",a.bannerVersion)}")`;
-  }else{
-    paint(node,bgCSS(a.bannerBg));
-  }
-}
-function profileBanner(p,a=appearanceFor(p)){
-  const banner=el("div","banner");
-  paintBanner(banner,p,a);
-  banner.append(avatarElement(p,true,a));
-  const info=el("div");
-  const name=txt(info,"h2",p.username||"Player");
-  name.style.color=a.usernameColor;
-  const bio=txt(info,"p",p.bio||"");
-  bio.style.color=a.bioColor;
-  banner.append(info);
-  return banner;
-}
-function playerRow(parent,p,actions=[]){
-  const row=el("div","userrow");
-  const left=el("div","row");
-  left.append(avatarElement(p));
-  const info=el("div");
-  txt(info,"strong",p.username||"Unknown");
-  txt(info,"div",p.bio||"","muted");
-  left.append(info);row.append(left);
-  const right=el("div","row");
-  actions.forEach(a=>right.append(button(a.label,a.fn,"btn secondary")));
-  row.append(right);parent.append(row);
+function renderGames() {
+    const search = document.getElementById("search").value.toLowerCase();
+
+    const filtered = games.filter(game => {
+        return (
+            (selectedCategory === "All" ||
+             game.category === selectedCategory) &&
+            game.name.toLowerCase().includes(search)
+        );
+    });
+
+    const container = document.getElementById("games");
+
+    container.innerHTML = filtered.map(game => `
+        <div class="game" onclick="playGame('${game.name.replace(/'/g, "\\'")}')">
+            <div class="thumbnail"
+                 style="background:${game.color}">
+                ${game.emoji}
+            </div>
+            <div class="game-info">
+                <h3>${game.name}</h3>
+                <p>${game.category}</p>
+                <span class="tag">PLAY NOW</span>
+            </div>
+        </div>
+    `).join("");
+
+    document.getElementById("empty").style.display =
+        filtered.length ? "none" : "block";
 }
 
-// ====================================================
-// AUTH
-// ====================================================
+function playGame(name) {
+    const game = games.find(g => g.name === name);
 
-$("authButton").onclick=()=>$("authOverlay").hidden=false;
-$("closeAuth").onclick=()=>$("authOverlay").hidden=true;
-function setAuthMode(mode){
-  authMode=mode;
-  $("loginTab").className=mode==="login"?"btn":"btn secondary";
-  $("registerTab").className=mode==="register"?"btn":"btn secondary";
-  $("submitAuth").textContent=mode==="login"?"Sign In":"Create Account";
+    if (!game) return;
+
+    let recent = JSON.parse(
+        localStorage.getItem("recentGames") || "[]"
+    );
+
+    recent = [name, ...recent.filter(n => n !== name)].slice(0, 6);
+
+    localStorage.setItem("recentGames", JSON.stringify(recent));
+
+    window.open(game.url, "_blank", "noopener,noreferrer");
+
+    renderRecent();
 }
-$("loginTab").onclick=()=>setAuthMode("login");
-$("registerTab").onclick=()=>setAuthMode("register");
-$("submitAuth").onclick=async()=>{
-  const b=$("submitAuth");b.disabled=true;
-  $("authError").textContent="";
-  try{
-    const email=$("email").value.trim();
-    const password=$("password").value;
-    if(authMode==="login")
-      await signInWithEmailAndPassword(auth,email,password);
-    else
-      await createUserWithEmailAndPassword(auth,email,password);
-    $("authOverlay").hidden=true;
-  }catch(e){$("authError").textContent=error(e);}
-  finally{b.disabled=false;}
-};
-$("logoutButton").onclick=()=>signOut(auth).catch(e=>notice(error(e)));
 
-onAuthStateChanged(auth,async current=>{
-  user=current;profile=null;isAdmin=false;
-  if(current){
-    try{
-      const [snap,token]=await Promise.all([
-        getDoc(doc(db,"users",current.uid)),
-        current.getIdTokenResult()
-      ]);
-      if(auth.currentUser?.uid!==current.uid)return;
-      profile=snap.exists()?{uid:current.uid,...snap.data()}:null;
-      isAdmin=token.claims.admin===true;
-    }catch(e){console.error(e);}
-  }
-  $("headerName").textContent=profile?.username||current?.email||"Guest";
-  $("authButton").hidden=!!current;
-  $("logoutButton").hidden=!current;
-  $("adminNav").hidden=!isAdmin;
-  if(current&&!profile)page="setup";
-  if(!current&&["profile","friends","inventory","garage","admin","setup"].includes(page))
-    page="discover";
-  render();
+function renderRecent() {
+    const recent = JSON.parse(
+        localStorage.getItem("recentGames") || "[]"
+    );
+
+    document.getElementById("recent").innerHTML =
+        recent.map(name => {
+            const game = games.find(g => g.name === name);
+            if (!game) return "";
+
+            return `
+            <div class="game" onclick="playGame('${game.name.replace(/'/g, "\\'")}')">
+                <div class="thumbnail" style="background:${game.color}">
+                    ${game.emoji}
+                </div>
+                <div class="game-info">
+                    <h3>${game.name}</h3>
+                    <p>${game.category}</p>
+                </div>
+            </div>`;
+        }).join("");
+}
+
+document.getElementById("search").addEventListener(
+    "input", renderGames
+);
+
+document.querySelectorAll(".category").forEach(button => {
+    button.addEventListener("click", () => {
+        document.querySelectorAll(".category").forEach(b =>
+            b.classList.remove("active")
+        );
+
+        button.classList.add("active");
+        selectedCategory = button.dataset.cat;
+
+        renderGames();
+    });
 });
 
-function setup(){
-  txt(content,"h1","Create Your Profile");
-  const p=panel("Choose Username");
-  const name=field("3–20 letters, numbers or underscores");
-  p.append(name);
-  p.append(button("Create Profile",async()=>{
-    if(!user)return;
-    const username=name.value.trim();
-    if(!validName(username)){notice("Invalid username.");return;}
-    const lower=username.toLowerCase();
-    try{
-      await runTransaction(db,async tx=>{
-        const u=doc(db,"users",user.uid);
-        const n=doc(db,"usernames",lower);
-        const us=await tx.get(u);
-        const ns=await tx.get(n);
-        if(us.exists()||ns.exists())throw Error("Username unavailable.");
-        tx.set(u,{
-          username,usernameLower:lower,
-          bio:"New to Game Hub!",avatar:"classic",
-          background:"#17263e",equipped:"classic",
-          createdAt:serverTimestamp()
-        });
-        tx.set(n,{uid:user.uid,username});
-      });
-      profile={
-        uid:user.uid,username,usernameLower:lower,
-        bio:"New to Game Hub!",avatar:"classic",
-        background:"#17263e",equipped:"classic"
-      };
-      $("headerName").textContent=username;
-      go("profile");
-    }catch(e){notice(error(e));}
-  }));
-}
+renderGames();
+renderRecent();
 
-// ====================================================
-// DISCOVER
-// ====================================================
-
-function discover(){
-  txt(content,"h1","Discover Games");
-  txt(content,"p","Play something great. Or something completely chaotic.","muted");
-  const feature=el("section","feature");
-  const image=new Image();image.alt="Featured game";
-  image.onerror=()=>image.hidden=true;
-  const info=el("div","featureinfo");
-  txt(info,"strong","FEATURED GAME");
-  const title=txt(info,"h2","");
-  const desc=txt(info,"p","");
-  info.append(button("View Game",()=>{
-    selectedGame=games[featuredIndex];go("detail");
-  }));
-  const controls=el("div","controls");
-  controls.append(button("❮",()=>change(-1)),button("❯",()=>change(1)));
-  feature.append(image,el("div","shade"),info,controls);
-  content.append(feature);
-  function change(n){
-    featuredIndex=(featuredIndex+n+games.length)%games.length;
-    const g=games[featuredIndex];
-    title.textContent=g.name;desc.textContent=g.description;
-    if(g.banner||g.image){
-      image.hidden=false;image.src=encodeURI(g.banner||g.image);
-    }else image.hidden=true;
-  }
-  change(0);
-  carouselTimer=setInterval(()=>{
-    if(page==="discover"&&feature.isConnected)change(1);
-    else clearInterval(carouselTimer);
-  },5000);
-  txt(content,"h2","All Games");
-  const search=field("Search games...");
-  const grid=el("div","grid");
-  content.append(search,grid);
-  function draw(){
-    grid.replaceChildren();
-    for(const g of games.filter(g=>g.name.toLowerCase().includes(search.value.toLowerCase()))){
-      const card=el("article","card");
-      const artwork=el("div","art");art(artwork,g.image,g.icon);
-      const body=el("div","cardbody");
-      txt(body,"h3",g.name);txt(body,"p",g.description,"muted");
-      body.append(button("View Game",()=>{selectedGame=g;go("detail");}));
-      card.append(artwork,body);grid.append(card);
-    }
-  }
-  search.oninput=draw;draw();
-  txt(content,"h2","Coming Soon");
-  const soon=el("div","panel");
-  txt(soon,"h2","⚾ Doodle Sluggers");
-  txt(soon,"p","Launch: 28 October 2026, 9:00 AM AEDT, 29 October 2026");
-  const countdown=txt(soon,"div",launchCountdown(),"launchcount");
-  countdown.dataset.doodleCountdown="1";
-  const play=button("🔒 Coming Soon",()=>{
-    if(launchReady())window.open(DOODLE_URL,"_blank","noopener,noreferrer");
-  });
-  play.dataset.doodleAction="1";
-  play.disabled=!launchReady();
-  soon.append(play);
-  content.append(soon);
-}
-function detail(){
-  const g=selectedGame;
-  txt(content,"h1",g.name);
-  const hero=el("div","hero");art(hero,g.detail||g.banner||g.image,g.icon);
-  content.append(hero);
-  const p=panel(g.genre);
-  txt(p,"p",g.description);
-  if(g.id==="doodle"){
-    const cd=txt(p,"div",launchCountdown(),"launchcount");
-    cd.dataset.doodleCountdown="1";
-    const b=button("🔒 Coming Soon",()=>{
-      if(launchReady())window.open(g.url,"_blank","noopener,noreferrer");
-    });
-    b.dataset.doodleAction="1";b.disabled=!launchReady();p.append(b);
-  }else{
-    const a=el("a","btn","▶ Play Game");
-    a.href=g.url;a.target="_blank";a.rel="noopener noreferrer";
-    p.append(a);
-  }
-  p.append(button("Back",()=>go("discover"),"btn secondary"));
-}
-
-// ====================================================
-// SHOP + GARAGE
-// ====================================================
-
-function shopPage(){
-  txt(content,"h1","🛒 Game Hub Shop");
-  txt(content,"p","Preview only — secure GP purchases are not connected yet.","muted");
-  const grid=el("div","grid");
-  for(const [emoji,name,description,ready] of crates){
-    const card=el("article","card");
-    txt(card,"div",emoji,"art");
-    const body=el("div","cardbody");
-    txt(body,"h3",name);txt(body,"p",description,"muted");
-    txt(body,"p","100 GP","price");
-    const b=button(ready?"Purchases Coming Soon":"Game Coming Soon",()=>{});
-    b.disabled=true;body.append(b);card.append(body);grid.append(card);
-  }
-  content.append(grid);
-  const p=panel("Keep or Return");
-  const rg=el("div","raritygrid");
-  for(const [name,color,refund] of rarities){
-    const r=el("div","rarity");
-    const h=txt(r,"h3",name);h.style.color=color;
-    txt(r,"p",`+${refund} GP`,"price");rg.append(r);
-  }
-  p.append(rg);
-  const craft=panel("Crafting & Trading — Planned");
-  txt(craft,"p","Fusion, blueprints, secure item trading and GP rewards will be connected later.");
-}
-function garagePage(){
-  txt(content,"h1","🔧 Garage & Collections");
-  const tabs=el("div","tabs"),display=el("div");
-  const entries=[
-    ["boost","🏎️ Boostball Garage","Cars, paint and boost trails"],
-    ["counter","🔫 Counter Opps Armoury","Weapon skins and loadouts"],
-    ["chaos","🃏 Card Chaos Collection","Cards and character cosmetics"],
-    ["baseball","⚾ Doodle Sluggers Locker","Bats and characters — coming soon"]
-  ];
-  entries.forEach(([id,label])=>{
-    const b=button(label,()=>{selectedGarage=id;draw();},"btn secondary");
-    b.dataset.id=id;tabs.append(b);
-  });
-  content.append(tabs,display);
-  function draw(){
-    tabs.querySelectorAll("button").forEach(b=>
-      b.className=b.dataset.id===selectedGarage?"btn":"btn secondary");
-    display.replaceChildren();
-    const entry=entries.find(x=>x[0]===selectedGarage);
-    const p=el("div","panel");
-    txt(p,"h2",entry[1]);txt(p,"p",entry[2]);
-    txt(p,"p","Cosmetic equipment slots are coming in a later update.","muted");
-    p.append(button("Browse Shop",()=>go("shop")));
-    display.append(p);
-  }
-  draw();
-}
-
-// ====================================================
-// PHOTO CROPPER — DRAG + ZOOM
-// ====================================================
-
-let cropImage=null,cropType="avatar",cropCallback=null;
-let zoom=1,offsetX=0,offsetY=0,dragging=false,lastX=0,lastY=0;
-const canvas=$("cropCanvas"),ctx=canvas.getContext("2d");
-const stage=$("cropStage");
-
-function dimensions(){
-  return cropType==="avatar"?[400,400]:[1200,450];
-}
-function drawCrop(){
-  if(!cropImage)return;
-  const [w,h]=dimensions();
-  canvas.width=w;canvas.height=h;
-  const scale=Math.max(w/cropImage.width,h/cropImage.height)*zoom;
-  const dw=cropImage.width*scale,dh=cropImage.height*scale;
-  offsetX=Math.max(-(dw-w)/2,Math.min((dw-w)/2,offsetX));
-  offsetY=Math.max(-(dh-h)/2,Math.min((dh-h)/2,offsetY));
-  ctx.clearRect(0,0,w,h);
-  ctx.drawImage(cropImage,(w-dw)/2+offsetX,(h-dh)/2+offsetY,dw,dh);
-}
-function openCrop(file,type,callback){
-  if(!file)return;
-  if(!file.type.startsWith("image/")||file.size>15*1024*1024){
-    alert("Choose an image under 15 MB.");return;
-  }
-  const reader=new FileReader();
-  reader.onload=()=>{
-    const img=new Image();
-    img.onload=()=>{
-      cropImage=img;cropType=type;cropCallback=callback;
-      zoom=1;offsetX=0;offsetY=0;
-      $("cropZoom").value=1;$("cropZoomLabel").textContent="1.00×";
-      $("cropTitle").textContent=type==="avatar"?"Crop Profile Picture":"Crop Banner";
-      stage.classList.toggle("circle",type==="avatar");
-      $("cropOverlay").hidden=false;drawCrop();
-    };
-    img.onerror=()=>alert("Couldn't open this image.");
-    img.src=reader.result;
-  };
-  reader.readAsDataURL(file);
-}
-$("cropZoom").oninput=e=>{
-  zoom=Number(e.target.value);
-  $("cropZoomLabel").textContent=zoom.toFixed(2)+"×";
-  drawCrop();
-};
-stage.addEventListener("pointerdown",e=>{
-  if(!cropImage)return;
-  dragging=true;lastX=e.clientX;lastY=e.clientY;
-  stage.setPointerCapture(e.pointerId);
-});
-stage.addEventListener("pointermove",e=>{
-  if(!dragging)return;
-  const rect=stage.getBoundingClientRect();
-  const [w,h]=dimensions();
-  offsetX+=(e.clientX-lastX)*w/rect.width;
-  offsetY+=(e.clientY-lastY)*h/rect.height;
-  lastX=e.clientX;lastY=e.clientY;drawCrop();
-});
-stage.addEventListener("pointerup",()=>dragging=false);
-stage.addEventListener("pointercancel",()=>dragging=false);
-$("cropCancel").onclick=()=>{
-  $("cropOverlay").hidden=true;cropImage=null;
-};
-$("cropSave").onclick=()=>{
-  if(!cropImage)return;
-  drawCrop();
-  const output=document.createElement("canvas");
-  const [w,h]=dimensions();output.width=w;output.height=h;
-  output.getContext("2d").drawImage(canvas,0,0);
-  output.toBlob(blob=>{
-    if(blob)cropCallback(blob);
-    $("cropOverlay").hidden=true;cropImage=null;
-  },"image/jpeg",.82);
-};
-
-// ====================================================
-// CUSTOM COLOUR + GRADIENT CONTROLS
-// ====================================================
-
-function colorControl(parent,label,initial,change){
-  const row=el("div","colorrow");
-  txt(row,"strong",label);
-  const picker=el("input");picker.type="color";
-  picker.value=safeColor(initial);
-  const hex=field("#RRGGBB",picker.value);
-  hex.maxLength=7;hex.style.width="125px";
-  picker.oninput=()=>{hex.value=picker.value;change(picker.value);};
-  hex.onchange=()=>{
-    if(validHex(hex.value)){
-      picker.value=hex.value;change(hex.value);
-    }else hex.value=picker.value;
-  };
-  row.append(picker,hex);parent.append(row);
-}
-function backgroundEditor(parent,bg,change){
-  const modes=el("div","modes");
-  const settings=el("div");
-  parent.append(modes,settings);
-  function redraw(){
-    modes.replaceChildren();settings.replaceChildren();
-    for(const [id,label] of [
-      ["solid","Solid"],["gradient2","2-Colour Gradient"],
-      ["gradient3","3-Colour Gradient"]
-    ]){
-      const b=button(label,()=>{
-        bg.mode=id;change();redraw();
-      },"btn secondary"+(bg.mode===id?" active":""));
-      modes.append(b);
-    }
-    const count=bg.mode==="solid"?1:bg.mode==="gradient2"?2:3;
-    for(let i=0;i<count;i++){
-      colorControl(settings,`Colour ${i+1}`,bg.colors[i],value=>{
-        bg.colors[i]=value;change();
-      });
-    }
-    if(count>1){
-      const row=el("div","sliderrow");
-      txt(row,"strong","Angle");
-      const slider=el("input");slider.type="range";
-      slider.min=0;slider.max=360;slider.value=bg.angle;
-      const value=txt(row,"span",`${bg.angle}°`);
-      slider.oninput=()=>{
-        bg.angle=Number(slider.value);
-        value.textContent=`${bg.angle}°`;change();
-      };
-      row.insertBefore(slider,value);settings.append(row);
-    }
-  }
-  redraw();
-}
-
-// ====================================================
-// PROFILE EDITOR
-// ====================================================
-
-async function saveProfile(changes){
-  await updateDoc(doc(db,"users",user.uid),changes);
-  Object.assign(profile,changes);
-}
-function profilePage(){
-  if(!requireUser())return;
-  const a=structuredClone(appearanceFor(profile));
-  const pending={avatar:null,banner:null};
-  let avatarPreviewURL="",bannerPreviewURL="";
-  txt(content,"h1","🎨 Profile Appearance Studio");
-  txt(content,"p","Custom photos, text avatars, colours and gradients.","muted");
-  const previewHolder=el("div");
-  content.append(previewHolder);
-  function refresh(){
-    previewHolder.replaceChildren();
-    const p=profileBanner(profile,a);
-    if(a.avatarMode==="photo"&&pending.avatar){
-      const avatar=p.querySelector(".avatar");
-      avatar.replaceChildren();
-      const img=new Image();img.src=avatarPreviewURL;img.alt="New avatar";
-      avatar.append(img);
-    }
-    if(a.bannerMode==="photo"&&pending.banner){
-      p.style.background=`center / cover url("${bannerPreviewURL}")`;
-    }
-    previewHolder.append(p);
-  }
-  refresh();
-
-  const editor=panel("Customise Your Profile");
-  const columns=el("div","editorgrid");
-  editor.append(columns);
-  const left=el("div","editorbox");
-  const right=el("div","editorbox");
-  columns.append(left,right);
-
-  // AVATAR
-  txt(left,"h2","Profile Picture");
-  const avatarPreview=el("div","previewavatar");
-  left.append(avatarPreview);
-  const avatarModes=el("div","modes");
-  const avatarOptions=el("div");
-  left.append(avatarModes,avatarOptions);
-
-  function drawAvatar(){
-    avatarModes.replaceChildren();avatarOptions.replaceChildren();
-    avatarPreview.replaceChildren();
-    for(const [id,label] of [
-      ["preset","Emoji"],["text","Custom Text"],["photo","Photo"]
-    ]){
-      avatarModes.append(button(label,()=>{
-        a.avatarMode=id;drawAvatar();refresh();
-      },"btn secondary"+(a.avatarMode===id?" active":"")));
-    }
-    if(a.avatarMode==="preset"){
-      avatarPreview.textContent=avatars.find(x=>x[0]===profile.avatar)?.[1]||"🎮";
-      const grid=el("div","avatargrid");
-      for(const [id,emoji] of avatars){
-        grid.append(button(emoji,()=>{
-          profile.avatar=id;
-          avatarPreview.textContent=emoji;
-          refresh();
-        }));
-      }
-      avatarOptions.append(grid);
-    }else if(a.avatarMode==="text"){
-      paint(avatarPreview,bgCSS(a.avatarBg));
-      avatarPreview.textContent=a.avatarText;
-      const input=field("Avatar letters or word",a.avatarText);
-      input.maxLength=6;
-      input.oninput=()=>{
-        a.avatarText=input.value;
-        avatarPreview.textContent=a.avatarText;refresh();
-      };
-      avatarOptions.append(input);
-      txt(avatarOptions,"h3","Avatar Background");
-      backgroundEditor(avatarOptions,a.avatarBg,()=>{
-        paint(avatarPreview,bgCSS(a.avatarBg));refresh();
-      });
-    }else{
-      const url=pending.avatar?avatarPreviewURL:
-        imageURL(user.uid,"avatar",a.avatarVersion);
-      if(url){
-        const img=new Image();img.src=url;img.alt="Avatar preview";
-        img.style.cssText="width:100%;height:100%;object-fit:cover";
-        avatarPreview.append(img);
-      }else avatarPreview.textContent="📷";
-      const upload=el("input","field");
-      upload.type="file";upload.accept="image/*";
-      upload.onchange=()=>{
-        openCrop(upload.files[0],"avatar",blob=>{
-          if(avatarPreviewURL)URL.revokeObjectURL(avatarPreviewURL);
-          pending.avatar=blob;
-          avatarPreviewURL=URL.createObjectURL(blob);
-          drawAvatar();refresh();
-        });
-        upload.value="";
-      };
-      avatarOptions.append(upload);
-    }
-  }
-  drawAvatar();
-
-  // BANNER
-  txt(right,"h2","Profile Banner");
-  const bannerPreview=el("div","previewbanner");
-  right.append(bannerPreview);
-  const bannerModes=el("div","modes");
-  const bannerOptions=el("div");
-  right.append(bannerModes,bannerOptions);
-  function drawBanner(){
-    bannerModes.replaceChildren();bannerOptions.replaceChildren();
-    if(a.bannerMode==="photo"){
-      bannerPreview.style.background=pending.banner
-        ?`center / cover url("${bannerPreviewURL}")`
-        :`center / cover url("${imageURL(user.uid,"banner",a.bannerVersion)}")`;
-    }else paint(bannerPreview,bgCSS(a.bannerBg));
-    for(const [id,label] of [["color","Colours / Gradients"],["photo","Photo"]]){
-      bannerModes.append(button(label,()=>{
-        a.bannerMode=id;drawBanner();refresh();
-      },"btn secondary"+(a.bannerMode===id?" active":"")));
-    }
-    if(a.bannerMode==="photo"){
-      const upload=el("input","field");
-      upload.type="file";upload.accept="image/*";
-      upload.onchange=()=>{
-        openCrop(upload.files[0],"banner",blob=>{
-          if(bannerPreviewURL)URL.revokeObjectURL(bannerPreviewURL);
-          pending.banner=blob;
-          bannerPreviewURL=URL.createObjectURL(blob);
-          drawBanner();refresh();
-        });
-        upload.value="";
-      };
-      bannerOptions.append(upload);
-    }else{
-      backgroundEditor(bannerOptions,a.bannerBg,()=>{
-        paint(bannerPreview,bgCSS(a.bannerBg));refresh();
-      });
-    }
-  }
-  drawBanner();
-
-  const colors=panel("Profile Text Colours");
-  colorControl(colors,"Username",a.usernameColor,v=>{
-    a.usernameColor=v;refresh();
-  });
-  colorControl(colors,"Bio",a.bioColor,v=>{
-    a.bioColor=v;refresh();
-  });
-
-  const savePanel=panel("Save Changes");
-  txt(savePanel,"p",WORKER_URL
-    ?"Photos will be uploaded to Netlify and appearance settings saved in Firebase."
-    :"Photo uploads need Cloudflare setup. Colours, gradients and text avatars can still be saved.",
-    "muted");
-  const save=button("💾 Save Profile Appearance",async()=>{
-    save.disabled=true;
-    try{
-      if(a.avatarMode==="photo"&&pending.avatar){
-        if(!WORKER_URL)throw Error("Set up Cloudflare before saving uploaded photos.");
-        await uploadImage(pending.avatar,"avatar");
-        a.avatarVersion=Date.now();
-      }
-      if(a.bannerMode==="photo"&&pending.banner){
-        if(!WORKER_URL)throw Error("Set up Cloudflare before saving uploaded banners.");
-        await uploadImage(pending.banner,"banner");
-        a.bannerVersion=Date.now();
-      }
-      if((a.avatarMode==="photo"&&!WORKER_URL)||
-         (a.bannerMode==="photo"&&!WORKER_URL))
-        throw Error("Photo mode needs the Cloudflare Worker.");
-      await saveProfile({
-        avatar:profile.avatar,
-        appearance:a
-      });
-      notice("Profile appearance saved!");
-      go("profile");
-    }catch(e){notice(error(e));}
-    finally{save.disabled=false;}
-  });
-  savePanel.append(save);
-  savePanel.append(button("Cancel Changes",()=>go("discover"),"btn secondary"));
-
-  const bioPanel=panel("Edit Bio");
-  const bio=el("textarea","field");
-  bio.rows=4;bio.maxLength=500;bio.value=profile.bio||"";
-  bioPanel.append(bio);
-  bioPanel.append(button("Save Bio",async()=>{
-    try{
-      await saveProfile({bio:bio.value});
-      go("profile");notice("Bio saved!");
-    }catch(e){notice(error(e));}
-  }));
-}
-
-// ====================================================
-// FRIENDS
-// ====================================================
-
-function publicProfilePage(){
-  if(!selectedPlayer){go("friends");return;}
-  txt(content,"h1","Player Profile");
-  content.append(profileBanner(selectedPlayer));
-  content.append(button("Back to Friends",()=>go("friends"),"btn secondary"));
-}
-async function friendsPage(){
-  if(!requireUser())return;
-  txt(content,"h1","👥 Friends");
-  const find=panel("Find Player");
-  const input=field("Exact username");
-  find.append(input);
-  find.append(button("Search",async()=>{
-    const name=input.value.trim().toLowerCase();
-    if(!validName(name)){notice("Invalid username.");return;}
-    try{
-      const reservation=await getDoc(doc(db,"usernames",name));
-      if(!reservation.exists()){notice("Player not found.");return;}
-      const uid=reservation.data().uid;
-      const snap=await getDoc(doc(db,"users",uid));
-      if(!snap.exists()){notice("Profile unavailable.");return;}
-      const player={uid,...snap.data()};
-      find.querySelector(".userrow")?.remove();
-      playerRow(find,player,[
-        {label:"View",fn:()=>{selectedPlayer=player;go("publicProfile");}},
-        {label:"Add Friend",fn:async()=>{
-          if(uid===user.uid){notice("That's your account.");return;}
-          try{
-            await setDoc(doc(db,"friendRequests",`${user.uid}_${uid}`),{
-              sender:user.uid,receiver:uid,
-              status:"pending",createdAt:serverTimestamp()
-            });
-            notice("Friend request sent!");
-          }catch(e){notice(error(e));}
-        }}
-      ]);
-    }catch(e){notice(error(e));}
-  }));
-  const incoming=panel("Incoming Requests");
-  const outgoing=panel("Sent Requests");
-  const accepted=panel("Friends");
-  try{
-    const uid=user.uid;
-    const [r,s]=await Promise.all([
-      getDocs(query(collection(db,"friendRequests"),where("receiver","==",uid))),
-      getDocs(query(collection(db,"friendRequests"),where("sender","==",uid)))
-    ]);
-    if(page!=="friends")return;
-    const requests=new Map();
-    [...r.docs,...s.docs].forEach(d=>requests.set(d.id,{id:d.id,...d.data()}));
-    let counts=[0,0,0];
-    for(const req of requests.values()){
-      const other=req.sender===uid?req.receiver:req.sender;
-      const snap=await getDoc(doc(db,"users",other));
-      const p=snap.exists()?{uid:other,...snap.data()}:{uid:other,username:"Unknown"};
-      if(page!=="friends")return;
-      if(req.status==="accepted"){
-        counts[2]++;
-        playerRow(accepted,p,[{label:"View",fn:()=>{
-          selectedPlayer=p;go("publicProfile");
-        }}]);
-      }else if(req.receiver===uid){
-        counts[0]++;
-        playerRow(incoming,p,[
-          {label:"Accept",fn:async()=>{
-            try{await updateDoc(doc(db,"friendRequests",req.id),{status:"accepted"});go("friends");}
-            catch(e){notice(error(e));}
-          }},
-          {label:"Decline",fn:async()=>{
-            try{await deleteDoc(doc(db,"friendRequests",req.id));go("friends");}
-            catch(e){notice(error(e));}
-          }}
-        ]);
-      }else{
-        counts[1]++;
-        playerRow(outgoing,p,[{label:"Cancel",fn:async()=>{
-          try{await deleteDoc(doc(db,"friendRequests",req.id));go("friends");}
-          catch(e){notice(error(e));}
-        }}]);
-      }
-    }
-    if(!counts[0])txt(incoming,"p","No incoming requests.","muted");
-    if(!counts[1])txt(outgoing,"p","No pending requests.","muted");
-    if(!counts[2])txt(accepted,"p","No friends yet.","muted");
-  }catch(e){notice(error(e));}
-}
-
-// ====================================================
-// EXISTING PROFILE SKIN INVENTORY
-// ====================================================
-
-async function inventoryPage(){
-  if(!requireUser())return;
-  txt(content,"h1","🎨 Profile Inventory");
-  const grid=el("div","grid");content.append(grid);
-  const owned=new Set(["classic"]);
-  try{
-    const snap=await getDocs(collection(db,"users",user.uid,"inventory"));
-    snap.forEach(d=>owned.add(d.id));
-  }catch(e){notice(error(e));}
-  if(page!=="inventory")return;
-  for(const [id,name,emoji,free] of skins){
-    const has=owned.has(id);
-    const card=el("div","panel");
-    txt(card,"div",emoji,"art");txt(card,"h3",name);
-    txt(card,"p",has?"Owned":free?"Free to claim":"Locked","muted");
-    const b=button(profile.equipped===id?"Equipped":has?"Equip":free?"Claim Free":"Locked",async()=>{
-      try{
-        if(!has&&free)
-          await setDoc(doc(db,"users",user.uid,"inventory",id),{skinId:id,source:"free"});
-        else if(!has)return;
-        await saveProfile({equipped:id});
-        go("inventory");
-      }catch(e){notice(error(e));}
-    });
-    b.disabled=profile.equipped===id||(!has&&!free);
-    card.append(b);grid.append(card);
-  }
-}
-
-// ====================================================
-// NEWS + ADMIN
-// ====================================================
-
-async function newsPage(){
-  txt(content,"h1","📢 News");
-  const p=panel("Announcements");
-  try{
-    const snap=await getDocs(query(collection(db,"announcements"),orderBy("createdAt","desc"),limit(30)));
-    if(page!=="news")return;
-    if(snap.empty)txt(p,"p","No announcements yet.");
-    snap.forEach(d=>{
-      const n=el("div","notice");
-      txt(n,"h3",d.data().title||"Announcement");
-      txt(n,"p",d.data().body||"");p.append(n);
-    });
-  }catch(e){notice(error(e));}
-}
-function adminPage(){
-  if(!isAdmin){go("discover");return;}
-  txt(content,"h1","🛡️ Admin");
-  const p=panel("Publish Announcement");
-  const title=field("Title");
-  title.maxLength=100;
-  const body=el("textarea","field");
-  body.rows=5;body.maxLength=1000;body.placeholder="Announcement";
-  p.append(title,body);
-  p.append(button("Publish",async()=>{
-    if(!title.value.trim()||!body.value.trim())return;
-    try{
-      await addDoc(collection(db,"announcements"),{
-        title:title.value.trim(),body:body.value.trim(),
-        author:user.uid,createdAt:serverTimestamp()
-      });
-      title.value="";body.value="";notice("Published!");
-    }catch(e){notice(error(e));}
-  }));
-}
-
-render();
 </script>
+
 </body>
 </html>
