@@ -4,203 +4,285 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GameHub | Play Free Games</title>
+<title>GameHub</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+  --bg: #101116;
+  --panel: #191b24;
+  --panel2: #222530;
+  --text: #f5f5f7;
+  --muted: #a0a3b1;
+  --accent: #7657ff;
+  --accent2: #987fff;
 }
 
+* { box-sizing: border-box; }
+
 body {
-    background: #10121a;
-    color: white;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
 }
 
 header {
-    height: 75px;
-    background: #191c28;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 5%;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  background: #171820;
+  border-bottom: 1px solid #292b36;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .logo {
-    font-size: 27px;
-    font-weight: 900;
-    color: #8c70ff;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: -1px;
 }
 
-.search {
-    width: 35%;
-    padding: 12px 18px;
-    border-radius: 12px;
-    border: 1px solid #35394a;
-    background: #252938;
-    color: white;
-    outline: none;
-    font-size: 15px;
+.logo span { color: var(--accent2); }
+
+.header-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
-.search:focus {
-    border-color: #8c70ff;
+button, input {
+  font: inherit;
 }
+
+button {
+  cursor: pointer;
+  border: 0;
+}
+
+.header-btn {
+  padding: 10px 15px;
+  border-radius: 9px;
+  color: white;
+  background: var(--panel2);
+}
+
+.header-btn:hover { background: #343747; }
 
 .hero {
-    margin: 30px 5%;
-    padding: 45px;
-    border-radius: 20px;
-    background: linear-gradient(120deg, #5435c5, #a348b7, #e66b83);
+  padding: 55px 5% 35px;
+  background:
+    radial-gradient(ellipse at 80% 20%, #44318b55, transparent 50%),
+    linear-gradient(120deg, #1b1c2a, #111218);
 }
 
 .hero h1 {
-    font-size: 38px;
-    margin-bottom: 12px;
+  font-size: clamp(35px, 5vw, 58px);
+  margin: 0 0 12px;
 }
+
+.hero h1 span { color: var(--accent2); }
 
 .hero p {
-    color: #eee;
-    margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 16px;
 }
 
-.hero button {
-    padding: 13px 25px;
-    background: white;
-    color: #33216e;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
+.search {
+  display: block;
+  width: min(600px, 100%);
+  padding: 15px 18px;
+  margin-top: 25px;
+  border-radius: 12px;
+  border: 1px solid #383b4b;
+  background: #20222d;
+  color: white;
+  outline: none;
 }
+
+.search:focus { border-color: var(--accent); }
+
+main { padding: 30px 5%; }
 
 .categories {
-    display: flex;
-    gap: 10px;
-    padding: 0 5%;
-    overflow-x: auto;
-    margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
 }
 
 .category {
-    background: #252938;
-    border: 1px solid #363b50;
-    color: white;
-    padding: 11px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    white-space: nowrap;
+  background: var(--panel);
+  color: var(--muted);
+  padding: 10px 16px;
+  border-radius: 30px;
+  border: 1px solid #30323e;
 }
 
 .category.active,
 .category:hover {
-    background: #7959e9;
+  color: white;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
-.section {
-    padding: 0 5%;
-    margin-bottom: 40px;
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px 0 18px;
 }
 
-.section h2 {
-    margin-bottom: 20px;
-    font-size: 23px;
+.section-title h2 {
+  margin: 0;
+  font-size: 23px;
 }
+
+.section-title small { color: var(--muted); }
 
 .games {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 18px;
 }
 
-.game {
-    background: #1d2130;
-    border-radius: 15px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: 0.2s;
-    border: 1px solid #292e40;
+.game-card {
+  background: var(--panel);
+  border: 1px solid #292c37;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform .2s, border-color .2s;
+  cursor: pointer;
+  position: relative;
 }
 
-.game:hover {
-    transform: translateY(-6px);
-    border-color: #8c70ff;
+.game-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
 }
 
-.thumbnail {
-    height: 125px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 55px;
+.game-art {
+  height: 135px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 54px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
 }
 
-.game-info {
-    padding: 13px;
-}
+.game-info { padding: 14px; }
 
 .game-info h3 {
-    font-size: 15px;
-    margin-bottom: 6px;
+  margin: 0 0 7px;
+  font-size: 17px;
 }
 
 .game-info p {
-    font-size: 12px;
-    color: #9299ae;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
 }
 
-.tag {
-    display: inline-block;
-    background: #34304d;
-    color: #bcaaff;
-    padding: 4px 8px;
-    border-radius: 5px;
-    font-size: 10px;
-    margin-top: 8px;
+.game-tag {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #ffffff15;
+  color: #ddd;
+  font-size: 11px;
+}
+
+.favourite {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #111a;
+  color: white;
+  font-size: 19px;
+}
+
+.favourite.selected { color: #ffcf55; }
+
+.empty {
+  color: var(--muted);
+  padding: 30px 0;
+  display: none;
 }
 
 footer {
-    text-align: center;
-    padding: 35px;
-    color: #737b91;
-    background: #191c28;
+  padding: 35px 5%;
+  color: var(--muted);
+  border-top: 1px solid #292b36;
+  margin-top: 50px;
 }
 
-.empty {
-    color: #888;
-    padding: 25px 0;
-    display: none;
+/* Game player */
+
+.player {
+  position: fixed;
+  inset: 0;
+  background: #08090d;
+  z-index: 20;
+  display: none;
+  flex-direction: column;
 }
 
-@media(max-width: 650px) {
-    header {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 15px 5%;
-        gap: 12px;
-    }
+.player.open { display: flex; }
 
-    .search {
-        width: 100%;
-    }
+.player-bar {
+  min-height: 65px;
+  padding: 10px 18px;
+  background: #191b24;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
 
-    .hero {
-        padding: 30px;
-    }
+.player-bar h2 {
+  font-size: 17px;
+  margin: 0;
+}
 
-    .hero h1 {
-        font-size: 29px;
-    }
+.player-actions {
+  display: flex;
+  gap: 8px;
+}
 
-    .games {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
+.player-actions button {
+  padding: 10px 13px;
+  background: var(--panel2);
+  color: white;
+  border-radius: 8px;
+}
+
+#gameFrame {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  background: #fff;
+}
+
+.player-message {
+  display: none;
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+
+@media(max-width: 550px) {
+  header { padding: 0 4%; }
+  main { padding: 25px 4%; }
+  .hero { padding: 40px 4% 30px; }
+  .games { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .game-art { height: 110px; }
+  .player-bar { flex-wrap: wrap; }
 }
 </style>
 </head>
@@ -208,313 +290,296 @@ footer {
 <body>
 
 <header>
-    <div class="logo">🎮 GameHub</div>
-    <input class="search" id="search"
-        placeholder="Search thousands of games...">
+  <div class="logo">GAME<span>HUB</span></div>
+  <div class="header-right">
+    <button class="header-btn" onclick="showFavourites()">★ Favourites</button>
+    <button class="header-btn" onclick="showRecent()">Recently played</button>
+  </div>
 </header>
 
-<div class="hero">
-    <h1>Find your next favourite game.</h1>
-    <p>Discover games, explore new worlds and play whenever you want.</p>
-    <button onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">
-        Explore Games →
-    </button>
-</div>
-
-<nav class="categories" id="categories">
-    <button class="category active" data-cat="All">🔥 All Games</button>
-    <button class="category" data-cat="Action">⚔️ Action</button>
-    <button class="category" data-cat="Racing">🏎️ Racing</button>
-    <button class="category" data-cat="Sports">⚽ Sports</button>
-    <button class="category" data-cat="Puzzle">🧩 Puzzle</button>
-    <button class="category" data-cat="Strategy">🧠 Strategy</button>
-    <button class="category" data-cat="Multiplayer">👥 Multiplayer</button>
-</nav>
-
-<section class="section" id="library">
-    <h2>⭐ Popular Games</h2>
-    <div class="games" id="games"></div>
-    <p class="empty" id="empty">No games found. Try another search!</p>
+<section class="hero">
+  <h1>PLAY MORE.<br><span>WORRY LESS.</span></h1>
+  <p>Your games. Your library. Your GameHub.</p>
+  <input
+    class="search"
+    id="search"
+    placeholder="Search games..."
+    oninput="renderGames()"
+  >
 </section>
 
-<section class="section">
-    <h2>🕹️ Recently Played</h2>
-    <div class="games" id="recent"></div>
-</section>
+<main>
+  <div class="categories" id="categories"></div>
+
+  <div class="section-title">
+    <h2 id="sectionHeading">All games</h2>
+    <small id="gameCount"></small>
+  </div>
+
+  <div class="games" id="games"></div>
+  <div class="empty" id="empty">No games found. Try another search.</div>
+</main>
 
 <footer>
-    <h3>🎮 GameHub</h3>
-    <p style="margin-top:10px">Your games. Your world.</p>
-    <p style="margin-top:15px">Game links belong to their respective creators.</p>
+  <strong>GAMEHUB</strong>
+  <p>Your personal browser gaming library.</p>
+  <small>GameHub is an independent platform. Game names and trademarks belong to their respective owners.</small>
 </footer>
 
-<script>
+<!-- Fullscreen game player -->
+<div class="player" id="player">
+  <div class="player-bar">
+    <h2 id="playerTitle">Game</h2>
+    <div class="player-actions">
+      <button onclick="saveCurrentGame()">Save</button>
+      <button onclick="reloadGame()">Restart</button>
+      <button onclick="closeGame()">✕ Close</button>
+    </div>
+  </div>
+  <iframe id="gameFrame" allowfullscreen></iframe>
+  <div class="player-message" id="playerMessage"></div>
+</div>
 
-const games = [
-    {
-        name:"2048",
-        category:"Puzzle",
-        emoji:"🔢",
-        color:"#d69d48",
-        url:"https://play2048.co/"
-    },
-    {
-        name:"Slither.io",
-        category:"Multiplayer",
-        emoji:"🐍",
-        color:"#319c68",
-        url:"https://slither.io/"
-    },
-    {
-        name:"Agar.io",
-        category:"Multiplayer",
-        emoji:"🔵",
-        color:"#347acb",
-        url:"https://agar.io/"
-    },
-    {
-        name:"Chess",
-        category:"Strategy",
-        emoji:"♟️",
-        color:"#686868",
-        url:"https://www.chess.com/play/computer"
-    },
-    {
-        name:"Little Alchemy 2",
-        category:"Puzzle",
-        emoji:"🧪",
-        color:"#537ba5",
-        url:"https://littlealchemy2.com/"
-    },
-    {
-        name:"Tetris",
-        category:"Puzzle",
-        emoji:"🟪",
-        color:"#774dd4",
-        url:"https://tetris.com/play-tetris"
-    },
-    {
-        name:"GeoGuessr",
-        category:"Strategy",
-        emoji:"🌍",
-        color:"#429b83",
-        url:"https://www.geoguessr.com/"
-    },
-    {
-        name:"Krunker",
-        category:"Action",
-        emoji:"🎯",
-        color:"#b15c3c",
-        url:"https://krunker.io/"
-    },
-    {
-        name:"Diep.io",
-        category:"Action",
-        emoji:"🔫",
-        color:"#4383b8",
-        url:"https://diep.io/"
-    },
-    {
-        name:"Cookie Clicker",
-        category:"Strategy",
-        emoji:"🍪",
-        color:"#a66a38",
-        url:"https://orteil.dashnet.org/cookieclicker/"
-    },
-    {
-        name:"Chess Online",
-        category:"Strategy",
-        emoji:"👑",
-        color:"#4a5268",
-        url:"https://lichess.org/"
-    },
-    {
-        name:"Wordle",
-        category:"Puzzle",
-        emoji:"🟩",
-        color:"#548d53",
-        url:"https://www.nytimes.com/games/wordle/index.html"
-    },
-    {
-        name:"Moto X3M",
-        category:"Racing",
-        emoji:"🏍️",
-        color:"#bd543f",
-        url:"https://www.coolmathgames.com/0-moto-x3m"
-    },
-    {
-        name:"Drift Hunters",
-        category:"Racing",
-        emoji:"🏎️",
-        color:"#3e668c",
-        url:"https://www.drifthunters.com/"
-    },
-    {
-        name:"Shell Shockers",
-        category:"Action",
-        emoji:"🥚",
-        color:"#b5a044",
-        url:"https://shellshock.io/"
-    },
-    {
-        name:"Paper.io",
-        category:"Multiplayer",
-        emoji:"📄",
-        color:"#6a6ac5",
-        url:"https://paper-io.com/"
-    },
-    {
-        name:"Football Legends",
-        category:"Sports",
-        emoji:"⚽",
-        color:"#428c4d",
-        url:"https://www.crazygames.com/game/football-legends"
-    },
-    {
-        name:"Basketball Stars",
-        category:"Sports",
-        emoji:"🏀",
-        color:"#c87835",
-        url:"https://www.crazygames.com/game/basketball-stars"
-    },
-    {
-        name:"Subway Surfers",
-        category:"Action",
-        emoji:"🚇",
-        color:"#4086b9",
-        url:"https://poki.com/en/g/subway-surfers"
-    },
-    {
-        name:"Temple Run 2",
-        category:"Action",
-        emoji:"🏃",
-        color:"#9b7142",
-        url:"https://poki.com/en/g/temple-run-2"
-    },
-    {
-        name:"Idle Breakout",
-        category:"Strategy",
-        emoji:"🧱",
-        color:"#586caa",
-        url:"https://www.coolmathgames.com/0-idle-breakout"
-    },
-    {
-        name:"Fireboy and Watergirl",
-        category:"Puzzle",
-        emoji:"🔥",
-        color:"#a14e53",
-        url:"https://www.coolmathgames.com/0-fireboy-and-water-girl"
-    },
-    {
-        name:"Monkey Mart",
-        category:"Strategy",
-        emoji:"🐵",
-        color:"#a78b46",
-        url:"https://poki.com/en/g/monkey-mart"
-    },
-    {
-        name:"Stickman Hook",
-        category:"Action",
-        emoji:"🪝",
-        color:"#7e58a8",
-        url:"https://poki.com/en/g/stickman-hook"
-    }
+<script>
+const gameList = [
+  {
+    id: "boostball",
+    name: "Boostball",
+    category: "Sports",
+    icon: "⚽",
+    description: "GameHub original",
+    path: "/games/boostball/index.html",
+    c1: "#174d8d",
+    c2: "#35b8df"
+  },
+  {
+    id: "counter-opps",
+    name: "Counter Opps",
+    category: "Action",
+    icon: "🎯",
+    description: "GameHub original",
+    path: "/games/counter-opps/index.html",
+    c1: "#343d4e",
+    c2: "#9c4b50"
+  },
+  {
+    id: "card-chaos",
+    name: "Card Chaos",
+    category: "Strategy",
+    icon: "🃏",
+    description: "GameHub original",
+    path: "/games/card-chaos/index.html",
+    c1: "#582a87",
+    c2: "#dc5685"
+  },
+  {
+    id: "doodle-sluggers",
+    name: "Doodle Sluggers",
+    category: "Sports",
+    icon: "⚾",
+    description: "GameHub original",
+    path: "/games/doodle-sluggers/index.html",
+    c1: "#26724b",
+    c2: "#d6a64e"
+  },
+  {
+    id: "life-simulator",
+    name: "Life Simulator",
+    category: "Simulation",
+    icon: "🏡",
+    description: "Our future life-simulation game",
+    path: "/games/life-simulator/index.html",
+    c1: "#3e5b8a",
+    c2: "#59a58b"
+  }
 ];
 
-let selectedCategory = "All";
+const categories = [
+  "All", "Action", "Arcade", "Racing", "Sports",
+  "Puzzle", "Strategy", "Simulation"
+];
+
+let activeCategory = "All";
+let currentGame = null;
+let specialView = null;
+
+function getData(key, fallback = []) {
+  try {
+    return JSON.parse(localStorage.getItem("gamehub_" + key)) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function setData(key, value) {
+  localStorage.setItem("gamehub_" + key, JSON.stringify(value));
+}
+
+function renderCategories() {
+  const container = document.getElementById("categories");
+
+  container.innerHTML = categories.map(category => `
+    <button
+      class="category ${activeCategory === category ? "active" : ""}"
+      onclick="selectCategory('${category}')"
+    >${category}</button>
+  `).join("");
+}
+
+function selectCategory(category) {
+  activeCategory = category;
+  specialView = null;
+  document.getElementById("sectionHeading").textContent =
+    category === "All" ? "All games" : category + " games";
+  renderCategories();
+  renderGames();
+}
 
 function renderGames() {
-    const search = document.getElementById("search").value.toLowerCase();
+  const search = document.getElementById("search").value.toLowerCase();
+  const favourites = getData("favourites");
+  const recent = getData("recent");
 
-    const filtered = games.filter(game => {
-        return (
-            (selectedCategory === "All" ||
-             game.category === selectedCategory) &&
-            game.name.toLowerCase().includes(search)
-        );
-    });
+  let list = [...gameList];
 
-    const container = document.getElementById("games");
+  if (specialView === "favourites") {
+    list = list.filter(game => favourites.includes(game.id));
+    document.getElementById("sectionHeading").textContent = "★ Favourites";
+  } else if (specialView === "recent") {
+    list = recent
+      .map(id => gameList.find(game => game.id === id))
+      .filter(Boolean);
+    document.getElementById("sectionHeading").textContent = "Recently played";
+  } else if (activeCategory !== "All") {
+    list = list.filter(game => game.category === activeCategory);
+  }
 
-    container.innerHTML = filtered.map(game => `
-        <div class="game" onclick="playGame('${game.name.replace(/'/g, "\\'")}')">
-            <div class="thumbnail"
-                 style="background:${game.color}">
-                ${game.emoji}
-            </div>
-            <div class="game-info">
-                <h3>${game.name}</h3>
-                <p>${game.category}</p>
-                <span class="tag">PLAY NOW</span>
-            </div>
-        </div>
-    `).join("");
+  list = list.filter(game =>
+    game.name.toLowerCase().includes(search) ||
+    game.category.toLowerCase().includes(search)
+  );
 
-    document.getElementById("empty").style.display =
-        filtered.length ? "none" : "block";
+  document.getElementById("gameCount").textContent =
+    list.length + " games";
+
+  document.getElementById("empty").style.display =
+    list.length ? "none" : "block";
+
+  document.getElementById("games").innerHTML = list.map(game => `
+    <article class="game-card" onclick="launchGame('${game.id}')">
+      <div class="game-art" style="--c1:${game.c1};--c2:${game.c2}">
+        ${game.icon}
+      </div>
+      <button
+        class="favourite ${favourites.includes(game.id) ? "selected" : ""}"
+        onclick="event.stopPropagation();toggleFavourite('${game.id}')"
+        aria-label="Toggle favourite"
+      >★</button>
+      <div class="game-info">
+        <h3>${game.name}</h3>
+        <p>${game.description}</p>
+        <span class="game-tag">${game.category}</span>
+      </div>
+    </article>
+  `).join("");
 }
 
-function playGame(name) {
-    const game = games.find(g => g.name === name);
+function toggleFavourite(id) {
+  let favourites = getData("favourites");
 
-    if (!game) return;
+  if (favourites.includes(id)) {
+    favourites = favourites.filter(item => item !== id);
+  } else {
+    favourites.push(id);
+  }
 
-    let recent = JSON.parse(
-        localStorage.getItem("recentGames") || "[]"
-    );
-
-    recent = [name, ...recent.filter(n => n !== name)].slice(0, 6);
-
-    localStorage.setItem("recentGames", JSON.stringify(recent));
-
-    window.open(game.url, "_blank", "noopener,noreferrer");
-
-    renderRecent();
+  setData("favourites", favourites);
+  renderGames();
 }
 
-function renderRecent() {
-    const recent = JSON.parse(
-        localStorage.getItem("recentGames") || "[]"
-    );
-
-    document.getElementById("recent").innerHTML =
-        recent.map(name => {
-            const game = games.find(g => g.name === name);
-            if (!game) return "";
-
-            return `
-            <div class="game" onclick="playGame('${game.name.replace(/'/g, "\\'")}')">
-                <div class="thumbnail" style="background:${game.color}">
-                    ${game.emoji}
-                </div>
-                <div class="game-info">
-                    <h3>${game.name}</h3>
-                    <p>${game.category}</p>
-                </div>
-            </div>`;
-        }).join("");
+function showFavourites() {
+  specialView = "favourites";
+  activeCategory = "All";
+  renderCategories();
+  renderGames();
 }
 
-document.getElementById("search").addEventListener(
-    "input", renderGames
-);
+function showRecent() {
+  specialView = "recent";
+  activeCategory = "All";
+  renderCategories();
+  renderGames();
+}
 
-document.querySelectorAll(".category").forEach(button => {
-    button.addEventListener("click", () => {
-        document.querySelectorAll(".category").forEach(b =>
-            b.classList.remove("active")
-        );
+function launchGame(id) {
+  const game = gameList.find(item => item.id === id);
+  if (!game) return;
 
-        button.classList.add("active");
-        selectedCategory = button.dataset.cat;
+  currentGame = game;
 
-        renderGames();
-    });
-});
+  if (id === "life-simulator") {
+    alert("Life Simulator is a planned GameHub original. We'll add its game files next!");
+    return;
+  }
 
+  document.getElementById("playerTitle").textContent = game.name;
+  document.getElementById("player").classList.add("open");
+  document.getElementById("gameFrame").src = game.path;
+
+  let recent = getData("recent");
+  recent = [id, ...recent.filter(item => item !== id)].slice(0, 10);
+  setData("recent", recent);
+}
+
+function closeGame() {
+  document.getElementById("player").classList.remove("open");
+  document.getElementById("gameFrame").src = "about:blank";
+  currentGame = null;
+}
+
+function reloadGame() {
+  const frame = document.getElementById("gameFrame");
+  frame.src = frame.src;
+}
+
+function saveCurrentGame() {
+  if (!currentGame) return;
+  try {
+    document.getElementById("gameFrame").contentWindow.postMessage({
+      type: "GAMEHUB_SAVE_REQUEST",
+      gameId: currentGame.id
+    }, location.origin);
+    alert("Save request sent to the game!");
+  } catch (error) {
+    alert("This game doesn't support GameHub saves yet.");
+  }
+}
+
+// Shared API for games hosted on the same website.
+// Inside a game iframe, use parent.GameHub.save() and parent.GameHub.load().
+window.GameHub = {
+  save(gameId, data) {
+    setData("save_" + gameId, data);
+  },
+
+  load(gameId) {
+    return getData("save_" + gameId, null);
+  },
+
+  getHighScore(gameId) {
+    return getData("score_" + gameId, 0);
+  },
+
+  setHighScore(gameId, score) {
+    const oldScore = getData("score_" + gameId, 0);
+    if (score > oldScore) {
+      setData("score_" + gameId, score);
+    }
+  }
+};
+
+renderCategories();
 renderGames();
-renderRecent();
-
 </script>
 
 </body>
